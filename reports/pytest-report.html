@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title id="head-title">pytest-report.html</title>
+      <style type="text/css">body {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  /* do not increase min-width as some may use split screens */
+  min-width: 800px;
+  color: #999;
+}
+
+h1 {
+  font-size: 24px;
+  color: black;
+}
+
+h2 {
+  font-size: 16px;
+  color: black;
+}
+
+p {
+  color: black;
+}
+
+a {
+  color: #999;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+/******************************
+ * SUMMARY INFORMATION
+ ******************************/
+#environment td {
+  padding: 5px;
+  border: 1px solid #e6e6e6;
+  vertical-align: top;
+}
+#environment tr:nth-child(odd) {
+  background-color: #f6f6f6;
+}
+#environment ul {
+  margin: 0;
+  padding: 0 20px;
+}
+
+/******************************
+ * TEST RESULT COLORS
+ ******************************/
+span.passed,
+.passed .col-result {
+  color: green;
+}
+
+span.skipped,
+span.xfailed,
+span.rerun,
+.skipped .col-result,
+.xfailed .col-result,
+.rerun .col-result {
+  color: orange;
+}
+
+span.error,
+span.failed,
+span.xpassed,
+.error .col-result,
+.failed .col-result,
+.xpassed .col-result {
+  color: red;
+}
+
+.col-links__extra {
+  margin-right: 3px;
+}
+
+/******************************
+ * RESULTS TABLE
+ *
+ * 1. Table Layout
+ * 2. Extra
+ * 3. Sorting items
+ *
+ ******************************/
+/*------------------
+ * 1. Table Layout
+ *------------------*/
+#results-table {
+  border: 1px solid #e6e6e6;
+  color: #999;
+  font-size: 12px;
+  width: 100%;
+}
+#results-table th,
+#results-table td {
+  padding: 5px;
+  border: 1px solid #e6e6e6;
+  text-align: left;
+}
+#results-table th {
+  font-weight: bold;
+}
+
+/*------------------
+ * 2. Extra
+ *------------------*/
+.logwrapper {
+  max-height: 230px;
+  overflow-y: scroll;
+  background-color: #e6e6e6;
+}
+.logwrapper.expanded {
+  max-height: none;
+}
+.logwrapper.expanded .logexpander:after {
+  content: "collapse [-]";
+}
+.logwrapper .logexpander {
+  z-index: 1;
+  position: sticky;
+  top: 10px;
+  width: max-content;
+  border: 1px solid;
+  border-radius: 3px;
+  padding: 5px 7px;
+  margin: 10px 0 10px calc(100% - 80px);
+  cursor: pointer;
+  background-color: #e6e6e6;
+}
+.logwrapper .logexpander:after {
+  content: "expand [+]";
+}
+.logwrapper .logexpander:hover {
+  color: #000;
+  border-color: #000;
+}
+.logwrapper .log {
+  min-height: 40px;
+  position: relative;
+  top: -50px;
+  height: calc(100% + 50px);
+  border: 1px solid #e6e6e6;
+  color: black;
+  display: block;
+  font-family: "Courier New", Courier, monospace;
+  padding: 5px;
+  padding-right: 80px;
+  white-space: pre-wrap;
+}
+
+div.media {
+  border: 1px solid #e6e6e6;
+  float: right;
+  height: 240px;
+  margin: 0 5px;
+  overflow: hidden;
+  width: 320px;
+}
+
+.media-container {
+  display: grid;
+  grid-template-columns: 25px auto 25px;
+  align-items: center;
+  flex: 1 1;
+  overflow: hidden;
+  height: 200px;
+}
+
+.media-container--fullscreen {
+  grid-template-columns: 0px auto 0px;
+}
+
+.media-container__nav--right,
+.media-container__nav--left {
+  text-align: center;
+  cursor: pointer;
+}
+
+.media-container__viewport {
+  cursor: pointer;
+  text-align: center;
+  height: inherit;
+}
+.media-container__viewport img,
+.media-container__viewport video {
+  object-fit: cover;
+  width: 100%;
+  max-height: 100%;
+}
+
+.media__name,
+.media__counter {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex: 0 0 25px;
+  align-items: center;
+}
+
+.collapsible td:not(.col-links) {
+  cursor: pointer;
+}
+.collapsible td:not(.col-links):hover::after {
+  color: #bbb;
+  font-style: italic;
+  cursor: pointer;
+}
+
+.col-result {
+  width: 130px;
+}
+.col-result:hover::after {
+  content: " (hide details)";
+}
+
+.col-result.collapsed:hover::after {
+  content: " (show details)";
+}
+
+#environment-header h2:hover::after {
+  content: " (hide details)";
+  color: #bbb;
+  font-style: italic;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+#environment-header.collapsed h2:hover::after {
+  content: " (show details)";
+  color: #bbb;
+  font-style: italic;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+/*------------------
+ * 3. Sorting items
+ *------------------*/
+.sortable {
+  cursor: pointer;
+}
+.sortable.desc:after {
+  content: " ";
+  position: relative;
+  left: 5px;
+  bottom: -12.5px;
+  border: 10px solid #4caf50;
+  border-bottom: 0;
+  border-left-color: transparent;
+  border-right-color: transparent;
+}
+.sortable.asc:after {
+  content: " ";
+  position: relative;
+  left: 5px;
+  bottom: 12.5px;
+  border: 10px solid #4caf50;
+  border-top: 0;
+  border-left-color: transparent;
+  border-right-color: transparent;
+}
+
+.hidden, .summary__reload__button.hidden {
+  display: none;
+}
+
+.summary__data {
+  flex: 0 0 550px;
+}
+.summary__reload {
+  flex: 1 1;
+  display: flex;
+  justify-content: center;
+}
+.summary__reload__button {
+  flex: 0 0 300px;
+  display: flex;
+  color: white;
+  font-weight: bold;
+  background-color: #4caf50;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.summary__reload__button:hover {
+  background-color: #46a049;
+}
+.summary__spacer {
+  flex: 0 0 550px;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+}
+
+.filters,
+.collapse {
+  display: flex;
+  align-items: center;
+}
+.filters button,
+.collapse button {
+  color: #999;
+  border: none;
+  background: none;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.filters button:hover,
+.collapse button:hover {
+  color: #ccc;
+}
+
+.filter__label {
+  margin-right: 10px;
+}
+
+      </style>
+    
+  </head>
+  <body>
+    <h1 id="title">pytest-report.html</h1>
+    <p>Report generated on 10-Aug-2025 at 19:42:59 by <a href="https://pypi.python.org/pypi/pytest-html">pytest-html</a>
+        v4.1.1</p>
+    <div id="environment-header">
+      <h2>Environment</h2>
+    </div>
+    <table id="environment"></table>
+    <!-- TEMPLATES -->
+      <template id="template_environment_row">
+      <tr>
+        <td></td>
+        <td></td>
+      </tr>
+    </template>
+    <template id="template_results-table__body--empty">
+      <tbody class="results-table-row">
+        <tr id="not-found-message">
+          <td colspan="4">No results found. Check the filters.</th>
+        </tr>
+    </template>
+    <template id="template_results-table__tbody">
+      <tbody class="results-table-row">
+        <tr class="collapsible">
+        </tr>
+        <tr class="extras-row">
+          <td class="extra" colspan="4">
+            <div class="extraHTML"></div>
+            <div class="media">
+              <div class="media-container">
+                  <div class="media-container__nav--left"><</div>
+                  <div class="media-container__viewport">
+                    <img src="" />
+                    <video controls>
+                      <source src="" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="media-container__nav--right">></div>
+                </div>
+                <div class="media__name"></div>
+                <div class="media__counter"></div>
+            </div>
+            <div class="logwrapper">
+              <div class="logexpander"></div>
+              <div class="log"></div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </template>
+    <!-- END TEMPLATES -->
+    <div class="summary">
+      <div class="summary__data">
+        <h2>Summary</h2>
+        <div class="additional-summary prefix">
+        </div>
+        <p class="run-count">1 test took 00:00:43.</p>
+        <p class="filter">(Un)check the boxes to filter the results.</p>
+        <div class="summary__reload">
+          <div class="summary__reload__button hidden" onclick="location.reload()">
+            <div>There are still tests running. <br />Reload this page to get the latest results!</div>
+          </div>
+        </div>
+        <div class="summary__spacer"></div>
+        <div class="controls">
+          <div class="filters">
+            <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="failed" disabled/>
+            <span class="failed">0 Failed,</span>
+            <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="passed" />
+            <span class="passed">1 Passed,</span>
+            <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="skipped" />
+            <span class="skipped">1 Skipped,</span>
+            <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="xfailed" disabled/>
+            <span class="xfailed">0 Expected failures,</span>
+            <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="xpassed" disabled/>
+            <span class="xpassed">0 Unexpected passes,</span>
+            <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="error" disabled/>
+            <span class="error">0 Errors,</span>
+            <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="rerun" disabled/>
+            <span class="rerun">0 Reruns</span>
+          </div>
+          <div class="collapse">
+            <button id="show_all_details">Show all details</button>&nbsp;/&nbsp;<button id="hide_all_details">Hide all details</button>
+          </div>
+        </div>
+      </div>
+      <div class="additional-summary summary">
+      </div>
+      <div class="additional-summary postfix">
+      </div>
+    </div>
+    <table id="results-table">
+      <thead id="results-table-head">
+        <tr>
+          <th class="sortable" data-column-type="result">Result</th>
+          <th class="sortable" data-column-type="testId">Test</th>
+          <th class="sortable" data-column-type="duration">Duration</th>
+          <th>Links</th>
+        </tr>
+      </thead>
+    </table>
+  </body>
+  <footer>
+    <div id="data-container" data-jsonblob="{&#34;environment&#34;: {&#34;Python&#34;: &#34;3.10.6&#34;, &#34;Platform&#34;: &#34;Windows-10-10.0.22631-SP0&#34;, &#34;Packages&#34;: {&#34;pytest&#34;: &#34;7.4.3&#34;, &#34;pluggy&#34;: &#34;1.6.0&#34;}, &#34;Plugins&#34;: {&#34;allure-pytest&#34;: &#34;2.13.2&#34;, &#34;anyio&#34;: &#34;3.7.1&#34;, &#34;Faker&#34;: &#34;37.4.0&#34;, &#34;base-url&#34;: &#34;2.1.0&#34;, &#34;html&#34;: &#34;4.1.1&#34;, &#34;metadata&#34;: &#34;3.1.1&#34;, &#34;rerunfailures&#34;: &#34;12.0&#34;, &#34;xdist&#34;: &#34;3.8.0&#34;}, &#34;JAVA_HOME&#34;: &#34;D:\\jdk&#34;, &#34;Base URL&#34;: &#34;&#34;}, &#34;tests&#34;: {&#34;test_case/api/test_api_driver.py::TestDataDrivenAPI::test_login_api_data_driven&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Skipped&#34;, &#34;testId&#34;: &#34;test_case/api/test_api_driver.py::TestDataDrivenAPI::test_login_api_data_driven&#34;, &#34;duration&#34;: &#34;100 ms&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Skipped&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;test_case/api/test_api_driver.py::TestDataDrivenAPI::test_login_api_data_driven&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;100 ms&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;[gw1] win32 -- Python 3.10.6 D:\\python\\python.exe\n(&amp;#x27;E:\\\\code_project\\\\cc_p\\\\auto_case\\\\test_case\\\\api\\\\test_api_driver.py&amp;#x27;, 110, &amp;#x27;Skipped: \u6d4b\u8bd5\u6570\u636e\u6587\u4ef6\u4e0d\u5b58\u5728: E:\\\\code_project\\\\cc_p\\\\auto_case\\\\data\\\\api\\\\login\\\\login_cases.yaml&amp;#x27;)\n\n---------------------------- Captured stdout setup -----------------------------\n2025-08-10 19:42:16 | INFO | test_case.conftest:pytest_runtest_setup:128 | \u5f00\u59cb\u6267\u884c\u6d4b\u8bd5: test_login_api_data_driven\n2025-08-10 19:42:16 | WARNING | utils.config.parser:load_env_config:52 | \u73af\u5883\u914d\u7f6e\u6587\u4ef6\u4e0d\u5b58\u5728: E:\\code_project\\cc_p\\auto_case\\config\\env_config.yaml\n--------------------------- Captured stdout teardown ---------------------------\n2025-08-10 19:42:16 | INFO | test_case.conftest:pytest_runtest_teardown:133 | \u6d4b\u8bd5\u6267\u884c\u5b8c\u6210: test_login_api_data_driven\n2025-08-10 19:42:16 | INFO | utils.core.api.client:logout:420 | \u672a\u914d\u7f6e\u767b\u51fa\u63a5\u53e3\uff0c\u8df3\u8fc7\u767b\u51fa\u8bf7\u6c42\n2025-08-10 19:42:16 | INFO | utils.core.api.client:clear_token:456 | token\u5df2\u6e05\u9664\n2025-08-10 19:42:16 | INFO | utils.core.api.client:logout:427 | \u767b\u51fa\u64cd\u4f5c\u5b8c\u6210\n2025-08-10 19:42:16 | INFO | utils.core.api.client:close:464 | API\u5ba2\u6237\u7aef\u4f1a\u8bdd\u5df2\u5173\u95ed\n2025-08-10 19:42:16 | INFO | test_case.api.conftest:api_client:96 | API\u5ba2\u6237\u7aef\u6e05\u7406\u5b8c\u6210\n&#34;}], &#34;test_case/api/test_api_driver.py::TestAPI::test_single_api_cases&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;test_case/api/test_api_driver.py::TestAPI::test_single_api_cases&#34;, &#34;duration&#34;: &#34;00:00:43&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;test_case/api/test_api_driver.py::TestAPI::test_single_api_cases&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;00:00:43&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;[gw0] win32 -- Python 3.10.6 D:\\python\\python.exe\n\n---------------------------- Captured stdout setup -----------------------------\n2025-08-10 19:42:16 | INFO | test_case.conftest:pytest_runtest_setup:128 | \u5f00\u59cb\u6267\u884c\u6d4b\u8bd5: test_single_api_cases\n2025-08-10 19:42:16 | WARNING | utils.config.parser:load_env_config:52 | \u73af\u5883\u914d\u7f6e\u6587\u4ef6\u4e0d\u5b58\u5728: E:\\code_project\\cc_p\\auto_case\\config\\env_config.yaml\n\n----------------------------- Captured stdout call -----------------------------\n2025-08-10 19:42:16 | WARNING | utils.config.parser:load_env_config:52 | \u73af\u5883\u914d\u7f6e\u6587\u4ef6\u4e0d\u5b58\u5728: E:\\code_project\\cc_p\\auto_case\\config\\env_config.yaml\n2025-08-10 19:42:16 | INFO | utils.core.base.test_base:setup_method:26 | \u5f00\u59cb\u6267\u884c\u6d4b\u8bd5: test_single_api_cases\n2025-08-10 19:42:16 | INFO | utils.logging.test_step_logger:start_test:32 | ================================================================================\n2025-08-10 19:42:16 | INFO | utils.logging.test_step_logger:start_test:33 | \ud83d\ude80 \u5f00\u59cb\u6267\u884c\u6d4b\u8bd5: test_single_api_cases\n2025-08-10 19:42:16 | INFO | utils.logging.test_step_logger:start_test:36 | ================================================================================\n2025-08-10 19:42:16 | INFO | test_case.api.test_api_driver:setup_test:16 | API\u6d4b\u8bd5\u73af\u5883\u51c6\u5907\u5b8c\u6210\n2025-08-10 19:42:16 | INFO | test_case.api.test_api_driver:test_single_api_cases:78 | \u6267\u884c\u6d4b\u8bd5\u6587\u4ef6: E:\\code_project\\cc_p\\auto_case\\data\\api\\api_test_cases.yaml\n2025-08-10 19:42:16 | INFO | utils.logging.test_step_logger:start_test:32 | ================================================================================\n2025-08-10 19:42:16 | INFO | utils.logging.test_step_logger:start_test:33 | \ud83d\ude80 \u5f00\u59cb\u6267\u884c\u6d4b\u8bd5: \u83b7\u53d6\u7528\u6237\u4fe1\u606f\n2025-08-10 19:42:16 | INFO | utils.logging.test_step_logger:start_test:35 | \ud83d\udcdd \u6d4b\u8bd5\u63cf\u8ff0: \u6d4b\u8bd5\u83b7\u53d6\u5355\u4e2a\u7528\u6237\u4fe1\u606f\u7684API\u63a5\u53e3\n2025-08-10 19:42:16 | INFO | utils.logging.test_step_logger:start_test:36 | ================================================================================\n2025-08-10 19:42:16 | INFO | utils.logging.test_step_logger:start_step:53 | \ud83d\udccb \u6b65\u9aa4 1: \u6d4b\u8bd5\u7528\u4f8b\u521d\u59cb\u5316\n2025-08-10 19:42:16 | INFO | utils.logging.test_step_logger:start_step:55 |    \ud83d\udcc4 \u63cf\u8ff0: \u51c6\u5907\u6d4b\u8bd5\u73af\u5883\u548c\u6570\u636e\n2025-08-10 19:42:16 | INFO | utils.logging.test_step_logger:log_action:89 |    \u26a1 \u52a0\u8f7d\u6d4b\u8bd5\u7528\u4f8b\u914d\u7f6e: {\n  &amp;quot;case_name&amp;quot;: &amp;quot;\u83b7\u53d6\u7528\u6237\u4fe1\u606f&amp;quot;,\n  &amp;quot;test_type&amp;quot;: &amp;quot;unknown&amp;quot;,\n  &amp;quot;priority&amp;quot;: &amp;quot;normal&amp;quot;\n}\n2025-08-10 19:42:16 | INFO | utils.core.base.test_base:execute_test_case:116 | \u6267\u884c\u6d4b\u8bd5\u7528\u4f8b: \u83b7\u53d6\u7528\u6237\u4fe1\u606f\n2025-08-10 19:42:16 | INFO | utils.logging.test_step_logger:end_step:209 |    \u2705 \u6b65\u9aa4\u5b8c\u6210: PASSED (\u8017\u65f6: 0.003s)\n2025-08-10 19:42:16 | INFO | utils.logging.test_step_logger:start_step:53 | \ud83d\udccb \u6b65\u9aa4 2: \u6267\u884c\u6d4b\u8bd5\u903b\u8f91\n2025-08-10 19:42:16 | INFO | utils.logging.test_step_logger:start_step:55 |    \ud83d\udcc4 \u63cf\u8ff0: \u6267\u884c\u4e3b\u8981\u6d4b\u8bd5\u6b65\u9aa4\n2025-08-10 19:42:16 | INFO | utils.logging.logger:log_step:153 |    \u6b65\u9aa4: \u53d1\u9001GET\u8bf7\u6c42 https://jsonplaceholder.typicode.com/users/1\n2025-08-10 19:42:16 | INFO | utils.logging.test_step_logger:log_api_request:94 |    \ud83c\udf10 API\u8bf7\u6c42: GET https://jsonplaceholder.typicode.com/users/1\n2025-08-10 19:42:16 | INFO | utils.logging.test_step_logger:log_api_request:97 |    \ud83d\udce4 \u8bf7\u6c42\u5934: {\n  &amp;quot;User-Agent&amp;quot;: &amp;quot;python-requests/2.31.0&amp;quot;,\n  &amp;quot;Accept-Encoding&amp;quot;: &amp;quot;gzip, deflate, br&amp;quot;,\n  &amp;quot;Accept&amp;quot;: &amp;quot;application/json&amp;quot;,\n  &amp;quot;Connection&amp;quot;: &amp;quot;keep-alive&amp;quot;\n}\n2025-08-10 19:42:17 | INFO | utils.logging.test_step_logger:log_api_response:122 |    \u2705 API\u54cd\u5e94: 200\n2025-08-10 19:42:17 | INFO | utils.logging.test_step_logger:log_api_response:125 |    \u23f1\ufe0f \u54cd\u5e94\u65f6\u95f4: 0.914s\n2025-08-10 19:42:17 | INFO | utils.logging.test_step_logger:log_api_response:128 |    \ud83d\udce5 \u54cd\u5e94\u5934: {\n  &amp;quot;Date&amp;quot;: &amp;quot;Sun, 10 Aug 2025 11:42:30 GMT&amp;quot;,\n  &amp;quot;Content-Type&amp;quot;: &amp;quot;application/json; charset=utf-8&amp;quot;,\n  &amp;quot;Transfer-Encoding&amp;quot;: &amp;quot;chunked&amp;quot;,\n  &amp;quot;Connection&amp;quot;: &amp;quot;keep-alive&amp;quot;,\n  &amp;quot;Access-Control-Allow-Credentials&amp;quot;: &amp;quot;true&amp;quot;,\n  &amp;quot;Cache-Control&amp;quot;: &amp;quot;max-age=43200&amp;quot;,\n  &amp;quot;Etag&amp;quot;: &amp;quot;W/\\&amp;quot;1fd-+2Y3G3w049iSZtw5t1mzSnunngE\\&amp;quot;&amp;quot;,\n  &amp;quot;Expires&amp;quot;: &amp;quot;-1&amp;quot;,\n  &amp;quot;Nel&amp;quot;: &amp;quot;{\\&amp;quot;report_to\\&amp;quot;:\\&amp;quot;heroku-nel\\&amp;quot;,\\&amp;quot;response_headers\\&amp;quot;:[\\&amp;quot;Via\\&amp;quot;],\\&amp;quot;max_age\\&amp;quot;:3600,\\&amp;quot;success_fraction\\&amp;quot;:0.01,\\&amp;quot;failure_fraction\\&amp;quot;:0.1}&amp;quot;,\n  &amp;quot;Pragma&amp;quot;: &amp;quot;no-cache&amp;quot;,\n  &amp;quot;Report-To&amp;quot;: &amp;quot;{\\&amp;quot;group\\&amp;quot;:\\&amp;quot;heroku-nel\\&amp;quot;,\\&amp;quot;endpoints\\&amp;quot;:[{\\&amp;quot;url\\&amp;quot;:\\&amp;quot;https://nel.heroku.com/reports?s=Q%2F3AGq5ubChmYQDJ6LNckCnhAajzQPDvwRxRPWP8muc%3D\\\\u0026sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d\\\\u0026ts=1752278603\\&amp;quot;}],\\&amp;quot;max_age\\&amp;quot;:3600}&amp;quot;,\n  &amp;quot;Reporting-Endpoints&amp;quot;: &amp;quot;heroku-nel=\\&amp;quot;https://nel.heroku.com/reports?s=Q%2F3AGq5ubChmYQDJ6LNckCnhAajzQPDvwRxRPWP8muc%3D&amp;amp;sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d&amp;amp;ts=1752278603\\&amp;quot;&amp;quot;,\n  &amp;quot;Server&amp;quot;: &amp;quot;cloudflare&amp;quot;,\n  &amp;quot;Vary&amp;quot;: &amp;quot;Origin, Accept-Encoding&amp;quot;,\n  &amp;quot;Via&amp;quot;: &amp;quot;2.0 heroku-router&amp;quot;,\n  &amp;quot;X-Content-Type-Options&amp;quot;: &amp;quot;nosniff&amp;quot;,\n  &amp;quot;X-Powered-By&amp;quot;: &amp;quot;Express&amp;quot;,\n  &amp;quot;X-Ratelimit-Limit&amp;quot;: &amp;quot;1000&amp;quot;,\n  &amp;quot;X-Ratelimit-Remaining&amp;quot;: &amp;quot;999&amp;quot;,\n  &amp;quot;X-Ratelimit-Reset&amp;quot;: &amp;quot;1752278654&amp;quot;,\n  &amp;quot;Age&amp;quot;: &amp;quot;5671&amp;quot;,\n  &amp;quot;Cf-Cache-Status&amp;quot;: &amp;quot;HIT&amp;quot;,\n  &amp;quot;Content-Encoding&amp;quot;: &amp;quot;br&amp;quot;,\n  &amp;quot;CF-RAY&amp;quot;: &amp;quot;96cf3af06b25d002-KIX&amp;quot;,\n  &amp;quot;alt-svc&amp;quot;: &amp;quot;h3=\\&amp;quot;:443\\&amp;quot;; ma=86400&amp;quot;\n}\n2025-08-10 19:42:17 | INFO | utils.logging.test_step_logger:log_api_response:131 |    \ud83d\udccb \u54cd\u5e94\u4f53: {\n  &amp;quot;id&amp;quot;: 1,\n  &amp;quot;name&amp;quot;: &amp;quot;Leanne Graham&amp;quot;,\n  &amp;quot;username&amp;quot;: &amp;quot;Bret&amp;quot;,\n  &amp;quot;email&amp;quot;: &amp;quot;***\u90ae\u7bb1***&amp;quot;,\n  &amp;quot;address&amp;quot;: {\n    &amp;quot;street&amp;quot;: &amp;quot;Kulas Light&amp;quot;,\n    &amp;quot;suite&amp;quot;: &amp;quot;Apt. 556&amp;quot;,\n    &amp;quot;city&amp;quot;: &amp;quot;Gwenborough&amp;quot;,\n    &amp;quot;zipcode&amp;quot;: &amp;quot;92998-3874&amp;quot;,\n    &amp;quot;geo&amp;quot;: {\n      &amp;quot;lat&amp;quot;: &amp;quot;-37.3159&amp;quot;,\n      &amp;quot;lng&amp;quot;: &amp;quot;81.1496&amp;quot;\n    }\n  },\n  &amp;quot;phone&amp;quot;: &amp;quot;1-770-736-8031 x56442&amp;quot;,\n  &amp;quot;website&amp;quot;: &amp;quot;hildegard.org&amp;quot;,\n  &amp;quot;company&amp;quot;: {\n    &amp;quot;name&amp;quot;: &amp;quot;Romaguera-Crona&amp;quot;,\n    &amp;quot;catchPhrase&amp;quot;: &amp;quot;Multi-layered client-server neural-net&amp;quot;,\n    &amp;quot;bs&amp;quot;: &amp;quot;harness real-time e-markets&amp;quot;\n  }\n}\n2025-08-10 19:42:17 | INFO | utils.logging.logger:log_step:153 |    \u6b65\u9aa4: \u9a8c\u8bc1\u54cd\u5e94 4\u4e2a\u65ad\u8a00\n2025-08-10 19:42:17 | INFO | utils.logging.logger:log_assertion:158 |    \u65ad\u8a00 [status_code] \u2713 \u671f\u671b: 200 | \u5b9e\u9645: 200\n2025-08-10 19:42:17 | INFO | utils.logging.logger:log_assertion:158 |    \u65ad\u8a00 [json_path[$.id] eq] \u2713 \u671f\u671b: 1 | \u5b9e\u9645: 1\n2025-08-10 19:42:17 | INFO | utils.logging.logger:log_assertion:158 |    \u65ad\u8a00 [json_path[$.name] not_empty] \u2713 \u671f\u671b: None | \u5b9e\u9645: Leanne Graham\n2025-08-10 19:42:17 | INFO | utils.logging.logger:log_assertion:158 |    \u65ad\u8a00 [json_path[$.email] contains] \u2713 \u671f\u671b: @ | \u5b9e\u9645: Sincere@april.biz\n2025-08-10 19:42:17 | INFO | utils.core.api.keywords:verify_response:196 | \u54cd\u5e94\u9a8c\u8bc1\u901a\u8fc7\n2025-08-10 19:42:17 | INFO | utils.logging.logger:log_step:153 |    \u6b65\u9aa4: \u63d0\u53d6\u6570\u636e 2\u4e2a\u63d0\u53d6\u9879\n2025-08-10 19:42:17 | WARNING | utils.data.extractor:extract_from_response:172 | \u4e0d\u652f\u6301\u7684\u63d0\u53d6\u7c7b\u578b: json_path\n2025-08-10 19:42:17 | WARNING | utils.data.extractor:extract_from_response:172 | \u4e0d\u652f\u6301\u7684\u63d0\u53d6\u7c7b\u578b: json_path\n2025-08-10 19:42:17 | INFO | utils.data.extractor:extract_from_response:174 | \u6570\u636e\u63d0\u53d6\u5b8c\u6210: {}\n2025-08-10 19:42:17 | INFO | utils.core.api.keywords:extract_data:221 | \u6570\u636e\u63d0\u53d6\u5b8c\u6210: {}\n2025-08-10 19:42:17 | INFO | utils.logging.test_step_logger:end_step:209 |    \u2705 \u6b65\u9aa4\u5b8c\u6210: PASSED (\u8017\u65f6: 0.967s)\n2025-08-10 19:42:17 | INFO | utils.logging.test_step_logger:start_step:53 | \ud83d\udccb \u6b65\u9aa4 3: \u6d4b\u8bd5\u7ed3\u679c\u9a8c\u8bc1\n2025-08-10 19:42:17 | INFO | utils.logging.test_step_logger:start_step:55 |    \ud83d\udcc4 \u63cf\u8ff0: \u9a8c\u8bc1\u6d4b\u8bd5\u6267\u884c\u7ed3\u679c\n2025-08-10 19:42:17 | INFO | utils.logging.test_step_logger:log_assertion:173 |    \u2705 \u65ad\u8a00: \u6d4b\u8bd5\u72b6\u6001\u68c0\u67e5\n2025-08-10 19:42:17 | INFO | utils.logging.test_step_logger:log_assertion:174 |    \ud83d\udccb \u671f\u671b\u503c: PASS\n2025-08-10 19:42:17 | INFO | utils.logging.test_step_logger:log_assertion:175 |    \ud83d\udcca \u5b9e\u9645\u503c: PASS\n2025-08-10 19:42:17 | INFO | utils.logging.test_step_logger:log_assertion:176 |    \ud83c\udfaf \u7ed3\u679c: \u901a\u8fc7\n2025-08-10 19:42:17 | INFO | utils.logging.test_step_logger:log_assertion:179 |    \ud83d\udcac \u8bf4\u660e: \u6d4b\u8bd5\u7528\u4f8b \u83b7\u53d6\u7528\u6237\u4fe1\u606f \u6267\u884c\u7ed3\u679c\n2025-08-10 19:42:17 | INFO | utils.logging.test_step_logger:end_step:209 |    \u2705 \u6b65\u9aa4\u5b8c\u6210: PASSED (\u8017\u65f6: 0.000s)\n2025-08-10 19:42:17 | INFO | utils.core.base.test_base:execute_test_case:149 | \u6d4b\u8bd5\u7528\u4f8b\u6267\u884c\u6210\u529f: \u83b7\u53d6\u7528\u6237\u4fe1\u606f\n2025-08-10 19:42:17 | INFO | utils.logging.test_step_logger:end_test:221 | ================================================================================\n2025-08-10 19:42:17 | INFO | utils.logging.test_step_logger:end_test:224 | \u2705 \u6d4b\u8bd5\u5b8c\u6210: \u83b7\u53d6\u7528\u6237\u4fe1\u606f\n2025-08-10 19:42:17 | INFO | utils.logging.test_step_logger:end_test:225 | \u23f1\ufe0f \u603b\u8017\u65f6: 0.970s\n2025-08-10 19:42:17 | INFO | utils.logging.test_step_logger:end_test:226 | \ud83d\udcca \u603b\u6b65\u9aa4\u6570: 3\n2025-08-10 19:42:17 | INFO | utils.logging.test_step_logger:end_test:232 | \u2705 \u901a\u8fc7\u6b65\u9aa4: 3\n2025-08-10 19:42:17 | INFO | utils.logging.test_step_logger:end_test:233 | \u274c \u5931\u8d25\u6b65\u9aa4: 0\n2025-08-10 19:42:17 | INFO | utils.logging.test_step_logger:end_test:236 | \ud83d\udccb \u6d4b\u8bd5\u603b\u7ed3:\n2025-08-10 19:42:17 | INFO | utils.logging.test_step_logger:end_test:238 |    \u6d4b\u8bd5\u7ed3\u679c: PASS\n2025-08-10 19:42:17 | INFO | utils.logging.test_step_logger:end_test:238 |    \u9519\u8bef\u4fe1\u606f: None\n2025-08-10 19:42:17 | INFO | utils.logging.test_step_logger:end_test:240 | ================================================================================\n2025-08-10 19:42:17 | INFO | utils.logging.test_step_logger:start_test:32 | ================================================================================\n2025-08-10 19:42:17 | INFO | utils.logging.test_step_logger:start_test:33 | \ud83d\ude80 \u5f00\u59cb\u6267\u884c\u6d4b\u8bd5: \u521b\u5efa\u65b0\u6587\u7ae0\n2025-08-10 19:42:17 | INFO | utils.logging.test_step_logger:start_test:35 | \ud83d\udcdd \u6d4b\u8bd5\u63cf\u8ff0: \u6d4b\u8bd5\u521b\u5efa\u65b0\u6587\u7ae0\u7684API\u63a5\u53e3\n2025-08-10 19:42:17 | INFO | utils.logging.test_step_logger:start_test:36 | ================================================================================\n2025-08-10 19:42:17 | INFO | utils.logging.test_step_logger:start_step:53 | \ud83d\udccb \u6b65\u9aa4 1: \u6d4b\u8bd5\u7528\u4f8b\u521d\u59cb\u5316\n2025-08-10 19:42:17 | INFO | utils.logging.test_step_logger:start_step:55 |    \ud83d\udcc4 \u63cf\u8ff0: \u51c6\u5907\u6d4b\u8bd5\u73af\u5883\u548c\u6570\u636e\n2025-08-10 19:42:17 | INFO | utils.logging.test_step_logger:log_action:89 |    \u26a1 \u52a0\u8f7d\u6d4b\u8bd5\u7528\u4f8b\u914d\u7f6e: {\n  &amp;quot;case_name&amp;quot;: &amp;quot;\u521b\u5efa\u65b0\u6587\u7ae0&amp;quot;,\n  &amp;quot;test_type&amp;quot;: &amp;quot;unknown&amp;quot;,\n  &amp;quot;priority&amp;quot;: &amp;quot;normal&amp;quot;\n}\n2025-08-10 19:42:17 | INFO | utils.core.base.test_base:execute_test_case:116 | \u6267\u884c\u6d4b\u8bd5\u7528\u4f8b: \u521b\u5efa\u65b0\u6587\u7ae0\n2025-08-10 19:42:17 | INFO | utils.logging.test_step_logger:end_step:209 |    \u2705 \u6b65\u9aa4\u5b8c\u6210: PASSED (\u8017\u65f6: 0.000s)\n2025-08-10 19:42:17 | INFO | utils.logging.test_step_logger:start_step:53 | \ud83d\udccb \u6b65\u9aa4 2: \u6267\u884c\u6d4b\u8bd5\u903b\u8f91\n2025-08-10 19:42:17 | INFO | utils.logging.test_step_logger:start_step:55 |    \ud83d\udcc4 \u63cf\u8ff0: \u6267\u884c\u4e3b\u8981\u6d4b\u8bd5\u6b65\u9aa4\n2025-08-10 19:42:17 | INFO | utils.logging.logger:log_step:153 |    \u6b65\u9aa4: \u53d1\u9001POST\u8bf7\u6c42 https://jsonplaceholder.typicode.com/posts\n2025-08-10 19:42:17 | INFO | utils.logging.test_step_logger:log_api_request:94 |    \ud83c\udf10 API\u8bf7\u6c42: POST https://jsonplaceholder.typicode.com/posts\n2025-08-10 19:42:17 | INFO | utils.logging.test_step_logger:log_api_request:97 |    \ud83d\udce4 \u8bf7\u6c42\u5934: {\n  &amp;quot;User-Agent&amp;quot;: &amp;quot;python-requests/2.31.0&amp;quot;,\n  &amp;quot;Accept-Encoding&amp;quot;: &amp;quot;gzip, deflate, br&amp;quot;,\n  &amp;quot;Accept&amp;quot;: &amp;quot;*/*&amp;quot;,\n  &amp;quot;Connection&amp;quot;: &amp;quot;keep-alive&amp;quot;,\n  &amp;quot;Content-Type&amp;quot;: &amp;quot;application/json&amp;quot;\n}\n2025-08-10 19:42:17 | INFO | utils.logging.test_step_logger:log_api_request:103 |    \ud83d\udce6 \u8bf7\u6c42\u4f53: {\n  &amp;quot;title&amp;quot;: &amp;quot;\u6d4b\u8bd5\u6587\u7ae0\u6807\u9898&amp;quot;,\n  &amp;quot;body&amp;quot;: &amp;quot;\u8fd9\u662f\u4e00\u7bc7\u6d4b\u8bd5\u6587\u7ae0\u7684\u5185\u5bb9&amp;quot;,\n  &amp;quot;userId&amp;quot;: 1\n}\n2025-08-10 19:42:18 | INFO | utils.logging.test_step_logger:log_api_response:122 |    \u274c API\u54cd\u5e94: 500\n2025-08-10 19:42:18 | INFO | utils.logging.test_step_logger:log_api_response:125 |    \u23f1\ufe0f \u54cd\u5e94\u65f6\u95f4: 0.738s\n2025-08-10 19:42:18 | INFO | utils.logging.test_step_logger:log_api_response:128 |    \ud83d\udce5 \u54cd\u5e94\u5934: {\n  &amp;quot;Date&amp;quot;: &amp;quot;Sun, 10 Aug 2025 11:42:31 GMT&amp;quot;,\n  &amp;quot;Content-Type&amp;quot;: &amp;quot;text/html; charset=utf-8&amp;quot;,\n  &amp;quot;Content-Length&amp;quot;: &amp;quot;755&amp;quot;,\n  &amp;quot;Connection&amp;quot;: &amp;quot;keep-alive&amp;quot;,\n  &amp;quot;Access-Control-Allow-Credentials&amp;quot;: &amp;quot;true&amp;quot;,\n  &amp;quot;Cache-Control&amp;quot;: &amp;quot;no-cache&amp;quot;,\n  &amp;quot;Etag&amp;quot;: &amp;quot;W/\\&amp;quot;2f3-3p4hjuLExFWDjhVA8owNYvDZVHY\\&amp;quot;&amp;quot;,\n  &amp;quot;Expires&amp;quot;: &amp;quot;-1&amp;quot;,\n  &amp;quot;Nel&amp;quot;: &amp;quot;{\\&amp;quot;report_to\\&amp;quot;:\\&amp;quot;heroku-nel\\&amp;quot;,\\&amp;quot;response_headers\\&amp;quot;:[\\&amp;quot;Via\\&amp;quot;],\\&amp;quot;max_age\\&amp;quot;:3600,\\&amp;quot;success_fraction\\&amp;quot;:0.01,\\&amp;quot;failure_fraction\\&amp;quot;:0.1}&amp;quot;,\n  &amp;quot;Pragma&amp;quot;: &amp;quot;no-cache&amp;quot;,\n  &amp;quot;Report-To&amp;quot;: &amp;quot;{\\&amp;quot;group\\&amp;quot;:\\&amp;quot;heroku-nel\\&amp;quot;,\\&amp;quot;endpoints\\&amp;quot;:[{\\&amp;quot;url\\&amp;quot;:\\&amp;quot;https://nel.heroku.com/reports?s=1xI8w1OoRl1U6X7cAWAPuqYXXVsj6bLvJiHcPhWLT3Y%3D\\\\u0026sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d\\\\u0026ts=1754826151\\&amp;quot;}],\\&amp;quot;max_age\\&amp;quot;:3600}&amp;quot;,\n  &amp;quot;Reporting-Endpoints&amp;quot;: &amp;quot;heroku-nel=\\&amp;quot;https://nel.heroku.com/reports?s=1xI8w1OoRl1U6X7cAWAPuqYXXVsj6bLvJiHcPhWLT3Y%3D&amp;amp;sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d&amp;amp;ts=1754826151\\&amp;quot;&amp;quot;,\n  &amp;quot;Server&amp;quot;: &amp;quot;cloudflare&amp;quot;,\n  &amp;quot;Vary&amp;quot;: &amp;quot;Origin, X-HTTP-Method-Override, Accept-Encoding&amp;quot;,\n  &amp;quot;Via&amp;quot;: &amp;quot;2.0 heroku-router&amp;quot;,\n  &amp;quot;X-Powered-By&amp;quot;: &amp;quot;Express&amp;quot;,\n  &amp;quot;X-Ratelimit-Limit&amp;quot;: &amp;quot;1000&amp;quot;,\n  &amp;quot;X-Ratelimit-Remaining&amp;quot;: &amp;quot;999&amp;quot;,\n  &amp;quot;X-Ratelimit-Reset&amp;quot;: &amp;quot;1754826180&amp;quot;,\n  &amp;quot;Cf-Cache-Status&amp;quot;: &amp;quot;DYNAMIC&amp;quot;,\n  &amp;quot;CF-RAY&amp;quot;: &amp;quot;96cf3af4382cd002-KIX&amp;quot;,\n  &amp;quot;alt-svc&amp;quot;: &amp;quot;h3=\\&amp;quot;:443\\&amp;quot;; ma=86400&amp;quot;\n}\n2025-08-10 19:42:18 | INFO | utils.logging.test_step_logger:log_api_response:131 |    \ud83d\udccb \u54cd\u5e94\u4f53: SyntaxError: Unexpected token t in JSON at position 0\n    at JSON.parse (&amp;lt;anonymous&amp;gt;)\n    at createStrictSyntaxError (/app/node_modules/body-parser/lib/types/json.js:158:10)\n    at parse (/app/node_modules/body-parser/lib/types/json.js:83:15)\n    at /app/node_modules/body-parser/lib/read.js:121:18\n    at invokeCallback (/app/node_modules/body-parser/node_modules/raw-body/index.js:224:16)\n    at done (/app/node_modules/body-parser/node_modules/raw-body/index.js:213:7)\n    at IncomingMessage.onEnd (/app/node_modules/body-parser/node_modules/raw-body/index.js:273:7)\n    at IncomingMessage.emit (node:events:525:35)\n    at endReadableNT (node:internal/streams/readable:1358:12)\n    at processTicksAndRejections (node:internal/process/task_queues:83:21)\n2025-08-10 19:42:18 | INFO | utils.logging.logger:log_step:153 |    \u6b65\u9aa4: \u9a8c\u8bc1\u54cd\u5e94 3\u4e2a\u65ad\u8a00\n2025-08-10 19:42:18 | INFO | utils.logging.logger:log_assertion:158 |    \u65ad\u8a00 [status_code] \u2717 \u671f\u671b: 201 | \u5b9e\u9645: 500\n2025-08-10 19:42:18 | ERROR | utils.core.api.assertions:assert_status_code:35 | \u521b\u5efa\u6210\u529f\u72b6\u6001\u7801\u5e94\u4e3a201\n2025-08-10 19:42:18 | INFO | utils.logging.test_step_logger:end_step:209 |    \u2705 \u6b65\u9aa4\u5b8c\u6210: PASSED (\u8017\u65f6: 0.743s)\n2025-08-10 19:42:18 | INFO | utils.logging.test_step_logger:start_step:53 | \ud83d\udccb \u6b65\u9aa4 3: \u6d4b\u8bd5\u7ed3\u679c\u9a8c\u8bc1\n2025-08-10 19:42:18 | INFO | utils.logging.test_step_logger:start_step:55 |    \ud83d\udcc4 \u63cf\u8ff0: \u9a8c\u8bc1\u6d4b\u8bd5\u6267\u884c\u7ed3\u679c\n2025-08-10 19:42:18 | INFO | utils.logging.test_step_logger:log_assertion:173 |    \u274c \u65ad\u8a00: \u6d4b\u8bd5\u72b6\u6001\u68c0\u67e5\n2025-08-10 19:42:18 | INFO | utils.logging.test_step_logger:log_assertion:174 |    \ud83d\udccb \u671f\u671b\u503c: PASS\n2025-08-10 19:42:18 | INFO | utils.logging.test_step_logger:log_assertion:175 |    \ud83d\udcca \u5b9e\u9645\u503c: FAIL\n2025-08-10 19:42:18 | INFO | utils.logging.test_step_logger:log_assertion:176 |    \ud83c\udfaf \u7ed3\u679c: \u5931\u8d25\n2025-08-10 19:42:18 | INFO | utils.logging.test_step_logger:log_assertion:179 |    \ud83d\udcac \u8bf4\u660e: \u6d4b\u8bd5\u7528\u4f8b \u521b\u5efa\u65b0\u6587\u7ae0 \u6267\u884c\u7ed3\u679c\n2025-08-10 19:42:18 | INFO | utils.logging.test_step_logger:end_step:209 |    \u2705 \u6b65\u9aa4\u5b8c\u6210: PASSED (\u8017\u65f6: 0.000s)\n2025-08-10 19:42:18 | ERROR | utils.core.base.test_base:execute_test_case:151 | \u6d4b\u8bd5\u7528\u4f8b\u6267\u884c\u5931\u8d25: \u521b\u5efa\u65b0\u6587\u7ae0, \u9519\u8bef: \u521b\u5efa\u6210\u529f\u72b6\u6001\u7801\u5e94\u4e3a201\n2025-08-10 19:42:18 | INFO | utils.logging.test_step_logger:end_test:221 | ================================================================================\n2025-08-10 19:42:18 | INFO | utils.logging.test_step_logger:end_test:224 | \u274c \u6d4b\u8bd5\u5b8c\u6210: \u521b\u5efa\u65b0\u6587\u7ae0\n2025-08-10 19:42:18 | INFO | utils.logging.test_step_logger:end_test:225 | \u23f1\ufe0f \u603b\u8017\u65f6: 0.743s\n2025-08-10 19:42:18 | INFO | utils.logging.test_step_logger:end_test:226 | \ud83d\udcca \u603b\u6b65\u9aa4\u6570: 3\n2025-08-10 19:42:18 | INFO | utils.logging.test_step_logger:end_test:232 | \u2705 \u901a\u8fc7\u6b65\u9aa4: 3\n2025-08-10 19:42:18 | INFO | utils.logging.test_step_logger:end_test:233 | \u274c \u5931\u8d25\u6b65\u9aa4: 0\n2025-08-10 19:42:18 | INFO | utils.logging.test_step_logger:end_test:236 | \ud83d\udccb \u6d4b\u8bd5\u603b\u7ed3:\n2025-08-10 19:42:18 | INFO | utils.logging.test_step_logger:end_test:238 |    \u6d4b\u8bd5\u7ed3\u679c: FAIL\n2025-08-10 19:42:18 | INFO | utils.logging.test_step_logger:end_test:238 |    \u9519\u8bef\u4fe1\u606f: \u521b\u5efa\u6210\u529f\u72b6\u6001\u7801\u5e94\u4e3a201\n2025-08-10 19:42:18 | INFO | utils.logging.test_step_logger:end_test:240 | ================================================================================\n2025-08-10 19:42:18 | INFO | utils.logging.test_step_logger:start_test:32 | ================================================================================\n2025-08-10 19:42:18 | INFO | utils.logging.test_step_logger:start_test:33 | \ud83d\ude80 \u5f00\u59cb\u6267\u884c\u6d4b\u8bd5: \u66f4\u65b0\u6587\u7ae0\u4fe1\u606f\n2025-08-10 19:42:18 | INFO | utils.logging.test_step_logger:start_test:35 | \ud83d\udcdd \u6d4b\u8bd5\u63cf\u8ff0: \u6d4b\u8bd5\u66f4\u65b0\u6587\u7ae0\u4fe1\u606f\u7684API\u63a5\u53e3\n2025-08-10 19:42:18 | INFO | utils.logging.test_step_logger:start_test:36 | ================================================================================\n2025-08-10 19:42:18 | INFO | utils.logging.test_step_logger:start_step:53 | \ud83d\udccb \u6b65\u9aa4 1: \u6d4b\u8bd5\u7528\u4f8b\u521d\u59cb\u5316\n2025-08-10 19:42:18 | INFO | utils.logging.test_step_logger:start_step:55 |    \ud83d\udcc4 \u63cf\u8ff0: \u51c6\u5907\u6d4b\u8bd5\u73af\u5883\u548c\u6570\u636e\n2025-08-10 19:42:18 | INFO | utils.logging.test_step_logger:log_action:89 |    \u26a1 \u52a0\u8f7d\u6d4b\u8bd5\u7528\u4f8b\u914d\u7f6e: {\n  &amp;quot;case_name&amp;quot;: &amp;quot;\u66f4\u65b0\u6587\u7ae0\u4fe1\u606f&amp;quot;,\n  &amp;quot;test_type&amp;quot;: &amp;quot;unknown&amp;quot;,\n  &amp;quot;priority&amp;quot;: &amp;quot;normal&amp;quot;\n}\n2025-08-10 19:42:18 | INFO | utils.core.base.test_base:execute_test_case:116 | \u6267\u884c\u6d4b\u8bd5\u7528\u4f8b: \u66f4\u65b0\u6587\u7ae0\u4fe1\u606f\n2025-08-10 19:42:18 | INFO | utils.logging.test_step_logger:end_step:209 |    \u2705 \u6b65\u9aa4\u5b8c\u6210: PASSED (\u8017\u65f6: 0.000s)\n2025-08-10 19:42:18 | INFO | utils.logging.test_step_logger:start_step:53 | \ud83d\udccb \u6b65\u9aa4 2: \u6267\u884c\u6d4b\u8bd5\u903b\u8f91\n2025-08-10 19:42:18 | INFO | utils.logging.test_step_logger:start_step:55 |    \ud83d\udcc4 \u63cf\u8ff0: \u6267\u884c\u4e3b\u8981\u6d4b\u8bd5\u6b65\u9aa4\n2025-08-10 19:42:18 | INFO | utils.logging.logger:log_step:153 |    \u6b65\u9aa4: \u53d1\u9001PUT\u8bf7\u6c42 https://jsonplaceholder.typicode.com/posts/1\n2025-08-10 19:42:18 | INFO | utils.logging.test_step_logger:log_api_request:94 |    \ud83c\udf10 API\u8bf7\u6c42: PUT https://jsonplaceholder.typicode.com/posts/1\n2025-08-10 19:42:18 | INFO | utils.logging.test_step_logger:log_api_request:97 |    \ud83d\udce4 \u8bf7\u6c42\u5934: {\n  &amp;quot;User-Agent&amp;quot;: &amp;quot;python-requests/2.31.0&amp;quot;,\n  &amp;quot;Accept-Encoding&amp;quot;: &amp;quot;gzip, deflate, br&amp;quot;,\n  &amp;quot;Accept&amp;quot;: &amp;quot;*/*&amp;quot;,\n  &amp;quot;Connection&amp;quot;: &amp;quot;keep-alive&amp;quot;,\n  &amp;quot;Content-Type&amp;quot;: &amp;quot;application/json&amp;quot;\n}\n2025-08-10 19:42:18 | INFO | utils.logging.test_step_logger:log_api_request:103 |    \ud83d\udce6 \u8bf7\u6c42\u4f53: {\n  &amp;quot;id&amp;quot;: 1,\n  &amp;quot;title&amp;quot;: &amp;quot;\u66f4\u65b0\u540e\u7684\u6587\u7ae0\u6807\u9898&amp;quot;,\n  &amp;quot;body&amp;quot;: &amp;quot;\u66f4\u65b0\u540e\u7684\u6587\u7ae0\u5185\u5bb9&amp;quot;,\n  &amp;quot;userId&amp;quot;: 1\n}\n2025-08-10 19:42:27 | WARNING | utils.core.api.client:_execute_with_retry:226 | \u8bf7\u6c42\u5931\u8d25\uff0c1\u79d2\u540e\u91cd\u8bd5 (\u7b2c1\u6b21): HTTPSConnectionPool(host=&amp;#x27;jsonplaceholder.typicode.com&amp;#x27;, port=443): Max retries exceeded with url: /posts/1 (Caused by ResponseError(&amp;#x27;too many 500 error responses&amp;#x27;))\n2025-08-10 19:42:36 | WARNING | utils.core.api.client:_execute_with_retry:226 | \u8bf7\u6c42\u5931\u8d25\uff0c2\u79d2\u540e\u91cd\u8bd5 (\u7b2c2\u6b21): HTTPSConnectionPool(host=&amp;#x27;jsonplaceholder.typicode.com&amp;#x27;, port=443): Max retries exceeded with url: /posts/1 (Caused by ResponseError(&amp;#x27;too many 500 error responses&amp;#x27;))\n2025-08-10 19:42:45 | WARNING | utils.core.api.client:_execute_with_retry:226 | \u8bf7\u6c42\u5931\u8d25\uff0c4\u79d2\u540e\u91cd\u8bd5 (\u7b2c3\u6b21): HTTPSConnectionPool(host=&amp;#x27;jsonplaceholder.typicode.com&amp;#x27;, port=443): Max retries exceeded with url: /posts/1 (Caused by ResponseError(&amp;#x27;too many 500 error responses&amp;#x27;))\n2025-08-10 19:42:57 | ERROR | utils.core.api.client:_execute_with_retry:229 | \u8bf7\u6c42\u5931\u8d25\uff0c\u5df2\u91cd\u8bd53\u6b21: HTTPSConnectionPool(host=&amp;#x27;jsonplaceholder.typicode.com&amp;#x27;, port=443): Max retries exceeded with url: /posts/1 (Caused by ResponseError(&amp;#x27;too many 500 error responses&amp;#x27;))\n2025-08-10 19:42:57 | INFO | utils.logging.test_step_logger:end_step:209 |    \u2705 \u6b65\u9aa4\u5b8c\u6210: PASSED (\u8017\u65f6: 39.182s)\n2025-08-10 19:42:57 | INFO | utils.logging.test_step_logger:start_step:53 | \ud83d\udccb \u6b65\u9aa4 3: \u6d4b\u8bd5\u7ed3\u679c\u9a8c\u8bc1\n2025-08-10 19:42:57 | INFO | utils.logging.test_step_logger:start_step:55 |    \ud83d\udcc4 \u63cf\u8ff0: \u9a8c\u8bc1\u6d4b\u8bd5\u6267\u884c\u7ed3\u679c\n2025-08-10 19:42:57 | INFO | utils.logging.test_step_logger:log_assertion:173 |    \u274c \u65ad\u8a00: \u6d4b\u8bd5\u72b6\u6001\u68c0\u67e5\n2025-08-10 19:42:57 | INFO | utils.logging.test_step_logger:log_assertion:174 |    \ud83d\udccb \u671f\u671b\u503c: PASS\n2025-08-10 19:42:57 | INFO | utils.logging.test_step_logger:log_assertion:175 |    \ud83d\udcca \u5b9e\u9645\u503c: FAIL\n2025-08-10 19:42:57 | INFO | utils.logging.test_step_logger:log_assertion:176 |    \ud83c\udfaf \u7ed3\u679c: \u5931\u8d25\n2025-08-10 19:42:57 | INFO | utils.logging.test_step_logger:log_assertion:179 |    \ud83d\udcac \u8bf4\u660e: \u6d4b\u8bd5\u7528\u4f8b \u66f4\u65b0\u6587\u7ae0\u4fe1\u606f \u6267\u884c\u7ed3\u679c\n2025-08-10 19:42:57 | INFO | utils.logging.test_step_logger:end_step:209 |    \u2705 \u6b65\u9aa4\u5b8c\u6210: PASSED (\u8017\u65f6: 0.000s)\n2025-08-10 19:42:57 | ERROR | utils.core.base.test_base:execute_test_case:151 | \u6d4b\u8bd5\u7528\u4f8b\u6267\u884c\u5931\u8d25: \u66f4\u65b0\u6587\u7ae0\u4fe1\u606f, \u9519\u8bef: HTTPSConnectionPool(host=&amp;#x27;jsonplaceholder.typicode.com&amp;#x27;, port=443): Max retries exceeded with url: /posts/1 (Caused by ResponseError(&amp;#x27;too many 500 error responses&amp;#x27;))\n2025-08-10 19:42:57 | INFO | utils.logging.test_step_logger:end_test:221 | ================================================================================\n2025-08-10 19:42:57 | INFO | utils.logging.test_step_logger:end_test:224 | \u274c \u6d4b\u8bd5\u5b8c\u6210: \u66f4\u65b0\u6587\u7ae0\u4fe1\u606f\n2025-08-10 19:42:57 | INFO | utils.logging.test_step_logger:end_test:225 | \u23f1\ufe0f \u603b\u8017\u65f6: 39.182s\n2025-08-10 19:42:57 | INFO | utils.logging.test_step_logger:end_test:226 | \ud83d\udcca \u603b\u6b65\u9aa4\u6570: 3\n2025-08-10 19:42:57 | INFO | utils.logging.test_step_logger:end_test:232 | \u2705 \u901a\u8fc7\u6b65\u9aa4: 3\n2025-08-10 19:42:57 | INFO | utils.logging.test_step_logger:end_test:233 | \u274c \u5931\u8d25\u6b65\u9aa4: 0\n2025-08-10 19:42:57 | INFO | utils.logging.test_step_logger:end_test:236 | \ud83d\udccb \u6d4b\u8bd5\u603b\u7ed3:\n2025-08-10 19:42:57 | INFO | utils.logging.test_step_logger:end_test:238 |    \u6d4b\u8bd5\u7ed3\u679c: FAIL\n2025-08-10 19:42:57 | INFO | utils.logging.test_step_logger:end_test:238 |    \u9519\u8bef\u4fe1\u606f: HTTPSConnectionPool(host=&amp;#x27;jsonplaceholder.typicode.com&amp;#x27;, port=443): Max retries exceeded with url: /posts/1 (Caused by ResponseError(&amp;#x27;too many 500 error responses&amp;#x27;))\n2025-08-10 19:42:57 | INFO | utils.logging.test_step_logger:end_test:240 | ================================================================================\n2025-08-10 19:42:57 | INFO | utils.logging.test_step_logger:start_test:32 | ================================================================================\n2025-08-10 19:42:57 | INFO | utils.logging.test_step_logger:start_test:33 | \ud83d\ude80 \u5f00\u59cb\u6267\u884c\u6d4b\u8bd5: \u5220\u9664\u6587\u7ae0\n2025-08-10 19:42:57 | INFO | utils.logging.test_step_logger:start_test:35 | \ud83d\udcdd \u6d4b\u8bd5\u63cf\u8ff0: \u6d4b\u8bd5\u5220\u9664\u6587\u7ae0\u7684API\u63a5\u53e3\n2025-08-10 19:42:57 | INFO | utils.logging.test_step_logger:start_test:36 | ================================================================================\n2025-08-10 19:42:57 | INFO | utils.logging.test_step_logger:start_step:53 | \ud83d\udccb \u6b65\u9aa4 1: \u6d4b\u8bd5\u7528\u4f8b\u521d\u59cb\u5316\n2025-08-10 19:42:57 | INFO | utils.logging.test_step_logger:start_step:55 |    \ud83d\udcc4 \u63cf\u8ff0: \u51c6\u5907\u6d4b\u8bd5\u73af\u5883\u548c\u6570\u636e\n2025-08-10 19:42:57 | INFO | utils.logging.test_step_logger:log_action:89 |    \u26a1 \u52a0\u8f7d\u6d4b\u8bd5\u7528\u4f8b\u914d\u7f6e: {\n  &amp;quot;case_name&amp;quot;: &amp;quot;\u5220\u9664\u6587\u7ae0&amp;quot;,\n  &amp;quot;test_type&amp;quot;: &amp;quot;unknown&amp;quot;,\n  &amp;quot;priority&amp;quot;: &amp;quot;normal&amp;quot;\n}\n2025-08-10 19:42:57 | INFO | utils.core.base.test_base:execute_test_case:116 | \u6267\u884c\u6d4b\u8bd5\u7528\u4f8b: \u5220\u9664\u6587\u7ae0\n2025-08-10 19:42:57 | INFO | utils.logging.test_step_logger:end_step:209 |    \u2705 \u6b65\u9aa4\u5b8c\u6210: PASSED (\u8017\u65f6: 0.000s)\n2025-08-10 19:42:57 | INFO | utils.logging.test_step_logger:start_step:53 | \ud83d\udccb \u6b65\u9aa4 2: \u6267\u884c\u6d4b\u8bd5\u903b\u8f91\n2025-08-10 19:42:57 | INFO | utils.logging.test_step_logger:start_step:55 |    \ud83d\udcc4 \u63cf\u8ff0: \u6267\u884c\u4e3b\u8981\u6d4b\u8bd5\u6b65\u9aa4\n2025-08-10 19:42:57 | INFO | utils.logging.logger:log_step:153 |    \u6b65\u9aa4: \u53d1\u9001DELETE\u8bf7\u6c42 https://jsonplaceholder.typicode.com/posts/1\n2025-08-10 19:42:57 | INFO | utils.logging.test_step_logger:log_api_request:94 |    \ud83c\udf10 API\u8bf7\u6c42: DELETE https://jsonplaceholder.typicode.com/posts/1\n2025-08-10 19:42:57 | INFO | utils.logging.test_step_logger:log_api_request:97 |    \ud83d\udce4 \u8bf7\u6c42\u5934: {\n  &amp;quot;User-Agent&amp;quot;: &amp;quot;python-requests/2.31.0&amp;quot;,\n  &amp;quot;Accept-Encoding&amp;quot;: &amp;quot;gzip, deflate, br&amp;quot;,\n  &amp;quot;Accept&amp;quot;: &amp;quot;*/*&amp;quot;,\n  &amp;quot;Connection&amp;quot;: &amp;quot;keep-alive&amp;quot;\n}\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:log_api_response:122 |    \u2705 API\u54cd\u5e94: 200\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:log_api_response:125 |    \u23f1\ufe0f \u54cd\u5e94\u65f6\u95f4: 1.168s\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:log_api_response:128 |    \ud83d\udce5 \u54cd\u5e94\u5934: {\n  &amp;quot;Date&amp;quot;: &amp;quot;Sun, 10 Aug 2025 11:43:11 GMT&amp;quot;,\n  &amp;quot;Content-Type&amp;quot;: &amp;quot;application/json; charset=utf-8&amp;quot;,\n  &amp;quot;Transfer-Encoding&amp;quot;: &amp;quot;chunked&amp;quot;,\n  &amp;quot;Connection&amp;quot;: &amp;quot;keep-alive&amp;quot;,\n  &amp;quot;Access-Control-Allow-Credentials&amp;quot;: &amp;quot;true&amp;quot;,\n  &amp;quot;Cache-Control&amp;quot;: &amp;quot;no-cache&amp;quot;,\n  &amp;quot;Etag&amp;quot;: &amp;quot;W/\\&amp;quot;2-vyGp6PvFo4RvsFtPoIWeCReyIC8\\&amp;quot;&amp;quot;,\n  &amp;quot;Expires&amp;quot;: &amp;quot;-1&amp;quot;,\n  &amp;quot;Nel&amp;quot;: &amp;quot;{\\&amp;quot;report_to\\&amp;quot;:\\&amp;quot;heroku-nel\\&amp;quot;,\\&amp;quot;response_headers\\&amp;quot;:[\\&amp;quot;Via\\&amp;quot;],\\&amp;quot;max_age\\&amp;quot;:3600,\\&amp;quot;success_fraction\\&amp;quot;:0.01,\\&amp;quot;failure_fraction\\&amp;quot;:0.1}&amp;quot;,\n  &amp;quot;Pragma&amp;quot;: &amp;quot;no-cache&amp;quot;,\n  &amp;quot;Report-To&amp;quot;: &amp;quot;{\\&amp;quot;group\\&amp;quot;:\\&amp;quot;heroku-nel\\&amp;quot;,\\&amp;quot;endpoints\\&amp;quot;:[{\\&amp;quot;url\\&amp;quot;:\\&amp;quot;https://nel.heroku.com/reports?s=o5wGxB8cGma0DU8rgHYgG6qb52XhpE7cL%2BDE2bpAFe0%3D\\\\u0026sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d\\\\u0026ts=1754826191\\&amp;quot;}],\\&amp;quot;max_age\\&amp;quot;:3600}&amp;quot;,\n  &amp;quot;Reporting-Endpoints&amp;quot;: &amp;quot;heroku-nel=\\&amp;quot;https://nel.heroku.com/reports?s=o5wGxB8cGma0DU8rgHYgG6qb52XhpE7cL%2BDE2bpAFe0%3D&amp;amp;sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d&amp;amp;ts=1754826191\\&amp;quot;&amp;quot;,\n  &amp;quot;Server&amp;quot;: &amp;quot;cloudflare&amp;quot;,\n  &amp;quot;Vary&amp;quot;: &amp;quot;Origin, Accept-Encoding&amp;quot;,\n  &amp;quot;Via&amp;quot;: &amp;quot;2.0 heroku-router&amp;quot;,\n  &amp;quot;X-Content-Type-Options&amp;quot;: &amp;quot;nosniff&amp;quot;,\n  &amp;quot;X-Powered-By&amp;quot;: &amp;quot;Express&amp;quot;,\n  &amp;quot;X-Ratelimit-Limit&amp;quot;: &amp;quot;1000&amp;quot;,\n  &amp;quot;X-Ratelimit-Remaining&amp;quot;: &amp;quot;994&amp;quot;,\n  &amp;quot;X-Ratelimit-Reset&amp;quot;: &amp;quot;1754826240&amp;quot;,\n  &amp;quot;Cf-Cache-Status&amp;quot;: &amp;quot;DYNAMIC&amp;quot;,\n  &amp;quot;Content-Encoding&amp;quot;: &amp;quot;br&amp;quot;,\n  &amp;quot;CF-RAY&amp;quot;: &amp;quot;96cf3bedbff4d002-KIX&amp;quot;,\n  &amp;quot;alt-svc&amp;quot;: &amp;quot;h3=\\&amp;quot;:443\\&amp;quot;; ma=86400&amp;quot;\n}\n2025-08-10 19:42:58 | INFO | utils.logging.logger:log_step:153 |    \u6b65\u9aa4: \u9a8c\u8bc1\u54cd\u5e94 1\u4e2a\u65ad\u8a00\n2025-08-10 19:42:58 | INFO | utils.logging.logger:log_assertion:158 |    \u65ad\u8a00 [status_code] \u2713 \u671f\u671b: 200 | \u5b9e\u9645: 200\n2025-08-10 19:42:58 | INFO | utils.core.api.keywords:verify_response:196 | \u54cd\u5e94\u9a8c\u8bc1\u901a\u8fc7\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:end_step:209 |    \u2705 \u6b65\u9aa4\u5b8c\u6210: PASSED (\u8017\u65f6: 1.168s)\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:start_step:53 | \ud83d\udccb \u6b65\u9aa4 3: \u6d4b\u8bd5\u7ed3\u679c\u9a8c\u8bc1\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:start_step:55 |    \ud83d\udcc4 \u63cf\u8ff0: \u9a8c\u8bc1\u6d4b\u8bd5\u6267\u884c\u7ed3\u679c\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:log_assertion:173 |    \u2705 \u65ad\u8a00: \u6d4b\u8bd5\u72b6\u6001\u68c0\u67e5\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:log_assertion:174 |    \ud83d\udccb \u671f\u671b\u503c: PASS\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:log_assertion:175 |    \ud83d\udcca \u5b9e\u9645\u503c: PASS\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:log_assertion:176 |    \ud83c\udfaf \u7ed3\u679c: \u901a\u8fc7\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:log_assertion:179 |    \ud83d\udcac \u8bf4\u660e: \u6d4b\u8bd5\u7528\u4f8b \u5220\u9664\u6587\u7ae0 \u6267\u884c\u7ed3\u679c\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:end_step:209 |    \u2705 \u6b65\u9aa4\u5b8c\u6210: PASSED (\u8017\u65f6: 0.000s)\n2025-08-10 19:42:58 | INFO | utils.core.base.test_base:execute_test_case:149 | \u6d4b\u8bd5\u7528\u4f8b\u6267\u884c\u6210\u529f: \u5220\u9664\u6587\u7ae0\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:end_test:221 | ================================================================================\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:end_test:224 | \u2705 \u6d4b\u8bd5\u5b8c\u6210: \u5220\u9664\u6587\u7ae0\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:end_test:225 | \u23f1\ufe0f \u603b\u8017\u65f6: 1.168s\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:end_test:226 | \ud83d\udcca \u603b\u6b65\u9aa4\u6570: 3\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:end_test:232 | \u2705 \u901a\u8fc7\u6b65\u9aa4: 3\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:end_test:233 | \u274c \u5931\u8d25\u6b65\u9aa4: 0\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:end_test:236 | \ud83d\udccb \u6d4b\u8bd5\u603b\u7ed3:\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:end_test:238 |    \u6d4b\u8bd5\u7ed3\u679c: PASS\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:end_test:238 |    \u9519\u8bef\u4fe1\u606f: None\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:end_test:240 | ================================================================================\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:start_test:32 | ================================================================================\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:start_test:33 | \ud83d\ude80 \u5f00\u59cb\u6267\u884c\u6d4b\u8bd5: \u83b7\u53d6\u4e0d\u5b58\u5728\u7684\u7528\u6237\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:start_test:35 | \ud83d\udcdd \u6d4b\u8bd5\u63cf\u8ff0: \u6d4b\u8bd5\u83b7\u53d6\u4e0d\u5b58\u5728\u7528\u6237\u65f6\u7684\u9519\u8bef\u5904\u7406\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:start_test:36 | ================================================================================\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:start_step:53 | \ud83d\udccb \u6b65\u9aa4 1: \u6d4b\u8bd5\u7528\u4f8b\u521d\u59cb\u5316\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:start_step:55 |    \ud83d\udcc4 \u63cf\u8ff0: \u51c6\u5907\u6d4b\u8bd5\u73af\u5883\u548c\u6570\u636e\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:log_action:89 |    \u26a1 \u52a0\u8f7d\u6d4b\u8bd5\u7528\u4f8b\u914d\u7f6e: {\n  &amp;quot;case_name&amp;quot;: &amp;quot;\u83b7\u53d6\u4e0d\u5b58\u5728\u7684\u7528\u6237&amp;quot;,\n  &amp;quot;test_type&amp;quot;: &amp;quot;unknown&amp;quot;,\n  &amp;quot;priority&amp;quot;: &amp;quot;normal&amp;quot;\n}\n2025-08-10 19:42:58 | INFO | utils.core.base.test_base:execute_test_case:116 | \u6267\u884c\u6d4b\u8bd5\u7528\u4f8b: \u83b7\u53d6\u4e0d\u5b58\u5728\u7684\u7528\u6237\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:end_step:209 |    \u2705 \u6b65\u9aa4\u5b8c\u6210: PASSED (\u8017\u65f6: 0.004s)\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:start_step:53 | \ud83d\udccb \u6b65\u9aa4 2: \u6267\u884c\u6d4b\u8bd5\u903b\u8f91\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:start_step:55 |    \ud83d\udcc4 \u63cf\u8ff0: \u6267\u884c\u4e3b\u8981\u6d4b\u8bd5\u6b65\u9aa4\n2025-08-10 19:42:58 | INFO | utils.logging.logger:log_step:153 |    \u6b65\u9aa4: \u53d1\u9001GET\u8bf7\u6c42 https://jsonplaceholder.typicode.com/users/999\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:log_api_request:94 |    \ud83c\udf10 API\u8bf7\u6c42: GET https://jsonplaceholder.typicode.com/users/999\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:log_api_request:97 |    \ud83d\udce4 \u8bf7\u6c42\u5934: {\n  &amp;quot;User-Agent&amp;quot;: &amp;quot;python-requests/2.31.0&amp;quot;,\n  &amp;quot;Accept-Encoding&amp;quot;: &amp;quot;gzip, deflate, br&amp;quot;,\n  &amp;quot;Accept&amp;quot;: &amp;quot;application/json&amp;quot;,\n  &amp;quot;Connection&amp;quot;: &amp;quot;keep-alive&amp;quot;\n}\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:log_api_response:122 |    \u274c API\u54cd\u5e94: 404\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:log_api_response:125 |    \u23f1\ufe0f \u54cd\u5e94\u65f6\u95f4: 0.213s\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:log_api_response:128 |    \ud83d\udce5 \u54cd\u5e94\u5934: {\n  &amp;quot;Date&amp;quot;: &amp;quot;Sun, 10 Aug 2025 11:43:12 GMT&amp;quot;,\n  &amp;quot;Content-Type&amp;quot;: &amp;quot;application/json; charset=utf-8&amp;quot;,\n  &amp;quot;Transfer-Encoding&amp;quot;: &amp;quot;chunked&amp;quot;,\n  &amp;quot;Connection&amp;quot;: &amp;quot;keep-alive&amp;quot;,\n  &amp;quot;Access-Control-Allow-Credentials&amp;quot;: &amp;quot;true&amp;quot;,\n  &amp;quot;Cache-Control&amp;quot;: &amp;quot;max-age=43200&amp;quot;,\n  &amp;quot;Etag&amp;quot;: &amp;quot;W/\\&amp;quot;2-vyGp6PvFo4RvsFtPoIWeCReyIC8\\&amp;quot;&amp;quot;,\n  &amp;quot;Expires&amp;quot;: &amp;quot;-1&amp;quot;,\n  &amp;quot;Nel&amp;quot;: &amp;quot;{\\&amp;quot;report_to\\&amp;quot;:\\&amp;quot;heroku-nel\\&amp;quot;,\\&amp;quot;response_headers\\&amp;quot;:[\\&amp;quot;Via\\&amp;quot;],\\&amp;quot;max_age\\&amp;quot;:3600,\\&amp;quot;success_fraction\\&amp;quot;:0.01,\\&amp;quot;failure_fraction\\&amp;quot;:0.1}&amp;quot;,\n  &amp;quot;Pragma&amp;quot;: &amp;quot;no-cache&amp;quot;,\n  &amp;quot;Report-To&amp;quot;: &amp;quot;{\\&amp;quot;group\\&amp;quot;:\\&amp;quot;heroku-nel\\&amp;quot;,\\&amp;quot;endpoints\\&amp;quot;:[{\\&amp;quot;url\\&amp;quot;:\\&amp;quot;https://nel.heroku.com/reports?s=9uWb7UpOrNG9tEIEzFkhcLvwAGgdawjUpWYD4w04Ssg%3D\\\\u0026sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d\\\\u0026ts=1754824955\\&amp;quot;}],\\&amp;quot;max_age\\&amp;quot;:3600}&amp;quot;,\n  &amp;quot;Reporting-Endpoints&amp;quot;: &amp;quot;heroku-nel=\\&amp;quot;https://nel.heroku.com/reports?s=9uWb7UpOrNG9tEIEzFkhcLvwAGgdawjUpWYD4w04Ssg%3D&amp;amp;sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d&amp;amp;ts=1754824955\\&amp;quot;&amp;quot;,\n  &amp;quot;Server&amp;quot;: &amp;quot;cloudflare&amp;quot;,\n  &amp;quot;Vary&amp;quot;: &amp;quot;Origin, Accept-Encoding&amp;quot;,\n  &amp;quot;Via&amp;quot;: &amp;quot;2.0 heroku-router&amp;quot;,\n  &amp;quot;X-Content-Type-Options&amp;quot;: &amp;quot;nosniff&amp;quot;,\n  &amp;quot;X-Powered-By&amp;quot;: &amp;quot;Express&amp;quot;,\n  &amp;quot;X-Ratelimit-Limit&amp;quot;: &amp;quot;1000&amp;quot;,\n  &amp;quot;X-Ratelimit-Remaining&amp;quot;: &amp;quot;998&amp;quot;,\n  &amp;quot;X-Ratelimit-Reset&amp;quot;: &amp;quot;1754824980&amp;quot;,\n  &amp;quot;Age&amp;quot;: &amp;quot;1236&amp;quot;,\n  &amp;quot;Cf-Cache-Status&amp;quot;: &amp;quot;HIT&amp;quot;,\n  &amp;quot;Content-Encoding&amp;quot;: &amp;quot;br&amp;quot;,\n  &amp;quot;CF-RAY&amp;quot;: &amp;quot;96cf3bf50a98d002-KIX&amp;quot;,\n  &amp;quot;alt-svc&amp;quot;: &amp;quot;h3=\\&amp;quot;:443\\&amp;quot;; ma=86400&amp;quot;\n}\n2025-08-10 19:42:58 | INFO | utils.logging.logger:log_step:153 |    \u6b65\u9aa4: \u9a8c\u8bc1\u54cd\u5e94 1\u4e2a\u65ad\u8a00\n2025-08-10 19:42:58 | INFO | utils.logging.logger:log_assertion:158 |    \u65ad\u8a00 [status_code] \u2713 \u671f\u671b: 404 | \u5b9e\u9645: 404\n2025-08-10 19:42:58 | INFO | utils.core.api.keywords:verify_response:196 | \u54cd\u5e94\u9a8c\u8bc1\u901a\u8fc7\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:end_step:209 |    \u2705 \u6b65\u9aa4\u5b8c\u6210: PASSED (\u8017\u65f6: 0.214s)\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:start_step:53 | \ud83d\udccb \u6b65\u9aa4 3: \u6d4b\u8bd5\u7ed3\u679c\u9a8c\u8bc1\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:start_step:55 |    \ud83d\udcc4 \u63cf\u8ff0: \u9a8c\u8bc1\u6d4b\u8bd5\u6267\u884c\u7ed3\u679c\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:log_assertion:173 |    \u2705 \u65ad\u8a00: \u6d4b\u8bd5\u72b6\u6001\u68c0\u67e5\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:log_assertion:174 |    \ud83d\udccb \u671f\u671b\u503c: PASS\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:log_assertion:175 |    \ud83d\udcca \u5b9e\u9645\u503c: PASS\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:log_assertion:176 |    \ud83c\udfaf \u7ed3\u679c: \u901a\u8fc7\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:log_assertion:179 |    \ud83d\udcac \u8bf4\u660e: \u6d4b\u8bd5\u7528\u4f8b \u83b7\u53d6\u4e0d\u5b58\u5728\u7684\u7528\u6237 \u6267\u884c\u7ed3\u679c\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:end_step:209 |    \u2705 \u6b65\u9aa4\u5b8c\u6210: PASSED (\u8017\u65f6: 0.000s)\n2025-08-10 19:42:58 | INFO | utils.core.base.test_base:execute_test_case:149 | \u6d4b\u8bd5\u7528\u4f8b\u6267\u884c\u6210\u529f: \u83b7\u53d6\u4e0d\u5b58\u5728\u7684\u7528\u6237\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:end_test:221 | ================================================================================\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:end_test:224 | \u2705 \u6d4b\u8bd5\u5b8c\u6210: \u83b7\u53d6\u4e0d\u5b58\u5728\u7684\u7528\u6237\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:end_test:225 | \u23f1\ufe0f \u603b\u8017\u65f6: 0.218s\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:end_test:226 | \ud83d\udcca \u603b\u6b65\u9aa4\u6570: 3\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:end_test:232 | \u2705 \u901a\u8fc7\u6b65\u9aa4: 3\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:end_test:233 | \u274c \u5931\u8d25\u6b65\u9aa4: 0\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:end_test:236 | \ud83d\udccb \u6d4b\u8bd5\u603b\u7ed3:\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:end_test:238 |    \u6d4b\u8bd5\u7ed3\u679c: PASS\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:end_test:238 |    \u9519\u8bef\u4fe1\u606f: None\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:end_test:240 | ================================================================================\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:start_test:32 | ================================================================================\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:start_test:33 | \ud83d\ude80 \u5f00\u59cb\u6267\u884c\u6d4b\u8bd5: \u83b7\u53d6\u6587\u7ae0\u5217\u8868\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:start_test:35 | \ud83d\udcdd \u6d4b\u8bd5\u63cf\u8ff0: \u6d4b\u8bd5\u5e26\u53c2\u6570\u7684\u6587\u7ae0\u5217\u8868\u67e5\u8be2\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:start_test:36 | ================================================================================\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:start_step:53 | \ud83d\udccb \u6b65\u9aa4 1: \u6d4b\u8bd5\u7528\u4f8b\u521d\u59cb\u5316\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:start_step:55 |    \ud83d\udcc4 \u63cf\u8ff0: \u51c6\u5907\u6d4b\u8bd5\u73af\u5883\u548c\u6570\u636e\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:log_action:89 |    \u26a1 \u52a0\u8f7d\u6d4b\u8bd5\u7528\u4f8b\u914d\u7f6e: {\n  &amp;quot;case_name&amp;quot;: &amp;quot;\u83b7\u53d6\u6587\u7ae0\u5217\u8868&amp;quot;,\n  &amp;quot;test_type&amp;quot;: &amp;quot;unknown&amp;quot;,\n  &amp;quot;priority&amp;quot;: &amp;quot;normal&amp;quot;\n}\n2025-08-10 19:42:58 | INFO | utils.core.base.test_base:execute_test_case:116 | \u6267\u884c\u6d4b\u8bd5\u7528\u4f8b: \u83b7\u53d6\u6587\u7ae0\u5217\u8868\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:end_step:209 |    \u2705 \u6b65\u9aa4\u5b8c\u6210: PASSED (\u8017\u65f6: 0.000s)\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:start_step:53 | \ud83d\udccb \u6b65\u9aa4 2: \u6267\u884c\u6d4b\u8bd5\u903b\u8f91\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:start_step:55 |    \ud83d\udcc4 \u63cf\u8ff0: \u6267\u884c\u4e3b\u8981\u6d4b\u8bd5\u6b65\u9aa4\n2025-08-10 19:42:58 | INFO | utils.logging.logger:log_step:153 |    \u6b65\u9aa4: \u53d1\u9001GET\u8bf7\u6c42 https://jsonplaceholder.typicode.com/posts\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:log_api_request:94 |    \ud83c\udf10 API\u8bf7\u6c42: GET https://jsonplaceholder.typicode.com/posts\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:log_api_request:97 |    \ud83d\udce4 \u8bf7\u6c42\u5934: {\n  &amp;quot;User-Agent&amp;quot;: &amp;quot;python-requests/2.31.0&amp;quot;,\n  &amp;quot;Accept-Encoding&amp;quot;: &amp;quot;gzip, deflate, br&amp;quot;,\n  &amp;quot;Accept&amp;quot;: &amp;quot;*/*&amp;quot;,\n  &amp;quot;Connection&amp;quot;: &amp;quot;keep-alive&amp;quot;\n}\n2025-08-10 19:42:58 | INFO | utils.logging.test_step_logger:log_api_request:100 |    \ud83d\udd17 \u8bf7\u6c42\u53c2\u6570: {\n  &amp;quot;userId&amp;quot;: 1,\n  &amp;quot;_limit&amp;quot;: 5\n}\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:log_api_response:122 |    \u2705 API\u54cd\u5e94: 200\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:log_api_response:125 |    \u23f1\ufe0f \u54cd\u5e94\u65f6\u95f4: 0.400s\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:log_api_response:128 |    \ud83d\udce5 \u54cd\u5e94\u5934: {\n  &amp;quot;Date&amp;quot;: &amp;quot;Sun, 10 Aug 2025 11:43:12 GMT&amp;quot;,\n  &amp;quot;Content-Type&amp;quot;: &amp;quot;application/json; charset=utf-8&amp;quot;,\n  &amp;quot;Content-Length&amp;quot;: &amp;quot;609&amp;quot;,\n  &amp;quot;Connection&amp;quot;: &amp;quot;keep-alive&amp;quot;,\n  &amp;quot;Access-Control-Allow-Credentials&amp;quot;: &amp;quot;true&amp;quot;,\n  &amp;quot;Access-Control-Expose-Headers&amp;quot;: &amp;quot;X-Total-Count&amp;quot;,\n  &amp;quot;Cache-Control&amp;quot;: &amp;quot;max-age=43200&amp;quot;,\n  &amp;quot;Content-Encoding&amp;quot;: &amp;quot;gzip&amp;quot;,\n  &amp;quot;Etag&amp;quot;: &amp;quot;W/\\&amp;quot;58c-XF96V4HoAbG/R4eS8h5L5u97pS8\\&amp;quot;&amp;quot;,\n  &amp;quot;Expires&amp;quot;: &amp;quot;-1&amp;quot;,\n  &amp;quot;Nel&amp;quot;: &amp;quot;{\\&amp;quot;report_to\\&amp;quot;:\\&amp;quot;heroku-nel\\&amp;quot;,\\&amp;quot;response_headers\\&amp;quot;:[\\&amp;quot;Via\\&amp;quot;],\\&amp;quot;max_age\\&amp;quot;:3600,\\&amp;quot;success_fraction\\&amp;quot;:0.01,\\&amp;quot;failure_fraction\\&amp;quot;:0.1}&amp;quot;,\n  &amp;quot;Pragma&amp;quot;: &amp;quot;no-cache&amp;quot;,\n  &amp;quot;Report-To&amp;quot;: &amp;quot;{\\&amp;quot;group\\&amp;quot;:\\&amp;quot;heroku-nel\\&amp;quot;,\\&amp;quot;endpoints\\&amp;quot;:[{\\&amp;quot;url\\&amp;quot;:\\&amp;quot;https://nel.heroku.com/reports?s=d51MmCHaTQbInDmguVmKNHVFY%2FGgTPdUI5OTX2O3QVo%3D\\\\u0026sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d\\\\u0026ts=1754825267\\&amp;quot;}],\\&amp;quot;max_age\\&amp;quot;:3600}&amp;quot;,\n  &amp;quot;Reporting-Endpoints&amp;quot;: &amp;quot;heroku-nel=\\&amp;quot;https://nel.heroku.com/reports?s=d51MmCHaTQbInDmguVmKNHVFY%2FGgTPdUI5OTX2O3QVo%3D&amp;amp;sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d&amp;amp;ts=1754825267\\&amp;quot;&amp;quot;,\n  &amp;quot;Server&amp;quot;: &amp;quot;cloudflare&amp;quot;,\n  &amp;quot;Vary&amp;quot;: &amp;quot;Origin, Accept-Encoding&amp;quot;,\n  &amp;quot;Via&amp;quot;: &amp;quot;2.0 heroku-router&amp;quot;,\n  &amp;quot;X-Content-Type-Options&amp;quot;: &amp;quot;nosniff&amp;quot;,\n  &amp;quot;X-Powered-By&amp;quot;: &amp;quot;Express&amp;quot;,\n  &amp;quot;X-Ratelimit-Limit&amp;quot;: &amp;quot;1000&amp;quot;,\n  &amp;quot;X-Ratelimit-Remaining&amp;quot;: &amp;quot;981&amp;quot;,\n  &amp;quot;X-Ratelimit-Reset&amp;quot;: &amp;quot;1754825280&amp;quot;,\n  &amp;quot;X-Total-Count&amp;quot;: &amp;quot;10&amp;quot;,\n  &amp;quot;Age&amp;quot;: &amp;quot;925&amp;quot;,\n  &amp;quot;Cf-Cache-Status&amp;quot;: &amp;quot;HIT&amp;quot;,\n  &amp;quot;CF-RAY&amp;quot;: &amp;quot;96cf3bf6682ad002-KIX&amp;quot;,\n  &amp;quot;alt-svc&amp;quot;: &amp;quot;h3=\\&amp;quot;:443\\&amp;quot;; ma=86400&amp;quot;\n}\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:log_api_response:131 |    \ud83d\udccb \u54cd\u5e94\u4f53: [\n  {\n    &amp;quot;userId&amp;quot;: 1,\n    &amp;quot;id&amp;quot;: 1,\n    &amp;quot;title&amp;quot;: &amp;quot;sunt aut facere repellat provident occaecati excepturi optio reprehenderit&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;quia et suscipit\\nsuscipit recusandae consequuntur expedita et cum\\nreprehenderit molestiae ut ut quas totam\\nnostrum rerum est autem sunt rem eveniet architecto&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 1,\n    &amp;quot;id&amp;quot;: 2,\n    &amp;quot;title&amp;quot;: &amp;quot;qui est esse&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;est rerum tempore vitae\\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\\nqui aperiam non debitis possimus qui neque nisi nulla&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 1,\n    &amp;quot;id&amp;quot;: 3,\n    &amp;quot;title&amp;quot;: &amp;quot;ea molestias quasi exercitationem repellat qui ipsa sit aut&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;et iusto sed quo iure\\nvoluptatem occaecati omnis eligendi aut ad\\nvoluptatem doloribus vel accusantium quis pariatur\\nmolestiae porro eius odio et labore et velit aut&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 1,\n    &amp;quot;id&amp;quot;: 4,\n    &amp;quot;title&amp;quot;: &amp;quot;eum et est occaecati&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;ullam et saepe reiciendis voluptatem adipisci\\nsit amet autem assumenda provident rerum culpa\\nquis hic commodi nesciunt rem tenetur doloremque ipsam iure\\nquis sunt voluptatem rerum illo velit&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 1,\n    &amp;quot;id&amp;quot;: 5,\n    &amp;quot;title&amp;quot;: &amp;quot;nesciunt quas odio&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;repudiandae veniam quaerat sunt sed\\nalias aut fugiat sit autem sed est\\nvoluptatem omnis possimus esse voluptatibus quis\\nest aut tenetur dolor neque&amp;quot;\n  }\n]\n2025-08-10 19:42:59 | INFO | utils.logging.logger:log_step:153 |    \u6b65\u9aa4: \u9a8c\u8bc1\u54cd\u5e94 3\u4e2a\u65ad\u8a00\n2025-08-10 19:42:59 | INFO | utils.logging.logger:log_assertion:158 |    \u65ad\u8a00 [status_code] \u2713 \u671f\u671b: 200 | \u5b9e\u9645: 200\n2025-08-10 19:42:59 | WARNING | utils.core.api.assertions:_compare_values:329 | \u4e0d\u652f\u6301\u7684\u6bd4\u8f83\u64cd\u4f5c\u7b26: is_list\n2025-08-10 19:42:59 | INFO | utils.logging.logger:log_assertion:158 |    \u65ad\u8a00 [json_path[$] is_list] \u2717 \u671f\u671b: None | \u5b9e\u9645: [{&amp;#x27;userId&amp;#x27;: 1, &amp;#x27;id&amp;#x27;: 1, &amp;#x27;title&amp;#x27;: &amp;#x27;sunt aut facere repellat provident occaecati excepturi optio reprehenderit&amp;#x27;, &amp;#x27;body&amp;#x27;: &amp;#x27;quia et suscipit\\nsuscipit recusandae consequuntur expedita et cum\\nreprehenderit molestiae ut ut quas totam\\nnostrum rerum est autem sunt rem eveniet architecto&amp;#x27;}, {&amp;#x27;userId&amp;#x27;: 1, &amp;#x27;id&amp;#x27;: 2, &amp;#x27;title&amp;#x27;: &amp;#x27;qui est esse&amp;#x27;, &amp;#x27;body&amp;#x27;: &amp;#x27;est rerum tempore vitae\\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\\nqui aperiam non debitis possimus qui neque nisi nulla&amp;#x27;}, {&amp;#x27;userId&amp;#x27;: 1, &amp;#x27;id&amp;#x27;: 3, &amp;#x27;title&amp;#x27;: &amp;#x27;ea molestias quasi exercitationem repellat qui ipsa sit aut&amp;#x27;, &amp;#x27;body&amp;#x27;: &amp;#x27;et iusto sed quo iure\\nvoluptatem occaecati omnis eligendi aut ad\\nvoluptatem doloribus vel accusantium quis pariatur\\nmolestiae porro eius odio et labore et velit aut&amp;#x27;}, {&amp;#x27;userId&amp;#x27;: 1, &amp;#x27;id&amp;#x27;: 4, &amp;#x27;title&amp;#x27;: &amp;#x27;eum et est occaecati&amp;#x27;, &amp;#x27;body&amp;#x27;: &amp;#x27;ullam et saepe reiciendis voluptatem adipisci\\nsit amet autem assumenda provident rerum culpa\\nquis hic commodi nesciunt rem tenetur doloremque ipsam iure\\nquis sunt voluptatem rerum illo velit&amp;#x27;}, {&amp;#x27;userId&amp;#x27;: 1, &amp;#x27;id&amp;#x27;: 5, &amp;#x27;title&amp;#x27;: &amp;#x27;nesciunt quas odio&amp;#x27;, &amp;#x27;body&amp;#x27;: &amp;#x27;repudiandae veniam quaerat sunt sed\\nalias aut fugiat sit autem sed est\\nvoluptatem omnis possimus esse voluptatibus quis\\nest aut tenetur dolor neque&amp;#x27;}]\n2025-08-10 19:42:59 | ERROR | utils.core.api.assertions:assert_json_path:94 | \u8fd4\u56de\u7ed3\u679c\u5e94\u4e3a\u6570\u7ec4\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:end_step:209 |    \u2705 \u6b65\u9aa4\u5b8c\u6210: PASSED (\u8017\u65f6: 0.418s)\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:start_step:53 | \ud83d\udccb \u6b65\u9aa4 3: \u6d4b\u8bd5\u7ed3\u679c\u9a8c\u8bc1\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:start_step:55 |    \ud83d\udcc4 \u63cf\u8ff0: \u9a8c\u8bc1\u6d4b\u8bd5\u6267\u884c\u7ed3\u679c\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:log_assertion:173 |    \u274c \u65ad\u8a00: \u6d4b\u8bd5\u72b6\u6001\u68c0\u67e5\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:log_assertion:174 |    \ud83d\udccb \u671f\u671b\u503c: PASS\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:log_assertion:175 |    \ud83d\udcca \u5b9e\u9645\u503c: FAIL\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:log_assertion:176 |    \ud83c\udfaf \u7ed3\u679c: \u5931\u8d25\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:log_assertion:179 |    \ud83d\udcac \u8bf4\u660e: \u6d4b\u8bd5\u7528\u4f8b \u83b7\u53d6\u6587\u7ae0\u5217\u8868 \u6267\u884c\u7ed3\u679c\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:end_step:209 |    \u2705 \u6b65\u9aa4\u5b8c\u6210: PASSED (\u8017\u65f6: 0.000s)\n2025-08-10 19:42:59 | ERROR | utils.core.base.test_base:execute_test_case:151 | \u6d4b\u8bd5\u7528\u4f8b\u6267\u884c\u5931\u8d25: \u83b7\u53d6\u6587\u7ae0\u5217\u8868, \u9519\u8bef: \u8fd4\u56de\u7ed3\u679c\u5e94\u4e3a\u6570\u7ec4\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:end_test:221 | ================================================================================\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:end_test:224 | \u274c \u6d4b\u8bd5\u5b8c\u6210: \u83b7\u53d6\u6587\u7ae0\u5217\u8868\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:end_test:225 | \u23f1\ufe0f \u603b\u8017\u65f6: 0.418s\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:end_test:226 | \ud83d\udcca \u603b\u6b65\u9aa4\u6570: 3\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:end_test:232 | \u2705 \u901a\u8fc7\u6b65\u9aa4: 3\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:end_test:233 | \u274c \u5931\u8d25\u6b65\u9aa4: 0\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:end_test:236 | \ud83d\udccb \u6d4b\u8bd5\u603b\u7ed3:\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:end_test:238 |    \u6d4b\u8bd5\u7ed3\u679c: FAIL\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:end_test:238 |    \u9519\u8bef\u4fe1\u606f: \u8fd4\u56de\u7ed3\u679c\u5e94\u4e3a\u6570\u7ec4\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:end_test:240 | ================================================================================\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:start_test:32 | ================================================================================\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:start_test:33 | \ud83d\ude80 \u5f00\u59cb\u6267\u884c\u6d4b\u8bd5: API\u54cd\u5e94\u65f6\u95f4\u6d4b\u8bd5\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:start_test:35 | \ud83d\udcdd \u6d4b\u8bd5\u63cf\u8ff0: \u6d4b\u8bd5API\u63a5\u53e3\u7684\u54cd\u5e94\u65f6\u95f4\u6027\u80fd\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:start_test:36 | ================================================================================\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:start_step:53 | \ud83d\udccb \u6b65\u9aa4 1: \u6d4b\u8bd5\u7528\u4f8b\u521d\u59cb\u5316\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:start_step:55 |    \ud83d\udcc4 \u63cf\u8ff0: \u51c6\u5907\u6d4b\u8bd5\u73af\u5883\u548c\u6570\u636e\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:log_action:89 |    \u26a1 \u52a0\u8f7d\u6d4b\u8bd5\u7528\u4f8b\u914d\u7f6e: {\n  &amp;quot;case_name&amp;quot;: &amp;quot;API\u54cd\u5e94\u65f6\u95f4\u6d4b\u8bd5&amp;quot;,\n  &amp;quot;test_type&amp;quot;: &amp;quot;unknown&amp;quot;,\n  &amp;quot;priority&amp;quot;: &amp;quot;normal&amp;quot;\n}\n2025-08-10 19:42:59 | INFO | utils.core.base.test_base:execute_test_case:116 | \u6267\u884c\u6d4b\u8bd5\u7528\u4f8b: API\u54cd\u5e94\u65f6\u95f4\u6d4b\u8bd5\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:end_step:209 |    \u2705 \u6b65\u9aa4\u5b8c\u6210: PASSED (\u8017\u65f6: 0.005s)\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:start_step:53 | \ud83d\udccb \u6b65\u9aa4 2: \u6267\u884c\u6d4b\u8bd5\u903b\u8f91\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:start_step:55 |    \ud83d\udcc4 \u63cf\u8ff0: \u6267\u884c\u4e3b\u8981\u6d4b\u8bd5\u6b65\u9aa4\n2025-08-10 19:42:59 | INFO | utils.logging.logger:log_step:153 |    \u6b65\u9aa4: \u53d1\u9001GET\u8bf7\u6c42 https://jsonplaceholder.typicode.com/posts\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:log_api_request:94 |    \ud83c\udf10 API\u8bf7\u6c42: GET https://jsonplaceholder.typicode.com/posts\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:log_api_request:97 |    \ud83d\udce4 \u8bf7\u6c42\u5934: {\n  &amp;quot;User-Agent&amp;quot;: &amp;quot;python-requests/2.31.0&amp;quot;,\n  &amp;quot;Accept-Encoding&amp;quot;: &amp;quot;gzip, deflate, br&amp;quot;,\n  &amp;quot;Accept&amp;quot;: &amp;quot;*/*&amp;quot;,\n  &amp;quot;Connection&amp;quot;: &amp;quot;keep-alive&amp;quot;\n}\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:log_api_response:122 |    \u2705 API\u54cd\u5e94: 200\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:log_api_response:125 |    \u23f1\ufe0f \u54cd\u5e94\u65f6\u95f4: 0.302s\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:log_api_response:128 |    \ud83d\udce5 \u54cd\u5e94\u5934: {\n  &amp;quot;Date&amp;quot;: &amp;quot;Sun, 10 Aug 2025 11:43:12 GMT&amp;quot;,\n  &amp;quot;Content-Type&amp;quot;: &amp;quot;application/json; charset=utf-8&amp;quot;,\n  &amp;quot;Transfer-Encoding&amp;quot;: &amp;quot;chunked&amp;quot;,\n  &amp;quot;Connection&amp;quot;: &amp;quot;keep-alive&amp;quot;,\n  &amp;quot;Access-Control-Allow-Credentials&amp;quot;: &amp;quot;true&amp;quot;,\n  &amp;quot;Cache-Control&amp;quot;: &amp;quot;max-age=43200&amp;quot;,\n  &amp;quot;Content-Encoding&amp;quot;: &amp;quot;gzip&amp;quot;,\n  &amp;quot;Etag&amp;quot;: &amp;quot;W/\\&amp;quot;6b80-Ybsq/K6GwwqrYkAsFxqDXGC7DoM\\&amp;quot;&amp;quot;,\n  &amp;quot;Expires&amp;quot;: &amp;quot;-1&amp;quot;,\n  &amp;quot;Nel&amp;quot;: &amp;quot;{\\&amp;quot;report_to\\&amp;quot;:\\&amp;quot;heroku-nel\\&amp;quot;,\\&amp;quot;response_headers\\&amp;quot;:[\\&amp;quot;Via\\&amp;quot;],\\&amp;quot;max_age\\&amp;quot;:3600,\\&amp;quot;success_fraction\\&amp;quot;:0.01,\\&amp;quot;failure_fraction\\&amp;quot;:0.1}&amp;quot;,\n  &amp;quot;Pragma&amp;quot;: &amp;quot;no-cache&amp;quot;,\n  &amp;quot;Report-To&amp;quot;: &amp;quot;{\\&amp;quot;group\\&amp;quot;:\\&amp;quot;heroku-nel\\&amp;quot;,\\&amp;quot;endpoints\\&amp;quot;:[{\\&amp;quot;url\\&amp;quot;:\\&amp;quot;https://nel.heroku.com/reports?s=JLRxMDgIs%2Bi36tKGvn7N6WMcBDi%2BRdjDgwWjZLbLGGA%3D\\\\u0026sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d\\\\u0026ts=1754816410\\&amp;quot;}],\\&amp;quot;max_age\\&amp;quot;:3600}&amp;quot;,\n  &amp;quot;Reporting-Endpoints&amp;quot;: &amp;quot;heroku-nel=\\&amp;quot;https://nel.heroku.com/reports?s=JLRxMDgIs%2Bi36tKGvn7N6WMcBDi%2BRdjDgwWjZLbLGGA%3D&amp;amp;sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d&amp;amp;ts=1754816410\\&amp;quot;&amp;quot;,\n  &amp;quot;Server&amp;quot;: &amp;quot;cloudflare&amp;quot;,\n  &amp;quot;Vary&amp;quot;: &amp;quot;Origin, Accept-Encoding&amp;quot;,\n  &amp;quot;Via&amp;quot;: &amp;quot;2.0 heroku-router&amp;quot;,\n  &amp;quot;X-Content-Type-Options&amp;quot;: &amp;quot;nosniff&amp;quot;,\n  &amp;quot;X-Powered-By&amp;quot;: &amp;quot;Express&amp;quot;,\n  &amp;quot;X-Ratelimit-Limit&amp;quot;: &amp;quot;1000&amp;quot;,\n  &amp;quot;X-Ratelimit-Remaining&amp;quot;: &amp;quot;999&amp;quot;,\n  &amp;quot;X-Ratelimit-Reset&amp;quot;: &amp;quot;1754816460&amp;quot;,\n  &amp;quot;Age&amp;quot;: &amp;quot;9781&amp;quot;,\n  &amp;quot;Cf-Cache-Status&amp;quot;: &amp;quot;HIT&amp;quot;,\n  &amp;quot;CF-RAY&amp;quot;: &amp;quot;96cf3bf8f925d002-KIX&amp;quot;,\n  &amp;quot;alt-svc&amp;quot;: &amp;quot;h3=\\&amp;quot;:443\\&amp;quot;; ma=86400&amp;quot;\n}\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:log_api_response:131 |    \ud83d\udccb \u54cd\u5e94\u4f53: [\n  {\n    &amp;quot;userId&amp;quot;: 1,\n    &amp;quot;id&amp;quot;: 1,\n    &amp;quot;title&amp;quot;: &amp;quot;sunt aut facere repellat provident occaecati excepturi optio reprehenderit&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;quia et suscipit\\nsuscipit recusandae consequuntur expedita et cum\\nreprehenderit molestiae ut ut quas totam\\nnostrum rerum est autem sunt rem eveniet architecto&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 1,\n    &amp;quot;id&amp;quot;: 2,\n    &amp;quot;title&amp;quot;: &amp;quot;qui est esse&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;est rerum tempore vitae\\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\\nqui aperiam non debitis possimus qui neque nisi nulla&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 1,\n    &amp;quot;id&amp;quot;: 3,\n    &amp;quot;title&amp;quot;: &amp;quot;ea molestias quasi exercitationem repellat qui ipsa sit aut&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;et iusto sed quo iure\\nvoluptatem occaecati omnis eligendi aut ad\\nvoluptatem doloribus vel accusantium quis pariatur\\nmolestiae porro eius odio et labore et velit aut&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 1,\n    &amp;quot;id&amp;quot;: 4,\n    &amp;quot;title&amp;quot;: &amp;quot;eum et est occaecati&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;ullam et saepe reiciendis voluptatem adipisci\\nsit amet autem assumenda provident rerum culpa\\nquis hic commodi nesciunt rem tenetur doloremque ipsam iure\\nquis sunt voluptatem rerum illo velit&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 1,\n    &amp;quot;id&amp;quot;: 5,\n    &amp;quot;title&amp;quot;: &amp;quot;nesciunt quas odio&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;repudiandae veniam quaerat sunt sed\\nalias aut fugiat sit autem sed est\\nvoluptatem omnis possimus esse voluptatibus quis\\nest aut tenetur dolor neque&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 1,\n    &amp;quot;id&amp;quot;: 6,\n    &amp;quot;title&amp;quot;: &amp;quot;dolorem eum magni eos aperiam quia&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;ut aspernatur corporis harum nihil quis provident sequi\\nmollitia nobis aliquid molestiae\\nperspiciatis et ea nemo ab reprehenderit accusantium quas\\nvoluptate dolores velit et doloremque molestiae&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 1,\n    &amp;quot;id&amp;quot;: 7,\n    &amp;quot;title&amp;quot;: &amp;quot;magnam facilis autem&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;dolore placeat quibusdam ea quo vitae\\nmagni quis enim qui quis quo nemo aut saepe\\nquidem repellat excepturi ut quia\\nsunt ut sequi eos ea sed quas&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 1,\n    &amp;quot;id&amp;quot;: 8,\n    &amp;quot;title&amp;quot;: &amp;quot;dolorem dolore est ipsam&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;dignissimos aperiam dolorem qui eum\\nfacilis quibusdam animi sint suscipit qui sint possimus cum\\nquaerat magni maiores excepturi\\nipsam ut commodi dolor voluptatum modi aut vitae&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 1,\n    &amp;quot;id&amp;quot;: 9,\n    &amp;quot;title&amp;quot;: &amp;quot;nesciunt iure omnis dolorem tempora et accusantium&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;consectetur animi nesciunt iure dolore\\nenim quia ad\\nveniam autem ut quam aut nobis\\net est aut quod aut provident voluptas autem voluptas&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 1,\n    &amp;quot;id&amp;quot;: 10,\n    &amp;quot;title&amp;quot;: &amp;quot;optio molestias id quia eum&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;quo et expedita modi cum officia vel magni\\ndoloribus qui repudiandae\\nvero nisi sit\\nquos veniam quod sed accusamus veritatis error&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 2,\n    &amp;quot;id&amp;quot;: 11,\n    &amp;quot;title&amp;quot;: &amp;quot;et ea vero quia laudantium autem&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;delectus reiciendis molestiae occaecati non minima eveniet qui voluptatibus\\naccusamus in eum beatae sit\\nvel qui neque voluptates ut commodi qui incidunt\\nut animi commodi&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 2,\n    &amp;quot;id&amp;quot;: 12,\n    &amp;quot;title&amp;quot;: &amp;quot;in quibusdam tempore odit est dolorem&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;itaque id aut magnam\\npraesentium quia et ea odit et ea voluptas et\\nsapiente quia nihil amet occaecati quia id voluptatem\\nincidunt ea est distinctio odio&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 2,\n    &amp;quot;id&amp;quot;: 13,\n    &amp;quot;title&amp;quot;: &amp;quot;dolorum ut in voluptas mollitia et saepe quo animi&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;aut dicta possimus sint mollitia voluptas commodi quo doloremque\\niste corrupti reiciendis voluptatem eius rerum\\nsit cumque quod eligendi laborum minima\\nperferendis recusandae assumenda consectetur porro architecto ipsum ipsam&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 2,\n    &amp;quot;id&amp;quot;: 14,\n    &amp;quot;title&amp;quot;: &amp;quot;voluptatem eligendi optio&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;fuga et accusamus dolorum perferendis illo voluptas\\nnon doloremque neque facere\\nad qui dolorum molestiae beatae\\nsed aut voluptas totam sit illum&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 2,\n    &amp;quot;id&amp;quot;: 15,\n    &amp;quot;title&amp;quot;: &amp;quot;eveniet quod temporibus&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;reprehenderit quos placeat\\nvelit minima officia dolores impedit repudiandae molestiae nam\\nvoluptas recusandae quis delectus\\nofficiis harum fugiat vitae&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 2,\n    &amp;quot;id&amp;quot;: 16,\n    &amp;quot;title&amp;quot;: &amp;quot;sint suscipit perspiciatis velit dolorum rerum ipsa laboriosam odio&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;suscipit nam nisi quo aperiam aut\\nasperiores eos fugit maiores voluptatibus quia\\nvoluptatem quis ullam qui in alias quia est\\nconsequatur magni mollitia accusamus ea nisi voluptate dicta&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 2,\n    &amp;quot;id&amp;quot;: 17,\n    &amp;quot;title&amp;quot;: &amp;quot;fugit voluptas sed molestias voluptatem provident&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;eos voluptas et aut odit natus earum\\naspernatur fuga molestiae ullam\\ndeserunt ratione qui eos\\nqui nihil ratione nemo velit ut aut id quo&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 2,\n    &amp;quot;id&amp;quot;: 18,\n    &amp;quot;title&amp;quot;: &amp;quot;voluptate et itaque vero tempora molestiae&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;eveniet quo quis\\nlaborum totam consequatur non dolor\\nut et est repudiandae\\nest voluptatem vel debitis et magnam&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 2,\n    &amp;quot;id&amp;quot;: 19,\n    &amp;quot;title&amp;quot;: &amp;quot;adipisci placeat illum aut reiciendis qui&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;illum quis cupiditate provident sit magnam\\nea sed aut omnis\\nveniam maiores ullam consequatur atque\\nadipisci quo iste expedita sit quos voluptas&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 2,\n    &amp;quot;id&amp;quot;: 20,\n    &amp;quot;title&amp;quot;: &amp;quot;doloribus ad provident suscipit at&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;qui consequuntur ducimus possimus quisquam amet similique\\nsuscipit porro ipsam amet\\neos veritatis officiis exercitationem vel fugit aut necessitatibus totam\\nomnis rerum consequatur expedita quidem cumque explicabo&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 3,\n    &amp;quot;id&amp;quot;: 21,\n    &amp;quot;title&amp;quot;: &amp;quot;asperiores ea ipsam voluptatibus modi minima quia sint&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;repellat aliquid praesentium dolorem quo\\nsed totam minus non itaque\\nnihil labore molestiae sunt dolor eveniet hic recusandae veniam\\ntempora et tenetur expedita sunt&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 3,\n    &amp;quot;id&amp;quot;: 22,\n    &amp;quot;title&amp;quot;: &amp;quot;dolor sint quo a velit explicabo quia nam&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;eos qui et ipsum ipsam suscipit aut\\nsed omnis non odio\\nexpedita earum mollitia molestiae aut atque rem suscipit\\nnam impedit esse&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 3,\n    &amp;quot;id&amp;quot;: 23,\n    &amp;quot;title&amp;quot;: &amp;quot;maxime id vitae nihil numquam&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;veritatis unde neque eligendi\\nquae quod architecto quo neque vitae\\nest illo sit tempora doloremque fugit quod\\net et vel beatae sequi ullam sed tenetur perspiciatis&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 3,\n    &amp;quot;id&amp;quot;: 24,\n    &amp;quot;title&amp;quot;: &amp;quot;autem hic labore sunt dolores incidunt&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;enim et ex nulla\\nomnis voluptas quia qui\\nvoluptatem consequatur numquam aliquam sunt\\ntotam recusandae id dignissimos aut sed asperiores deserunt&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 3,\n    &amp;quot;id&amp;quot;: 25,\n    &amp;quot;title&amp;quot;: &amp;quot;rem alias distinctio quo quis&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;ullam consequatur ut\\nomnis quis sit vel consequuntur\\nipsa eligendi ipsum molestiae et omnis error nostrum\\nmolestiae illo tempore quia et distinctio&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 3,\n    &amp;quot;id&amp;quot;: 26,\n    &amp;quot;title&amp;quot;: &amp;quot;est et quae odit qui non&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;similique esse doloribus nihil accusamus\\nomnis dolorem fuga consequuntur reprehenderit fugit recusandae temporibus\\nperspiciatis cum ut laudantium\\nomnis aut molestiae vel vero&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 3,\n    &amp;quot;id&amp;quot;: 27,\n    &amp;quot;title&amp;quot;: &amp;quot;quasi id et eos tenetur aut quo autem&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;eum sed dolores ipsam sint possimus debitis occaecati\\ndebitis qui qui et\\nut placeat enim earum aut odit facilis\\nconsequatur suscipit necessitatibus rerum sed inventore temporibus consequatur&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 3,\n    &amp;quot;id&amp;quot;: 28,\n    &amp;quot;title&amp;quot;: &amp;quot;delectus ullam et corporis nulla voluptas sequi&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;non et quaerat ex quae ad maiores\\nmaiores recusandae totam aut blanditiis mollitia quas illo\\nut voluptatibus voluptatem\\nsimilique nostrum eum&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 3,\n    &amp;quot;id&amp;quot;: 29,\n    &amp;quot;title&amp;quot;: &amp;quot;iusto eius quod necessitatibus culpa ea&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;odit magnam ut saepe sed non qui\\ntempora atque nihil\\naccusamus illum doloribus illo dolor\\neligendi repudiandae odit magni similique sed cum maiores&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 3,\n    &amp;quot;id&amp;quot;: 30,\n    &amp;quot;title&amp;quot;: &amp;quot;a quo magni similique perferendis&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;alias dolor cumque\\nimpedit blanditiis non eveniet odio maxime\\nblanditiis amet eius quis tempora quia autem rem\\na provident perspiciatis quia&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 4,\n    &amp;quot;id&amp;quot;: 31,\n    &amp;quot;title&amp;quot;: &amp;quot;ullam ut quidem id aut vel consequuntur&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;debitis eius sed quibusdam non quis consectetur vitae\\nimpedit ut qui consequatur sed aut in\\nquidem sit nostrum et maiores adipisci atque\\nquaerat voluptatem adipisci repudiandae&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 4,\n    &amp;quot;id&amp;quot;: 32,\n    &amp;quot;title&amp;quot;: &amp;quot;doloremque illum aliquid sunt&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;deserunt eos nobis asperiores et hic\\nest debitis repellat molestiae optio\\nnihil ratione ut eos beatae quibusdam distinctio maiores\\nearum voluptates et aut adipisci ea maiores voluptas maxime&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 4,\n    &amp;quot;id&amp;quot;: 33,\n    &amp;quot;title&amp;quot;: &amp;quot;qui explicabo molestiae dolorem&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;rerum ut et numquam laborum odit est sit\\nid qui sint in\\nquasi tenetur tempore aperiam et quaerat qui in\\nrerum officiis sequi cumque quod&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 4,\n    &amp;quot;id&amp;quot;: 34,\n    &amp;quot;title&amp;quot;: &amp;quot;magnam ut rerum iure&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;ea velit perferendis earum ut voluptatem voluptate itaque iusto\\ntotam pariatur in\\nnemo voluptatem voluptatem autem magni tempora minima in\\nest distinctio qui assumenda accusamus dignissimos officia nesciunt nobis&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 4,\n    &amp;quot;id&amp;quot;: 35,\n    &amp;quot;title&amp;quot;: &amp;quot;id nihil consequatur molestias animi provident&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;nisi error delectus possimus ut eligendi vitae\\nplaceat eos harum cupiditate facilis reprehenderit voluptatem beatae\\nmodi ducimus quo illum voluptas eligendi\\net nobis quia fugit&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 4,\n    &amp;quot;id&amp;quot;: 36,\n    &amp;quot;title&amp;quot;: &amp;quot;fuga nam accusamus voluptas reiciendis itaque&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;ad mollitia et omnis minus architecto odit\\nvoluptas doloremque maxime aut non ipsa qui alias veniam\\nblanditiis culpa aut quia nihil cumque facere et occaecati\\nqui aspernatur quia eaque ut aperiam inventore&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 4,\n    &amp;quot;id&amp;quot;: 37,\n    &amp;quot;title&amp;quot;: &amp;quot;provident vel ut sit ratione est&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;debitis et eaque non officia sed nesciunt pariatur vel\\nvoluptatem iste vero et ea\\nnumquam aut expedita ipsum nulla in\\nvoluptates omnis consequatur aut enim officiis in quam qui&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 4,\n    &amp;quot;id&amp;quot;: 38,\n    &amp;quot;title&amp;quot;: &amp;quot;explicabo et eos deleniti nostrum ab id repellendus&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;animi esse sit aut sit nesciunt assumenda eum voluptas\\nquia voluptatibus provident quia necessitatibus ea\\nrerum repudiandae quia voluptatem delectus fugit aut id quia\\nratione optio eos iusto veniam iure&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 4,\n    &amp;quot;id&amp;quot;: 39,\n    &amp;quot;title&amp;quot;: &amp;quot;eos dolorem iste accusantium est eaque quam&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;corporis rerum ducimus vel eum accusantium\\nmaxime aspernatur a porro possimus iste omnis\\nest in deleniti asperiores fuga aut\\nvoluptas sapiente vel dolore minus voluptatem incidunt ex&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 4,\n    &amp;quot;id&amp;quot;: 40,\n    &amp;quot;title&amp;quot;: &amp;quot;enim quo cumque&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;ut voluptatum aliquid illo tenetur nemo sequi quo facilis\\nipsum rem optio mollitia quas\\nvoluptatem eum voluptas qui\\nunde omnis voluptatem iure quasi maxime voluptas nam&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 5,\n    &amp;quot;id&amp;quot;: 41,\n    &amp;quot;title&amp;quot;: &amp;quot;non est facere&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;molestias id nostrum\\nexcepturi molestiae dolore omnis repellendus quaerat saepe\\nconsectetur iste quaerat tenetur asperiores accusamus ex ut\\nnam quidem est ducimus sunt debitis saepe&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 5,\n    &amp;quot;id&amp;quot;: 42,\n    &amp;quot;title&amp;quot;: &amp;quot;commodi ullam sint et excepturi error explicabo praesentium voluptas&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;odio fugit voluptatum ducimus earum autem est incidunt voluptatem\\nodit reiciendis aliquam sunt sequi nulla dolorem\\nnon facere repellendus voluptates quia\\nratione harum vitae ut&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 5,\n    &amp;quot;id&amp;quot;: 43,\n    &amp;quot;title&amp;quot;: &amp;quot;eligendi iste nostrum consequuntur adipisci praesentium sit beatae perferendis&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;similique fugit est\\nillum et dolorum harum et voluptate eaque quidem\\nexercitationem quos nam commodi possimus cum odio nihil nulla\\ndolorum exercitationem magnam ex et a et distinctio debitis&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 5,\n    &amp;quot;id&amp;quot;: 44,\n    &amp;quot;title&amp;quot;: &amp;quot;optio dolor molestias sit&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;temporibus est consectetur dolore\\net libero debitis vel velit laboriosam quia\\nipsum quibusdam qui itaque fuga rem aut\\nea et iure quam sed maxime ut distinctio quae&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 5,\n    &amp;quot;id&amp;quot;: 45,\n    &amp;quot;title&amp;quot;: &amp;quot;ut numquam possimus omnis eius suscipit laudantium iure&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;est natus reiciendis nihil possimus aut provident\\nex et dolor\\nrepellat pariatur est\\nnobis rerum repellendus dolorem autem&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 5,\n    &amp;quot;id&amp;quot;: 46,\n    &amp;quot;title&amp;quot;: &amp;quot;aut quo modi neque nostrum ducimus&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;voluptatem quisquam iste\\nvoluptatibus natus officiis facilis dolorem\\nquis quas ipsam\\nvel et voluptatum in aliquid&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 5,\n    &amp;quot;id&amp;quot;: 47,\n    &amp;quot;title&amp;quot;: &amp;quot;quibusdam cumque rem aut deserunt&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;voluptatem assumenda ut qui ut cupiditate aut impedit veniam\\noccaecati nemo illum voluptatem laudantium\\nmolestiae beatae rerum ea iure soluta nostrum\\neligendi et voluptate&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 5,\n    &amp;quot;id&amp;quot;: 48,\n    &amp;quot;title&amp;quot;: &amp;quot;ut voluptatem illum ea doloribus itaque eos&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;voluptates quo voluptatem facilis iure occaecati\\nvel assumenda rerum officia et\\nillum perspiciatis ab deleniti\\nlaudantium repellat ad ut et autem reprehenderit&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 5,\n    &amp;quot;id&amp;quot;: 49,\n    &amp;quot;title&amp;quot;: &amp;quot;laborum non sunt aut ut assumenda perspiciatis voluptas&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;inventore ab sint\\nnatus fugit id nulla sequi architecto nihil quaerat\\neos tenetur in in eum veritatis non\\nquibusdam officiis aspernatur cumque aut commodi aut&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 5,\n    &amp;quot;id&amp;quot;: 50,\n    &amp;quot;title&amp;quot;: &amp;quot;repellendus qui recusandae incidunt voluptates tenetur qui omnis exercitationem&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;error suscipit maxime adipisci consequuntur recusandae\\nvoluptas eligendi et est et voluptates\\nquia distinctio ab amet quaerat molestiae et vitae\\nadipisci impedit sequi nesciunt quis consectetur&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 6,\n    &amp;quot;id&amp;quot;: 51,\n    &amp;quot;title&amp;quot;: &amp;quot;soluta aliquam aperiam consequatur illo quis voluptas&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;sunt dolores aut doloribus\\ndolore doloribus voluptates tempora et\\ndoloremque et quo\\ncum asperiores sit consectetur dolorem&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 6,\n    &amp;quot;id&amp;quot;: 52,\n    &amp;quot;title&amp;quot;: &amp;quot;qui enim et consequuntur quia animi quis voluptate quibusdam&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;iusto est quibusdam fuga quas quaerat molestias\\na enim ut sit accusamus enim\\ntemporibus iusto accusantium provident architecto\\nsoluta esse reprehenderit qui laborum&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 6,\n    &amp;quot;id&amp;quot;: 53,\n    &amp;quot;title&amp;quot;: &amp;quot;ut quo aut ducimus alias&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;minima harum praesentium eum rerum illo dolore\\nquasi exercitationem rerum nam\\nporro quis neque quo\\nconsequatur minus dolor quidem veritatis sunt non explicabo similique&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 6,\n    &amp;quot;id&amp;quot;: 54,\n    &amp;quot;title&amp;quot;: &amp;quot;sit asperiores ipsam eveniet odio non quia&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;totam corporis dignissimos\\nvitae dolorem ut occaecati accusamus\\nex velit deserunt\\net exercitationem vero incidunt corrupti mollitia&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 6,\n    &amp;quot;id&amp;quot;: 55,\n    &amp;quot;title&amp;quot;: &amp;quot;sit vel voluptatem et non libero&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;debitis excepturi ea perferendis harum libero optio\\neos accusamus cum fuga ut sapiente repudiandae\\net ut incidunt omnis molestiae\\nnihil ut eum odit&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 6,\n    &amp;quot;id&amp;quot;: 56,\n    &amp;quot;title&amp;quot;: &amp;quot;qui et at rerum necessitatibus&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;aut est omnis dolores\\nneque rerum quod ea rerum velit pariatur beatae excepturi\\net provident voluptas corrupti\\ncorporis harum reprehenderit dolores eligendi&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 6,\n    &amp;quot;id&amp;quot;: 57,\n    &amp;quot;title&amp;quot;: &amp;quot;sed ab est est&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;at pariatur consequuntur earum quidem\\nquo est laudantium soluta voluptatem\\nqui ullam et est\\net cum voluptas voluptatum repellat est&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 6,\n    &amp;quot;id&amp;quot;: 58,\n    &amp;quot;title&amp;quot;: &amp;quot;voluptatum itaque dolores nisi et quasi&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;veniam voluptatum quae adipisci id\\net id quia eos ad et dolorem\\naliquam quo nisi sunt eos impedit error\\nad similique veniam&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 6,\n    &amp;quot;id&amp;quot;: 59,\n    &amp;quot;title&amp;quot;: &amp;quot;qui commodi dolor at maiores et quis id accusantium&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;perspiciatis et quam ea autem temporibus non voluptatibus qui\\nbeatae a earum officia nesciunt dolores suscipit voluptas et\\nanimi doloribus cum rerum quas et magni\\net hic ut ut commodi expedita sunt&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 6,\n    &amp;quot;id&amp;quot;: 60,\n    &amp;quot;title&amp;quot;: &amp;quot;consequatur placeat omnis quisquam quia reprehenderit fugit veritatis facere&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;asperiores sunt ab assumenda cumque modi velit\\nqui esse omnis\\nvoluptate et fuga perferendis voluptas\\nillo ratione amet aut et omnis&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 7,\n    &amp;quot;id&amp;quot;: 61,\n    &amp;quot;title&amp;quot;: &amp;quot;voluptatem doloribus consectetur est ut ducimus&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;ab nemo optio odio\\ndelectus tenetur corporis similique nobis repellendus rerum omnis facilis\\nvero blanditiis debitis in nesciunt doloribus dicta dolores\\nmagnam minus velit&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 7,\n    &amp;quot;id&amp;quot;: 62,\n    &amp;quot;title&amp;quot;: &amp;quot;beatae enim quia vel&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;enim aspernatur illo distinctio quae praesentium\\nbeatae alias amet delectus qui voluptate distinctio\\nodit sint accusantium autem omnis\\nquo molestiae omnis ea eveniet optio&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 7,\n    &amp;quot;id&amp;quot;: 63,\n    &amp;quot;title&amp;quot;: &amp;quot;voluptas blanditiis repellendus animi ducimus error sapiente et suscipit&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;enim adipisci aspernatur nemo\\nnumquam omnis facere dolorem dolor ex quis temporibus incidunt\\nab delectus culpa quo reprehenderit blanditiis asperiores\\naccusantium ut quam in voluptatibus voluptas ipsam dicta&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 7,\n    &amp;quot;id&amp;quot;: 64,\n    &amp;quot;title&amp;quot;: &amp;quot;et fugit quas eum in in aperiam quod&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;id velit blanditiis\\neum ea voluptatem\\nmolestiae sint occaecati est eos perspiciatis\\nincidunt a error provident eaque aut aut qui&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 7,\n    &amp;quot;id&amp;quot;: 65,\n    &amp;quot;title&amp;quot;: &amp;quot;consequatur id enim sunt et et&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;voluptatibus ex esse\\nsint explicabo est aliquid cumque adipisci fuga repellat labore\\nmolestiae corrupti ex saepe at asperiores et perferendis\\nnatus id esse incidunt pariatur&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 7,\n    &amp;quot;id&amp;quot;: 66,\n    &amp;quot;title&amp;quot;: &amp;quot;repudiandae ea animi iusto&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;officia veritatis tenetur vero qui itaque\\nsint non ratione\\nsed et ut asperiores iusto eos molestiae nostrum\\nveritatis quibusdam et nemo iusto saepe&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 7,\n    &amp;quot;id&amp;quot;: 67,\n    &amp;quot;title&amp;quot;: &amp;quot;aliquid eos sed fuga est maxime repellendus&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;reprehenderit id nostrum\\nvoluptas doloremque pariatur sint et accusantium quia quod aspernatur\\net fugiat amet\\nnon sapiente et consequatur necessitatibus molestiae&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 7,\n    &amp;quot;id&amp;quot;: 68,\n    &amp;quot;title&amp;quot;: &amp;quot;odio quis facere architecto reiciendis optio&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;magnam molestiae perferendis quisquam\\nqui cum reiciendis\\nquaerat animi amet hic inventore\\nea quia deleniti quidem saepe porro velit&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 7,\n    &amp;quot;id&amp;quot;: 69,\n    &amp;quot;title&amp;quot;: &amp;quot;fugiat quod pariatur odit minima&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;officiis error culpa consequatur modi asperiores et\\ndolorum assumenda voluptas et vel qui aut vel rerum\\nvoluptatum quisquam perspiciatis quia rerum consequatur totam quas\\nsequi commodi repudiandae asperiores et saepe a&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 7,\n    &amp;quot;id&amp;quot;: 70,\n    &amp;quot;title&amp;quot;: &amp;quot;voluptatem laborum magni&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;sunt repellendus quae\\nest asperiores aut deleniti esse accusamus repellendus quia aut\\nquia dolorem unde\\neum tempora esse dolore&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 8,\n    &amp;quot;id&amp;quot;: 71,\n    &amp;quot;title&amp;quot;: &amp;quot;et iusto veniam et illum aut fuga&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;occaecati a doloribus\\niste saepe consectetur placeat eum voluptate dolorem et\\nqui quo quia voluptas\\nrerum ut id enim velit est perferendis&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 8,\n    &amp;quot;id&amp;quot;: 72,\n    &amp;quot;title&amp;quot;: &amp;quot;sint hic doloribus consequatur eos non id&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;quam occaecati qui deleniti consectetur\\nconsequatur aut facere quas exercitationem aliquam hic voluptas\\nneque id sunt ut aut accusamus\\nsunt consectetur expedita inventore velit&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 8,\n    &amp;quot;id&amp;quot;: 73,\n    &amp;quot;title&amp;quot;: &amp;quot;consequuntur deleniti eos quia temporibus ab aliquid at&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;voluptatem cumque tenetur consequatur expedita ipsum nemo quia explicabo\\naut eum minima consequatur\\ntempore cumque quae est et\\net in consequuntur voluptatem voluptates aut&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 8,\n    &amp;quot;id&amp;quot;: 74,\n    &amp;quot;title&amp;quot;: &amp;quot;enim unde ratione doloribus quas enim ut sit sapiente&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;odit qui et et necessitatibus sint veniam\\nmollitia amet doloremque molestiae commodi similique magnam et quam\\nblanditiis est itaque\\nquo et tenetur ratione occaecati molestiae tempora&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 8,\n    &amp;quot;id&amp;quot;: 75,\n    &amp;quot;title&amp;quot;: &amp;quot;dignissimos eum dolor ut enim et delectus in&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;commodi non non omnis et voluptas sit\\nautem aut nobis magnam et sapiente voluptatem\\net laborum repellat qui delectus facilis temporibus\\nrerum amet et nemo voluptate expedita adipisci error dolorem&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 8,\n    &amp;quot;id&amp;quot;: 76,\n    &amp;quot;title&amp;quot;: &amp;quot;doloremque officiis ad et non perferendis&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;ut animi facere\\ntotam iusto tempore\\nmolestiae eum aut et dolorem aperiam\\nquaerat recusandae totam odio&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 8,\n    &amp;quot;id&amp;quot;: 77,\n    &amp;quot;title&amp;quot;: &amp;quot;necessitatibus quasi exercitationem odio&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;modi ut in nulla repudiandae dolorum nostrum eos\\naut consequatur omnis\\nut incidunt est omnis iste et quam\\nvoluptates sapiente aliquam asperiores nobis amet corrupti repudiandae provident&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 8,\n    &amp;quot;id&amp;quot;: 78,\n    &amp;quot;title&amp;quot;: &amp;quot;quam voluptatibus rerum veritatis&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;nobis facilis odit tempore cupiditate quia\\nassumenda doloribus rerum qui ea\\nillum et qui totam\\naut veniam repellendus&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 8,\n    &amp;quot;id&amp;quot;: 79,\n    &amp;quot;title&amp;quot;: &amp;quot;pariatur consequatur quia magnam autem omnis non amet&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;libero accusantium et et facere incidunt sit dolorem\\nnon excepturi qui quia sed laudantium\\nquisquam molestiae ducimus est\\nofficiis esse molestiae iste et quos&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 8,\n    &amp;quot;id&amp;quot;: 80,\n    &amp;quot;title&amp;quot;: &amp;quot;labore in ex et explicabo corporis aut quas&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;ex quod dolorem ea eum iure qui provident amet\\nquia qui facere excepturi et repudiandae\\nasperiores molestias provident\\nminus incidunt vero fugit rerum sint sunt excepturi provident&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 9,\n    &amp;quot;id&amp;quot;: 81,\n    &amp;quot;title&amp;quot;: &amp;quot;tempora rem veritatis voluptas quo dolores vero&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;facere qui nesciunt est voluptatum voluptatem nisi\\nsequi eligendi necessitatibus ea at rerum itaque\\nharum non ratione velit laboriosam quis consequuntur\\nex officiis minima doloremque voluptas ut aut&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 9,\n    &amp;quot;id&amp;quot;: 82,\n    &amp;quot;title&amp;quot;: &amp;quot;laudantium voluptate suscipit sunt enim enim&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;ut libero sit aut totam inventore sunt\\nporro sint qui sunt molestiae\\nconsequatur cupiditate qui iste ducimus adipisci\\ndolor enim assumenda soluta laboriosam amet iste delectus hic&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 9,\n    &amp;quot;id&amp;quot;: 83,\n    &amp;quot;title&amp;quot;: &amp;quot;odit et voluptates doloribus alias odio et&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;est molestiae facilis quis tempora numquam nihil qui\\nvoluptate sapiente consequatur est qui\\nnecessitatibus autem aut ipsa aperiam modi dolore numquam\\nreprehenderit eius rem quibusdam&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 9,\n    &amp;quot;id&amp;quot;: 84,\n    &amp;quot;title&amp;quot;: &amp;quot;optio ipsam molestias necessitatibus occaecati facilis veritatis dolores aut&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;sint molestiae magni a et quos\\neaque et quasi\\nut rerum debitis similique veniam\\nrecusandae dignissimos dolor incidunt consequatur odio&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 9,\n    &amp;quot;id&amp;quot;: 85,\n    &amp;quot;title&amp;quot;: &amp;quot;dolore veritatis porro provident adipisci blanditiis et sunt&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;similique sed nisi voluptas iusto omnis\\nmollitia et quo\\nassumenda suscipit officia magnam sint sed tempora\\nenim provident pariatur praesentium atque animi amet ratione&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 9,\n    &amp;quot;id&amp;quot;: 86,\n    &amp;quot;title&amp;quot;: &amp;quot;placeat quia et porro iste&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;quasi excepturi consequatur iste autem temporibus sed molestiae beatae\\net quaerat et esse ut\\nvoluptatem occaecati et vel explicabo autem\\nasperiores pariatur deserunt optio&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 9,\n    &amp;quot;id&amp;quot;: 87,\n    &amp;quot;title&amp;quot;: &amp;quot;nostrum quis quasi placeat&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;eos et molestiae\\nnesciunt ut a\\ndolores perspiciatis repellendus repellat aliquid\\nmagnam sint rem ipsum est&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 9,\n    &amp;quot;id&amp;quot;: 88,\n    &amp;quot;title&amp;quot;: &amp;quot;sapiente omnis fugit eos&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;consequatur omnis est praesentium\\nducimus non iste\\nneque hic deserunt\\nvoluptatibus veniam cum et rerum sed&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 9,\n    &amp;quot;id&amp;quot;: 89,\n    &amp;quot;title&amp;quot;: &amp;quot;sint soluta et vel magnam aut ut sed qui&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;repellat aut aperiam totam temporibus autem et\\narchitecto magnam ut\\nconsequatur qui cupiditate rerum quia soluta dignissimos nihil iure\\ntempore quas est&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 9,\n    &amp;quot;id&amp;quot;: 90,\n    &amp;quot;title&amp;quot;: &amp;quot;ad iusto omnis odit dolor voluptatibus&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;minus omnis soluta quia\\nqui sed adipisci voluptates illum ipsam voluptatem\\neligendi officia ut in\\neos soluta similique molestias praesentium blanditiis&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 10,\n    &amp;quot;id&amp;quot;: 91,\n    &amp;quot;title&amp;quot;: &amp;quot;aut amet sed&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;libero voluptate eveniet aperiam sed\\nsunt placeat suscipit molestias\\nsimilique fugit nam natus\\nexpedita consequatur consequatur dolores quia eos et placeat&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 10,\n    &amp;quot;id&amp;quot;: 92,\n    &amp;quot;title&amp;quot;: &amp;quot;ratione ex tenetur perferendis&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;aut et excepturi dicta laudantium sint rerum nihil\\nlaudantium et at\\na neque minima officia et similique libero et\\ncommodi voluptate qui&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 10,\n    &amp;quot;id&amp;quot;: 93,\n    &amp;quot;title&amp;quot;: &amp;quot;beatae soluta recusandae&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;dolorem quibusdam ducimus consequuntur dicta aut quo laboriosam\\nvoluptatem quis enim recusandae ut sed sunt\\nnostrum est odit totam\\nsit error sed sunt eveniet provident qui nulla&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 10,\n    &amp;quot;id&amp;quot;: 94,\n    &amp;quot;title&amp;quot;: &amp;quot;qui qui voluptates illo iste minima&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;aspernatur expedita soluta quo ab ut similique\\nexpedita dolores amet\\nsed temporibus distinctio magnam saepe deleniti\\nomnis facilis nam ipsum natus sint similique omnis&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 10,\n    &amp;quot;id&amp;quot;: 95,\n    &amp;quot;title&amp;quot;: &amp;quot;id minus libero illum nam ad officiis&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;earum voluptatem facere provident blanditiis velit laboriosam\\npariatur accusamus odio saepe\\ncumque dolor qui a dicta ab doloribus consequatur omnis\\ncorporis cupiditate eaque assumenda ad nesciunt&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 10,\n    &amp;quot;id&amp;quot;: 96,\n    &amp;quot;title&amp;quot;: &amp;quot;quaerat velit veniam amet cupiditate aut numquam ut sequi&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;in non odio excepturi sint eum\\nlabore voluptates vitae quia qui et\\ninventore itaque rerum\\nveniam non exercitationem delectus aut&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 10,\n    &amp;quot;id&amp;quot;: 97,\n    &amp;quot;title&amp;quot;: &amp;quot;quas fugiat ut perspiciatis vero provident&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;eum non blanditiis soluta porro quibusdam voluptas\\nvel voluptatem qui placeat dolores qui velit aut\\nvel inventore aut cumque culpa explicabo aliquid at\\nperspiciatis est et voluptatem dignissimos dolor itaque sit nam&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 10,\n    &amp;quot;id&amp;quot;: 98,\n    &amp;quot;title&amp;quot;: &amp;quot;laboriosam dolor voluptates&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;doloremque ex facilis sit sint culpa\\nsoluta assumenda eligendi non ut eius\\nsequi ducimus vel quasi\\nveritatis est dolores&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 10,\n    &amp;quot;id&amp;quot;: 99,\n    &amp;quot;title&amp;quot;: &amp;quot;temporibus sit alias delectus eligendi possimus magni&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;quo deleniti praesentium dicta non quod\\naut est molestias\\nmolestias et officia quis nihil\\nitaque dolorem quia&amp;quot;\n  },\n  {\n    &amp;quot;userId&amp;quot;: 10,\n    &amp;quot;id&amp;quot;: 100,\n    &amp;quot;title&amp;quot;: &amp;quot;at nam consequatur ea labore ea harum&amp;quot;,\n    &amp;quot;body&amp;quot;: &amp;quot;cupiditate quo est a modi nesciunt soluta\\nipsa voluptas error itaque dicta in\\nautem qui minus magnam et distinctio eum\\naccusamus ratione error aut&amp;quot;\n  }\n]\n2025-08-10 19:42:59 | INFO | utils.logging.logger:log_step:153 |    \u6b65\u9aa4: \u9a8c\u8bc1\u54cd\u5e94 2\u4e2a\u65ad\u8a00\n2025-08-10 19:42:59 | INFO | utils.logging.logger:log_assertion:158 |    \u65ad\u8a00 [status_code] \u2713 \u671f\u671b: 200 | \u5b9e\u9645: 200\n2025-08-10 19:42:59 | INFO | utils.logging.logger:log_assertion:158 |    \u65ad\u8a00 [response_time] \u2713 \u671f\u671b: &amp;lt;= 2000s | \u5b9e\u9645: 0.301s\n2025-08-10 19:42:59 | INFO | utils.core.api.keywords:verify_response:196 | \u54cd\u5e94\u9a8c\u8bc1\u901a\u8fc7\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:end_step:209 |    \u2705 \u6b65\u9aa4\u5b8c\u6210: PASSED (\u8017\u65f6: 0.310s)\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:start_step:53 | \ud83d\udccb \u6b65\u9aa4 3: \u6d4b\u8bd5\u7ed3\u679c\u9a8c\u8bc1\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:start_step:55 |    \ud83d\udcc4 \u63cf\u8ff0: \u9a8c\u8bc1\u6d4b\u8bd5\u6267\u884c\u7ed3\u679c\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:log_assertion:173 |    \u2705 \u65ad\u8a00: \u6d4b\u8bd5\u72b6\u6001\u68c0\u67e5\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:log_assertion:174 |    \ud83d\udccb \u671f\u671b\u503c: PASS\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:log_assertion:175 |    \ud83d\udcca \u5b9e\u9645\u503c: PASS\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:log_assertion:176 |    \ud83c\udfaf \u7ed3\u679c: \u901a\u8fc7\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:log_assertion:179 |    \ud83d\udcac \u8bf4\u660e: \u6d4b\u8bd5\u7528\u4f8b API\u54cd\u5e94\u65f6\u95f4\u6d4b\u8bd5 \u6267\u884c\u7ed3\u679c\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:end_step:209 |    \u2705 \u6b65\u9aa4\u5b8c\u6210: PASSED (\u8017\u65f6: 0.000s)\n2025-08-10 19:42:59 | INFO | utils.core.base.test_base:execute_test_case:149 | \u6d4b\u8bd5\u7528\u4f8b\u6267\u884c\u6210\u529f: API\u54cd\u5e94\u65f6\u95f4\u6d4b\u8bd5\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:end_test:221 | ================================================================================\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:end_test:224 | \u2705 \u6d4b\u8bd5\u5b8c\u6210: API\u54cd\u5e94\u65f6\u95f4\u6d4b\u8bd5\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:end_test:225 | \u23f1\ufe0f \u603b\u8017\u65f6: 0.316s\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:end_test:226 | \ud83d\udcca \u603b\u6b65\u9aa4\u6570: 3\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:end_test:232 | \u2705 \u901a\u8fc7\u6b65\u9aa4: 3\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:end_test:233 | \u274c \u5931\u8d25\u6b65\u9aa4: 0\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:end_test:236 | \ud83d\udccb \u6d4b\u8bd5\u603b\u7ed3:\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:end_test:238 |    \u6d4b\u8bd5\u7ed3\u679c: PASS\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:end_test:238 |    \u9519\u8bef\u4fe1\u606f: None\n2025-08-10 19:42:59 | INFO | utils.logging.test_step_logger:end_test:240 | ================================================================================\n2025-08-10 19:42:59 | INFO | utils.core.base.test_base:teardown_method:37 | \u6d4b\u8bd5\u6267\u884c\u5b8c\u6210: test_single_api_cases\n2025-08-10 19:42:59 | INFO | utils.logging.logger:end_test:187 | \u6d4b\u8bd5\u6267\u884c\u5b8c\u6210\n2025-08-10 19:42:59 | INFO | test_case.api.test_api_driver:teardown_test:19 | API\u6d4b\u8bd5\u73af\u5883\u6e05\u7406\u5b8c\u6210\n--------------------------- Captured stdout teardown ---------------------------\n2025-08-10 19:42:59 | INFO | test_case.conftest:pytest_runtest_teardown:133 | \u6d4b\u8bd5\u6267\u884c\u5b8c\u6210: test_single_api_cases\n2025-08-10 19:42:59 | INFO | utils.core.api.client:logout:420 | \u672a\u914d\u7f6e\u767b\u51fa\u63a5\u53e3\uff0c\u8df3\u8fc7\u767b\u51fa\u8bf7\u6c42\n2025-08-10 19:42:59 | INFO | utils.core.api.client:clear_token:456 | token\u5df2\u6e05\u9664\n2025-08-10 19:42:59 | INFO | utils.core.api.client:logout:427 | \u767b\u51fa\u64cd\u4f5c\u5b8c\u6210\n2025-08-10 19:42:59 | INFO | utils.core.api.client:close:464 | API\u5ba2\u6237\u7aef\u4f1a\u8bdd\u5df2\u5173\u95ed\n2025-08-10 19:42:59 | INFO | test_case.api.conftest:api_client:96 | API\u5ba2\u6237\u7aef\u6e05\u7406\u5b8c\u6210\n&#34;}]}, &#34;renderCollapsed&#34;: [&#34;passed&#34;], &#34;initialSort&#34;: &#34;result&#34;, &#34;title&#34;: &#34;pytest-report.html&#34;}"></div>
+    <script>
+      (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+const { getCollapsedCategory, setCollapsedIds } = require('./storage.js')
+
+class DataManager {
+    setManager(data) {
+        const collapsedCategories = [...getCollapsedCategory(data.renderCollapsed)]
+        const collapsedIds = []
+        const tests = Object.values(data.tests).flat().map((test, index) => {
+            const collapsed = collapsedCategories.includes(test.result.toLowerCase())
+            const id = `test_${index}`
+            if (collapsed) {
+                collapsedIds.push(id)
+            }
+            return {
+                ...test,
+                id,
+                collapsed,
+            }
+        })
+        const dataBlob = { ...data, tests }
+        this.data = { ...dataBlob }
+        this.renderData = { ...dataBlob }
+        setCollapsedIds(collapsedIds)
+    }
+
+    get allData() {
+        return { ...this.data }
+    }
+
+    resetRender() {
+        this.renderData = { ...this.data }
+    }
+
+    setRender(data) {
+        this.renderData.tests = [...data]
+    }
+
+    toggleCollapsedItem(id) {
+        this.renderData.tests = this.renderData.tests.map((test) =>
+            test.id === id ? { ...test, collapsed: !test.collapsed } : test,
+        )
+    }
+
+    set allCollapsed(collapsed) {
+        this.renderData = { ...this.renderData, tests: [...this.renderData.tests.map((test) => (
+            { ...test, collapsed }
+        ))] }
+    }
+
+    get testSubset() {
+        return [...this.renderData.tests]
+    }
+
+    get environment() {
+        return this.renderData.environment
+    }
+
+    get initialSort() {
+        return this.data.initialSort
+    }
+}
+
+module.exports = {
+    manager: new DataManager(),
+}
+
+},{"./storage.js":8}],2:[function(require,module,exports){
+const mediaViewer = require('./mediaviewer.js')
+const templateEnvRow = document.getElementById('template_environment_row')
+const templateResult = document.getElementById('template_results-table__tbody')
+
+function htmlToElements(html) {
+    const temp = document.createElement('template')
+    temp.innerHTML = html
+    return temp.content.childNodes
+}
+
+const find = (selector, elem) => {
+    if (!elem) {
+        elem = document
+    }
+    return elem.querySelector(selector)
+}
+
+const findAll = (selector, elem) => {
+    if (!elem) {
+        elem = document
+    }
+    return [...elem.querySelectorAll(selector)]
+}
+
+const dom = {
+    getStaticRow: (key, value) => {
+        const envRow = templateEnvRow.content.cloneNode(true)
+        const isObj = typeof value === 'object' && value !== null
+        const values = isObj ? Object.keys(value).map((k) => `${k}: ${value[k]}`) : null
+
+        const valuesElement = htmlToElements(
+            values ? `<ul>${values.map((val) => `<li>${val}</li>`).join('')}<ul>` : `<div>${value}</div>`)[0]
+        const td = findAll('td', envRow)
+        td[0].textContent = key
+        td[1].appendChild(valuesElement)
+
+        return envRow
+    },
+    getResultTBody: ({ testId, id, log, extras, resultsTableRow, tableHtml, result, collapsed }) => {
+        const resultBody = templateResult.content.cloneNode(true)
+        resultBody.querySelector('tbody').classList.add(result.toLowerCase())
+        resultBody.querySelector('tbody').id = testId
+        resultBody.querySelector('.collapsible').dataset.id = id
+
+        resultsTableRow.forEach((html) => {
+            const t = document.createElement('template')
+            t.innerHTML = html
+            resultBody.querySelector('.collapsible').appendChild(t.content)
+        })
+
+        if (log) {
+            // Wrap lines starting with "E" with span.error to color those lines red
+            const wrappedLog = log.replace(/^E.*$/gm, (match) => `<span class="error">${match}</span>`)
+            resultBody.querySelector('.log').innerHTML = wrappedLog
+        } else {
+            resultBody.querySelector('.log').remove()
+        }
+
+        if (collapsed) {
+            resultBody.querySelector('.collapsible > td')?.classList.add('collapsed')
+            resultBody.querySelector('.extras-row').classList.add('hidden')
+        } else {
+            resultBody.querySelector('.collapsible > td')?.classList.remove('collapsed')
+        }
+
+        const media = []
+        extras?.forEach(({ name, format_type, content }) => {
+            if (['image', 'video'].includes(format_type)) {
+                media.push({ path: content, name, format_type })
+            }
+
+            if (format_type === 'html') {
+                resultBody.querySelector('.extraHTML').insertAdjacentHTML('beforeend', `<div>${content}</div>`)
+            }
+        })
+        mediaViewer.setup(resultBody, media)
+
+        // Add custom html from the pytest_html_results_table_html hook
+        tableHtml?.forEach((item) => {
+            resultBody.querySelector('td[class="extra"]').insertAdjacentHTML('beforeend', item)
+        })
+
+        return resultBody
+    },
+}
+
+module.exports = {
+    dom,
+    htmlToElements,
+    find,
+    findAll,
+}
+
+},{"./mediaviewer.js":6}],3:[function(require,module,exports){
+const { manager } = require('./datamanager.js')
+const { doSort } = require('./sort.js')
+const storageModule = require('./storage.js')
+
+const getFilteredSubSet = (filter) =>
+    manager.allData.tests.filter(({ result }) => filter.includes(result.toLowerCase()))
+
+const doInitFilter = () => {
+    const currentFilter = storageModule.getVisible()
+    const filteredSubset = getFilteredSubSet(currentFilter)
+    manager.setRender(filteredSubset)
+}
+
+const doFilter = (type, show) => {
+    if (show) {
+        storageModule.showCategory(type)
+    } else {
+        storageModule.hideCategory(type)
+    }
+
+    const currentFilter = storageModule.getVisible()
+    const filteredSubset = getFilteredSubSet(currentFilter)
+    manager.setRender(filteredSubset)
+
+    const sortColumn = storageModule.getSort()
+    doSort(sortColumn, true)
+}
+
+module.exports = {
+    doFilter,
+    doInitFilter,
+}
+
+},{"./datamanager.js":1,"./sort.js":7,"./storage.js":8}],4:[function(require,module,exports){
+const { redraw, bindEvents, renderStatic } = require('./main.js')
+const { doInitFilter } = require('./filter.js')
+const { doInitSort } = require('./sort.js')
+const { manager } = require('./datamanager.js')
+const data = JSON.parse(document.getElementById('data-container').dataset.jsonblob)
+
+function init() {
+    manager.setManager(data)
+    doInitFilter()
+    doInitSort()
+    renderStatic()
+    redraw()
+    bindEvents()
+}
+
+init()
+
+},{"./datamanager.js":1,"./filter.js":3,"./main.js":5,"./sort.js":7}],5:[function(require,module,exports){
+const { dom, find, findAll } = require('./dom.js')
+const { manager } = require('./datamanager.js')
+const { doSort } = require('./sort.js')
+const { doFilter } = require('./filter.js')
+const {
+    getVisible,
+    getCollapsedIds,
+    setCollapsedIds,
+    getSort,
+    getSortDirection,
+    possibleFilters,
+} = require('./storage.js')
+
+const removeChildren = (node) => {
+    while (node.firstChild) {
+        node.removeChild(node.firstChild)
+    }
+}
+
+const renderStatic = () => {
+    const renderEnvironmentTable = () => {
+        const environment = manager.environment
+        const rows = Object.keys(environment).map((key) => dom.getStaticRow(key, environment[key]))
+        const table = document.getElementById('environment')
+        removeChildren(table)
+        rows.forEach((row) => table.appendChild(row))
+    }
+    renderEnvironmentTable()
+}
+
+const addItemToggleListener = (elem) => {
+    elem.addEventListener('click', ({ target }) => {
+        const id = target.parentElement.dataset.id
+        manager.toggleCollapsedItem(id)
+
+        const collapsedIds = getCollapsedIds()
+        if (collapsedIds.includes(id)) {
+            const updated = collapsedIds.filter((item) => item !== id)
+            setCollapsedIds(updated)
+        } else {
+            collapsedIds.push(id)
+            setCollapsedIds(collapsedIds)
+        }
+        redraw()
+    })
+}
+
+const renderContent = (tests) => {
+    const sortAttr = getSort(manager.initialSort)
+    const sortAsc = JSON.parse(getSortDirection())
+    const rows = tests.map(dom.getResultTBody)
+    const table = document.getElementById('results-table')
+    const tableHeader = document.getElementById('results-table-head')
+
+    const newTable = document.createElement('table')
+    newTable.id = 'results-table'
+
+    // remove all sorting classes and set the relevant
+    findAll('.sortable', tableHeader).forEach((elem) => elem.classList.remove('asc', 'desc'))
+    tableHeader.querySelector(`.sortable[data-column-type="${sortAttr}"]`)?.classList.add(sortAsc ? 'desc' : 'asc')
+    newTable.appendChild(tableHeader)
+
+    if (!rows.length) {
+        const emptyTable = document.getElementById('template_results-table__body--empty').content.cloneNode(true)
+        newTable.appendChild(emptyTable)
+    } else {
+        rows.forEach((row) => {
+            if (!!row) {
+                findAll('.collapsible td:not(.col-links', row).forEach(addItemToggleListener)
+                find('.logexpander', row).addEventListener('click',
+                    (evt) => evt.target.parentNode.classList.toggle('expanded'),
+                )
+                newTable.appendChild(row)
+            }
+        })
+    }
+
+    table.replaceWith(newTable)
+}
+
+const renderDerived = () => {
+    const currentFilter = getVisible()
+    possibleFilters.forEach((result) => {
+        const input = document.querySelector(`input[data-test-result="${result}"]`)
+        input.checked = currentFilter.includes(result)
+    })
+}
+
+const bindEvents = () => {
+    const filterColumn = (evt) => {
+        const { target: element } = evt
+        const { testResult } = element.dataset
+
+        doFilter(testResult, element.checked)
+        const collapsedIds = getCollapsedIds()
+        const updated = manager.renderData.tests.map((test) => {
+            return {
+                ...test,
+                collapsed: collapsedIds.includes(test.id),
+            }
+        })
+        manager.setRender(updated)
+        redraw()
+    }
+
+    const header = document.getElementById('environment-header')
+    header.addEventListener('click', () => {
+        const table = document.getElementById('environment')
+        table.classList.toggle('hidden')
+        header.classList.toggle('collapsed')
+    })
+
+    findAll('input[name="filter_checkbox"]').forEach((elem) => {
+        elem.addEventListener('click', filterColumn)
+    })
+
+    findAll('.sortable').forEach((elem) => {
+        elem.addEventListener('click', (evt) => {
+            const { target: element } = evt
+            const { columnType } = element.dataset
+            doSort(columnType)
+            redraw()
+        })
+    })
+
+    document.getElementById('show_all_details').addEventListener('click', () => {
+        manager.allCollapsed = false
+        setCollapsedIds([])
+        redraw()
+    })
+    document.getElementById('hide_all_details').addEventListener('click', () => {
+        manager.allCollapsed = true
+        const allIds = manager.renderData.tests.map((test) => test.id)
+        setCollapsedIds(allIds)
+        redraw()
+    })
+}
+
+const redraw = () => {
+    const { testSubset } = manager
+
+    renderContent(testSubset)
+    renderDerived()
+}
+
+module.exports = {
+    redraw,
+    bindEvents,
+    renderStatic,
+}
+
+},{"./datamanager.js":1,"./dom.js":2,"./filter.js":3,"./sort.js":7,"./storage.js":8}],6:[function(require,module,exports){
+class MediaViewer {
+    constructor(assets) {
+        this.assets = assets
+        this.index = 0
+    }
+
+    nextActive() {
+        this.index = this.index === this.assets.length - 1 ? 0 : this.index + 1
+        return [this.activeFile, this.index]
+    }
+
+    prevActive() {
+        this.index = this.index === 0 ? this.assets.length - 1 : this.index -1
+        return [this.activeFile, this.index]
+    }
+
+    get currentIndex() {
+        return this.index
+    }
+
+    get activeFile() {
+        return this.assets[this.index]
+    }
+}
+
+
+const setup = (resultBody, assets) => {
+    if (!assets.length) {
+        resultBody.querySelector('.media').classList.add('hidden')
+        return
+    }
+
+    const mediaViewer = new MediaViewer(assets)
+    const container = resultBody.querySelector('.media-container')
+    const leftArrow = resultBody.querySelector('.media-container__nav--left')
+    const rightArrow = resultBody.querySelector('.media-container__nav--right')
+    const mediaName = resultBody.querySelector('.media__name')
+    const counter = resultBody.querySelector('.media__counter')
+    const imageEl = resultBody.querySelector('img')
+    const sourceEl = resultBody.querySelector('source')
+    const videoEl = resultBody.querySelector('video')
+
+    const setImg = (media, index) => {
+        if (media?.format_type === 'image') {
+            imageEl.src = media.path
+
+            imageEl.classList.remove('hidden')
+            videoEl.classList.add('hidden')
+        } else if (media?.format_type === 'video') {
+            sourceEl.src = media.path
+
+            videoEl.classList.remove('hidden')
+            imageEl.classList.add('hidden')
+        }
+
+        mediaName.innerText = media?.name
+        counter.innerText = `${index + 1} / ${assets.length}`
+    }
+    setImg(mediaViewer.activeFile, mediaViewer.currentIndex)
+
+    const moveLeft = () => {
+        const [media, index] = mediaViewer.prevActive()
+        setImg(media, index)
+    }
+    const doRight = () => {
+        const [media, index] = mediaViewer.nextActive()
+        setImg(media, index)
+    }
+    const openImg = () => {
+        window.open(mediaViewer.activeFile.path, '_blank')
+    }
+    if (assets.length === 1) {
+        container.classList.add('media-container--fullscreen')
+    } else {
+        leftArrow.addEventListener('click', moveLeft)
+        rightArrow.addEventListener('click', doRight)
+    }
+    imageEl.addEventListener('click', openImg)
+}
+
+module.exports = {
+    setup,
+}
+
+},{}],7:[function(require,module,exports){
+const { manager } = require('./datamanager.js')
+const storageModule = require('./storage.js')
+
+const genericSort = (list, key, ascending, customOrder) => {
+    let sorted
+    if (customOrder) {
+        sorted = list.sort((a, b) => {
+            const aValue = a.result.toLowerCase()
+            const bValue = b.result.toLowerCase()
+
+            const aIndex = customOrder.findIndex((item) => item.toLowerCase() === aValue)
+            const bIndex = customOrder.findIndex((item) => item.toLowerCase() === bValue)
+
+            // Compare the indices to determine the sort order
+            return aIndex - bIndex
+        })
+    } else {
+        sorted = list.sort((a, b) => a[key] === b[key] ? 0 : a[key] > b[key] ? 1 : -1)
+    }
+
+    if (ascending) {
+        sorted.reverse()
+    }
+    return sorted
+}
+
+const durationSort = (list, ascending) => {
+    const parseDuration = (duration) => {
+        if (duration.includes(':')) {
+            // If it's in the format "HH:mm:ss"
+            const [hours, minutes, seconds] = duration.split(':').map(Number)
+            return (hours * 3600 + minutes * 60 + seconds) * 1000
+        } else {
+            // If it's in the format "nnn ms"
+            return parseInt(duration)
+        }
+    }
+    const sorted = list.sort((a, b) => parseDuration(a['duration']) - parseDuration(b['duration']))
+    if (ascending) {
+        sorted.reverse()
+    }
+    return sorted
+}
+
+const doInitSort = () => {
+    const type = storageModule.getSort(manager.initialSort)
+    const ascending = storageModule.getSortDirection()
+    const list = manager.testSubset
+    const initialOrder = ['Error', 'Failed', 'Rerun', 'XFailed', 'XPassed', 'Skipped', 'Passed']
+
+    storageModule.setSort(type)
+    storageModule.setSortDirection(ascending)
+
+    if (type?.toLowerCase() === 'original') {
+        manager.setRender(list)
+    } else {
+        let sortedList
+        switch (type) {
+        case 'duration':
+            sortedList = durationSort(list, ascending)
+            break
+        case 'result':
+            sortedList = genericSort(list, type, ascending, initialOrder)
+            break
+        default:
+            sortedList = genericSort(list, type, ascending)
+            break
+        }
+        manager.setRender(sortedList)
+    }
+}
+
+const doSort = (type, skipDirection) => {
+    const newSortType = storageModule.getSort(manager.initialSort) !== type
+    const currentAsc = storageModule.getSortDirection()
+    let ascending
+    if (skipDirection) {
+        ascending = currentAsc
+    } else {
+        ascending = newSortType ? false : !currentAsc
+    }
+    storageModule.setSort(type)
+    storageModule.setSortDirection(ascending)
+
+    const list = manager.testSubset
+    const sortedList = type === 'duration' ? durationSort(list, ascending) : genericSort(list, type, ascending)
+    manager.setRender(sortedList)
+}
+
+module.exports = {
+    doInitSort,
+    doSort,
+}
+
+},{"./datamanager.js":1,"./storage.js":8}],8:[function(require,module,exports){
+const possibleFilters = [
+    'passed',
+    'skipped',
+    'failed',
+    'error',
+    'xfailed',
+    'xpassed',
+    'rerun',
+]
+
+const getVisible = () => {
+    const url = new URL(window.location.href)
+    const settings = new URLSearchParams(url.search).get('visible')
+    const lower = (item) => {
+        const lowerItem = item.toLowerCase()
+        if (possibleFilters.includes(lowerItem)) {
+            return lowerItem
+        }
+        return null
+    }
+    return settings === null ?
+        possibleFilters :
+        [...new Set(settings?.split(',').map(lower).filter((item) => item))]
+}
+
+const hideCategory = (categoryToHide) => {
+    const url = new URL(window.location.href)
+    const visibleParams = new URLSearchParams(url.search).get('visible')
+    const currentVisible = visibleParams ? visibleParams.split(',') : [...possibleFilters]
+    const settings = [...new Set(currentVisible)].filter((f) => f !== categoryToHide).join(',')
+
+    url.searchParams.set('visible', settings)
+    window.history.pushState({}, null, unescape(url.href))
+}
+
+const showCategory = (categoryToShow) => {
+    if (typeof window === 'undefined') {
+        return
+    }
+    const url = new URL(window.location.href)
+    const currentVisible = new URLSearchParams(url.search).get('visible')?.split(',').filter(Boolean) ||
+        [...possibleFilters]
+    const settings = [...new Set([categoryToShow, ...currentVisible])]
+    const noFilter = possibleFilters.length === settings.length || !settings.length
+
+    noFilter ? url.searchParams.delete('visible') : url.searchParams.set('visible', settings.join(','))
+    window.history.pushState({}, null, unescape(url.href))
+}
+
+const getSort = (initialSort) => {
+    const url = new URL(window.location.href)
+    let sort = new URLSearchParams(url.search).get('sort')
+    if (!sort) {
+        sort = initialSort || 'result'
+    }
+    return sort
+}
+
+const setSort = (type) => {
+    const url = new URL(window.location.href)
+    url.searchParams.set('sort', type)
+    window.history.pushState({}, null, unescape(url.href))
+}
+
+const getCollapsedCategory = (renderCollapsed) => {
+    let categories
+    if (typeof window !== 'undefined') {
+        const url = new URL(window.location.href)
+        const collapsedItems = new URLSearchParams(url.search).get('collapsed')
+        switch (true) {
+        case !renderCollapsed && collapsedItems === null:
+            categories = ['passed']
+            break
+        case collapsedItems?.length === 0 || /^["']{2}$/.test(collapsedItems):
+            categories = []
+            break
+        case /^all$/.test(collapsedItems) || collapsedItems === null && /^all$/.test(renderCollapsed):
+            categories = [...possibleFilters]
+            break
+        default:
+            categories = collapsedItems?.split(',').map((item) => item.toLowerCase()) || renderCollapsed
+            break
+        }
+    } else {
+        categories = []
+    }
+    return categories
+}
+
+const getSortDirection = () => JSON.parse(sessionStorage.getItem('sortAsc')) || false
+const setSortDirection = (ascending) => sessionStorage.setItem('sortAsc', ascending)
+
+const getCollapsedIds = () => JSON.parse(sessionStorage.getItem('collapsedIds')) || []
+const setCollapsedIds = (list) => sessionStorage.setItem('collapsedIds', JSON.stringify(list))
+
+module.exports = {
+    getVisible,
+    hideCategory,
+    showCategory,
+    getCollapsedIds,
+    setCollapsedIds,
+    getSort,
+    setSort,
+    getSortDirection,
+    setSortDirection,
+    getCollapsedCategory,
+    possibleFilters,
+}
+
+},{}]},{},[4]);
+    </script>
+  </footer>
+</html>
