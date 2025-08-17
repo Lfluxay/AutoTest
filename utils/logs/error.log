@@ -1,0 +1,246 @@
+2025-08-10 14:36:02 | ERROR | utils.config.parser:load_config:26 | 配置文件不存在: E:\code_project\cc_p\auto_case\utils\config\config.yaml
+2025-08-10 18:08:41 | ERROR | utils.core.exception_framework:wrapper:248 | 执行 simulate_database_query 时发生异常: 数据库连接超时
+2025-08-10 18:12:52 | ERROR | utils.core.test_framework_app:execute_pytest_tests:235 | 测试执行失败，退出码: 2
+2025-08-10 18:12:52 | ERROR | utils.core.test_framework_app:run:534 | ============================================================
+2025-08-10 18:12:52 | ERROR | utils.core.test_framework_app:run:535 | 测试执行完成 - 失败
+2025-08-10 18:12:52 | ERROR | utils.core.test_framework_app:run:536 | ============================================================
+2025-08-10 18:16:03 | ERROR | utils.core.test_framework_app:execute_pytest_tests:235 | 测试执行失败，退出码: 2
+2025-08-10 18:16:03 | ERROR | utils.core.test_framework_app:run:534 | ============================================================
+2025-08-10 18:16:03 | ERROR | utils.core.test_framework_app:run:535 | 测试执行完成 - 失败
+2025-08-10 18:16:03 | ERROR | utils.core.test_framework_app:run:536 | ============================================================
+2025-08-10 18:19:38 | ERROR | utils.core.test_framework_app:execute_pytest_tests:235 | 测试执行失败，退出码: 3
+2025-08-10 18:19:38 | ERROR | utils.core.test_framework_app:run:534 | ============================================================
+2025-08-10 18:19:38 | ERROR | utils.core.test_framework_app:run:535 | 测试执行完成 - 失败
+2025-08-10 18:19:38 | ERROR | utils.core.test_framework_app:run:536 | ============================================================
+2025-08-10 18:29:05 | ERROR | utils.core.test_framework_app:validate_args:150 | 不支持的Excel文件格式: .yaml
+2025-08-10 18:30:08 | ERROR | utils.core.test_framework_app:execute_excel_tests:349 | 执行Excel测试失败: TestSuite.__init__() missing 1 required positional argument: 'title'
+2025-08-10 18:30:08 | ERROR | utils.core.exception_framework:wrapper:248 | 文件读取失败: [AutoTestException](FILE_002): 文件读取失败 | 详情: {'excel_path': 'data/examples/excel/mixed_test_cases.xlsx', 'error': "TestSuite.__init__() missing 1 required positional argument: 'title'"}
+2025-08-10 18:30:46 | ERROR | utils.core.test_framework_app:execute_excel_tests:349 | 执行Excel测试失败: 'TestSuite' object has no attribute 'load_from_excel'
+2025-08-10 18:30:46 | ERROR | utils.core.exception_framework:wrapper:248 | 文件读取失败: [AutoTestException](FILE_002): 文件读取失败 | 详情: {'excel_path': 'data/examples/excel/mixed_test_cases.xlsx', 'error': "'TestSuite' object has no attribute 'load_from_excel'"}
+2025-08-10 18:31:19 | ERROR | utils.core.test_framework_app:execute_excel_tests:388 | 执行Excel测试失败: No module named 'utils.template_parser'
+2025-08-10 18:31:19 | ERROR | utils.core.exception_framework:wrapper:248 | 文件读取失败: [AutoTestException](FILE_002): 文件读取失败 | 详情: {'excel_path': 'data/examples/excel/mixed_test_cases.xlsx', 'error': "No module named 'utils.template_parser'"}
+2025-08-10 18:31:39 | ERROR | utils.core.test_framework_app:execute_excel_tests:388 | 执行Excel测试失败: No module named 'core'
+2025-08-10 18:31:39 | ERROR | utils.core.exception_framework:wrapper:248 | 文件读取失败: [AutoTestException](FILE_002): 文件读取失败 | 详情: {'excel_path': 'data/examples/excel/mixed_test_cases.xlsx', 'error': "No module named 'core'"}
+2025-08-10 18:32:05 | ERROR | utils.core.test_framework_app:execute_excel_tests:388 | 执行Excel测试失败: 'TestExecutor' object has no attribute 'args'
+2025-08-10 18:32:05 | ERROR | utils.core.exception_framework:wrapper:248 | 文件读取失败: [AutoTestException](FILE_002): 文件读取失败 | 详情: {'excel_path': 'data/examples/excel/mixed_test_cases.xlsx', 'error': "'TestExecutor' object has no attribute 'args'"}
+2025-08-10 18:33:12 | ERROR | utils.core.test_framework_app:execute_pytest_tests:235 | 测试执行失败，退出码: 3
+2025-08-10 18:33:12 | ERROR | utils.core.test_framework_app:run:574 | ============================================================
+2025-08-10 18:33:12 | ERROR | utils.core.test_framework_app:run:575 | 测试执行完成 - 失败
+2025-08-10 18:33:12 | ERROR | utils.core.test_framework_app:run:576 | ============================================================
+2025-08-10 18:34:08 | ERROR | __main__:test_crypto_helper:103 | ❌ 加解密功能测试失败: type object 'CryptoHelper' has no attribute 'generate_random_string'
+2025-08-10 18:35:58 | ERROR | utils.core.test_framework_app:execute_pytest_tests:235 | 测试执行失败，退出码: 3
+2025-08-10 18:35:58 | ERROR | utils.core.test_framework_app:run:574 | ============================================================
+2025-08-10 18:35:58 | ERROR | utils.core.test_framework_app:run:575 | 测试执行完成 - 失败
+2025-08-10 18:35:58 | ERROR | utils.core.test_framework_app:run:576 | ============================================================
+2025-08-10 18:37:18 | ERROR | utils.core.test_framework_app:execute_pytest_tests:235 | 测试执行失败，退出码: 3
+2025-08-10 18:37:18 | ERROR | utils.core.test_framework_app:run:574 | ============================================================
+2025-08-10 18:37:18 | ERROR | utils.core.test_framework_app:run:575 | 测试执行完成 - 失败
+2025-08-10 18:37:18 | ERROR | utils.core.test_framework_app:run:576 | ============================================================
+2025-08-10 18:38:08 | ERROR | utils.core.test_framework_app:execute_pytest_tests:235 | 测试执行失败，退出码: 3
+2025-08-10 18:38:08 | ERROR | utils.core.test_framework_app:run:574 | ============================================================
+2025-08-10 18:38:08 | ERROR | utils.core.test_framework_app:run:575 | 测试执行完成 - 失败
+2025-08-10 18:38:08 | ERROR | utils.core.test_framework_app:run:576 | ============================================================
+2025-08-10 18:38:34 | ERROR | utils.core.test_framework_app:execute_pytest_tests:235 | 测试执行失败，退出码: 3
+2025-08-10 18:38:34 | ERROR | utils.core.test_framework_app:run:574 | ============================================================
+2025-08-10 18:38:34 | ERROR | utils.core.test_framework_app:run:575 | 测试执行完成 - 失败
+2025-08-10 18:38:34 | ERROR | utils.core.test_framework_app:run:576 | ============================================================
+2025-08-10 18:47:41 | ERROR | utils.core.test_framework_app:execute_pytest_tests:269 | 测试执行失败，退出码: 4
+2025-08-10 18:47:41 | ERROR | utils.core.test_framework_app:run:647 | ============================================================
+2025-08-10 18:47:41 | ERROR | utils.core.test_framework_app:run:648 | 测试执行完成 - 失败
+2025-08-10 18:47:41 | ERROR | utils.core.test_framework_app:run:649 | ============================================================
+2025-08-10 18:48:19 | ERROR | utils.core.test_framework_app:execute_pytest_tests:269 | 测试执行失败，退出码: 4
+2025-08-10 18:48:19 | ERROR | utils.core.test_framework_app:run:647 | ============================================================
+2025-08-10 18:48:19 | ERROR | utils.core.test_framework_app:run:648 | 测试执行完成 - 失败
+2025-08-10 18:48:19 | ERROR | utils.core.test_framework_app:run:649 | ============================================================
+2025-08-10 18:48:51 | ERROR | utils.core.test_framework_app:execute_pytest_tests:274 | 执行pytest测试失败: 'gbk' codec can't decode byte 0xaf in position 75: illegal multibyte sequence
+2025-08-10 18:48:53 | ERROR | utils.core.test_framework_app:execute_pytest_tests:274 | 执行pytest测试失败: 'gbk' codec can't decode byte 0xaf in position 75: illegal multibyte sequence
+2025-08-10 18:48:53 | ERROR | utils.core.test_framework_app:run:656 | 测试框架执行异常: [AutoTestException](SYS_002): 系统调用失败 | 详情: {'original_exception': '[AutoTestException](SYS_002): 系统调用失败 | 详情: {\'details\': "\'gbk\' codec can\'t decode byte 0xaf in position 75: illegal multibyte sequence"}', 'attempts': 2, 'function': 'execute_pytest_tests'}
+2025-08-10 18:49:25 | ERROR | utils.core.test_framework_app:execute_pytest_tests:271 | 测试执行失败，退出码: 3
+2025-08-10 18:49:25 | ERROR | utils.core.test_framework_app:run:649 | ============================================================
+2025-08-10 18:49:25 | ERROR | utils.core.test_framework_app:run:650 | 测试执行完成 - 失败
+2025-08-10 18:49:25 | ERROR | utils.core.test_framework_app:run:651 | ============================================================
+2025-08-10 18:50:07 | ERROR | utils.core.test_framework_app:execute_pytest_tests:271 | 测试执行失败，退出码: 3
+2025-08-10 18:50:07 | ERROR | utils.core.test_framework_app:run:649 | ============================================================
+2025-08-10 18:50:07 | ERROR | utils.core.test_framework_app:run:650 | 测试执行完成 - 失败
+2025-08-10 18:50:07 | ERROR | utils.core.test_framework_app:run:651 | ============================================================
+2025-08-10 18:59:30 | ERROR | utils.core.test_framework_app:execute_yaml_tests:449 | 执行YAML测试失败: cannot import name 'logger_manager' from 'utils.logging.test_step_logger' (E:\code_project\cc_p\auto_case\utils\logging\test_step_logger.py)
+2025-08-10 18:59:30 | ERROR | utils.core.exception_framework:wrapper:248 | 文件权限不足: [AutoTestException](FILE_004): 文件权限不足 | 详情: {'yaml_path': 'data/examples/api/basic_api_test.yaml', 'error': "cannot import name 'logger_manager' from 'utils.logging.test_step_logger' (E:\\code_project\\cc_p\\auto_case\\utils\\logging\\test_step_logger.py)"}
+2025-08-10 19:01:11 | ERROR | utils.core.test_framework_app:execute_pytest_tests:255 | 测试执行失败，退出码: 1
+2025-08-10 19:01:11 | ERROR | utils.core.test_framework_app:run:636 | ============================================================
+2025-08-10 19:01:11 | ERROR | utils.core.test_framework_app:run:637 | 测试执行完成 - 失败
+2025-08-10 19:01:11 | ERROR | utils.core.test_framework_app:run:638 | ============================================================
+2025-08-10 19:01:41 | ERROR | utils.core.test_framework_app:execute_pytest_tests:255 | 测试执行失败，退出码: 3
+2025-08-10 19:01:41 | ERROR | utils.core.test_framework_app:run:636 | ============================================================
+2025-08-10 19:01:41 | ERROR | utils.core.test_framework_app:run:637 | 测试执行完成 - 失败
+2025-08-10 19:01:41 | ERROR | utils.core.test_framework_app:run:638 | ============================================================
+2025-08-10 19:01:55 | ERROR | utils.core.test_framework_app:execute_pytest_tests:255 | 测试执行失败，退出码: 3
+2025-08-10 19:01:55 | ERROR | utils.core.test_framework_app:run:636 | ============================================================
+2025-08-10 19:01:55 | ERROR | utils.core.test_framework_app:run:637 | 测试执行完成 - 失败
+2025-08-10 19:01:55 | ERROR | utils.core.test_framework_app:run:638 | ============================================================
+2025-08-10 19:02:30 | ERROR | utils.core.test_framework_app:execute_pytest_tests:255 | 测试执行失败，退出码: 3
+2025-08-10 19:02:30 | ERROR | utils.core.test_framework_app:run:636 | ============================================================
+2025-08-10 19:02:30 | ERROR | utils.core.test_framework_app:run:637 | 测试执行完成 - 失败
+2025-08-10 19:02:30 | ERROR | utils.core.test_framework_app:run:638 | ============================================================
+2025-08-10 19:02:55 | ERROR | utils.core.test_framework_app:execute_pytest_tests:255 | 测试执行失败，退出码: 3
+2025-08-10 19:02:55 | ERROR | utils.core.test_framework_app:run:636 | ============================================================
+2025-08-10 19:02:55 | ERROR | utils.core.test_framework_app:run:637 | 测试执行完成 - 失败
+2025-08-10 19:02:55 | ERROR | utils.core.test_framework_app:run:638 | ============================================================
+2025-08-10 19:05:22 | ERROR | utils.core.test_framework_app:execute_pytest_tests:255 | 测试执行失败，退出码: 3
+2025-08-10 19:05:22 | ERROR | utils.core.test_framework_app:run:636 | ============================================================
+2025-08-10 19:05:22 | ERROR | utils.core.test_framework_app:run:637 | 测试执行完成 - 失败
+2025-08-10 19:05:22 | ERROR | utils.core.test_framework_app:run:638 | ============================================================
+2025-08-10 19:05:30 | ERROR | utils.core.test_framework_app:execute_pytest_tests:255 | 测试执行失败，退出码: 3
+2025-08-10 19:05:30 | ERROR | utils.core.test_framework_app:run:636 | ============================================================
+2025-08-10 19:05:30 | ERROR | utils.core.test_framework_app:run:637 | 测试执行完成 - 失败
+2025-08-10 19:05:30 | ERROR | utils.core.test_framework_app:run:638 | ============================================================
+2025-08-10 19:25:01 | ERROR | utils.core.api.client:_execute_with_retry:229 | 请求失败，已重试3次: HTTPSConnectionPool(host='dev-api.example.com', port=443): Max retries exceeded with url: /api/login (Caused by SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:997)')))
+2025-08-10 19:25:01 | ERROR | utils.core.auth.login_manager:_default_login:99 | API默认登录异常: HTTPSConnectionPool(host='dev-api.example.com', port=443): Max retries exceeded with url: /api/login (Caused by SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:997)')))
+2025-08-10 19:26:53 | ERROR | utils.core.api.assertions:assert_status_code:35 | 创建成功状态码应为201
+2025-08-10 19:26:53 | ERROR | utils.core.base.test_base:execute_test_case:151 | 测试用例执行失败: 创建新文章, 错误: 创建成功状态码应为201
+2025-08-10 19:27:32 | ERROR | utils.core.api.client:_execute_with_retry:229 | 请求失败，已重试3次: HTTPSConnectionPool(host='jsonplaceholder.typicode.com', port=443): Max retries exceeded with url: /posts/1 (Caused by ResponseError('too many 500 error responses'))
+2025-08-10 19:27:32 | ERROR | utils.core.base.test_base:execute_test_case:151 | 测试用例执行失败: 更新文章信息, 错误: HTTPSConnectionPool(host='jsonplaceholder.typicode.com', port=443): Max retries exceeded with url: /posts/1 (Caused by ResponseError('too many 500 error responses'))
+2025-08-10 19:27:34 | ERROR | utils.core.api.assertions:assert_json_path:94 | 返回结果应为数组
+2025-08-10 19:27:34 | ERROR | utils.core.base.test_base:execute_test_case:151 | 测试用例执行失败: 获取文章列表, 错误: 返回结果应为数组
+2025-08-10 19:28:09 | ERROR | utils.core.api.assertions:assert_status_code:35 | 创建成功状态码应为201
+2025-08-10 19:28:09 | ERROR | utils.core.base.test_base:execute_test_case:151 | 测试用例执行失败: 创建新文章, 错误: 创建成功状态码应为201
+2025-08-10 19:28:48 | ERROR | utils.core.api.client:_execute_with_retry:229 | 请求失败，已重试3次: HTTPSConnectionPool(host='jsonplaceholder.typicode.com', port=443): Max retries exceeded with url: /posts/1 (Caused by ResponseError('too many 500 error responses'))
+2025-08-10 19:28:48 | ERROR | utils.core.base.test_base:execute_test_case:151 | 测试用例执行失败: 更新文章信息, 错误: HTTPSConnectionPool(host='jsonplaceholder.typicode.com', port=443): Max retries exceeded with url: /posts/1 (Caused by ResponseError('too many 500 error responses'))
+2025-08-10 19:28:49 | ERROR | utils.core.api.assertions:assert_json_path:94 | 返回结果应为数组
+2025-08-10 19:28:49 | ERROR | utils.core.base.test_base:execute_test_case:151 | 测试用例执行失败: 获取文章列表, 错误: 返回结果应为数组
+2025-08-10 19:33:34 | ERROR | utils.core.web.browser:start_browser:100 | 浏览器启动失败: 不支持的浏览器类型: {'type': 'chromium', 'headless': False, 'viewport': {'width': 1920, 'height': 1080}}
+2025-08-10 19:34:57 | ERROR | utils.core.auth.login_manager:_default_login:286 | Web默认登录异常: Timeout 30000ms exceeded.
+2025-08-10 19:35:38 | ERROR | utils.core.auth.login_manager:_default_login:286 | Web默认登录异常: Timeout 30000ms exceeded.
+2025-08-10 19:37:01 | ERROR | utils.core.auth.login_manager:_default_login:286 | Web默认登录异常: Timeout 30000ms exceeded.
+2025-08-10 19:37:01 | ERROR | utils.core.web.keywords:execute_steps:517 | 步骤1执行失败: navigate, 错误: No module named 'core'
+2025-08-10 19:37:01 | ERROR | utils.core.base.test_base:execute_test_case:151 | 测试用例执行失败: 页面导航测试, 错误: No module named 'core'
+2025-08-10 19:37:01 | ERROR | utils.core.web.keywords:execute_steps:517 | 步骤1执行失败: navigate, 错误: No module named 'core'
+2025-08-10 19:37:01 | ERROR | utils.core.base.test_base:execute_test_case:151 | 测试用例执行失败: 表单填写测试, 错误: No module named 'core'
+2025-08-10 19:37:01 | ERROR | utils.core.web.keywords:execute_steps:517 | 步骤1执行失败: navigate, 错误: No module named 'core'
+2025-08-10 19:37:01 | ERROR | utils.core.base.test_base:execute_test_case:151 | 测试用例执行失败: 元素等待测试, 错误: No module named 'core'
+2025-08-10 19:37:01 | ERROR | utils.core.web.keywords:execute_steps:517 | 步骤1执行失败: navigate, 错误: No module named 'core'
+2025-08-10 19:37:01 | ERROR | utils.core.base.test_base:execute_test_case:151 | 测试用例执行失败: 多元素操作测试, 错误: No module named 'core'
+2025-08-10 19:37:01 | ERROR | utils.core.web.keywords:execute_steps:517 | 步骤1执行失败: navigate, 错误: No module named 'core'
+2025-08-10 19:37:01 | ERROR | utils.core.base.test_base:execute_test_case:151 | 测试用例执行失败: 页面交互测试, 错误: No module named 'core'
+2025-08-10 19:38:34 | ERROR | utils.core.auth.login_manager:_default_login:286 | Web默认登录异常: Timeout 30000ms exceeded.
+2025-08-10 19:39:21 | ERROR | utils.core.web.keywords:execute_steps:517 | 步骤1执行失败: navigate, 错误: No module named 'core'
+2025-08-10 19:39:21 | ERROR | utils.core.base.test_base:execute_test_case:151 | 测试用例执行失败: 页面导航测试, 错误: No module named 'core'
+2025-08-10 19:39:21 | ERROR | utils.core.web.keywords:execute_steps:517 | 步骤1执行失败: navigate, 错误: No module named 'core'
+2025-08-10 19:39:21 | ERROR | utils.core.base.test_base:execute_test_case:151 | 测试用例执行失败: 表单填写测试, 错误: No module named 'core'
+2025-08-10 19:39:21 | ERROR | utils.core.web.keywords:execute_steps:517 | 步骤1执行失败: navigate, 错误: No module named 'core'
+2025-08-10 19:39:21 | ERROR | utils.core.base.test_base:execute_test_case:151 | 测试用例执行失败: 元素等待测试, 错误: No module named 'core'
+2025-08-10 19:39:21 | ERROR | utils.core.web.keywords:execute_steps:517 | 步骤1执行失败: navigate, 错误: No module named 'core'
+2025-08-10 19:39:21 | ERROR | utils.core.base.test_base:execute_test_case:151 | 测试用例执行失败: 多元素操作测试, 错误: No module named 'core'
+2025-08-10 19:39:21 | ERROR | utils.core.web.keywords:execute_steps:517 | 步骤1执行失败: navigate, 错误: No module named 'core'
+2025-08-10 19:39:21 | ERROR | utils.core.base.test_base:execute_test_case:151 | 测试用例执行失败: 页面交互测试, 错误: No module named 'core'
+2025-08-10 19:42:18 | ERROR | utils.core.api.assertions:assert_status_code:35 | 创建成功状态码应为201
+2025-08-10 19:42:18 | ERROR | utils.core.base.test_base:execute_test_case:151 | 测试用例执行失败: 创建新文章, 错误: 创建成功状态码应为201
+2025-08-10 19:42:57 | ERROR | utils.core.api.client:_execute_with_retry:229 | 请求失败，已重试3次: HTTPSConnectionPool(host='jsonplaceholder.typicode.com', port=443): Max retries exceeded with url: /posts/1 (Caused by ResponseError('too many 500 error responses'))
+2025-08-10 19:42:57 | ERROR | utils.core.base.test_base:execute_test_case:151 | 测试用例执行失败: 更新文章信息, 错误: HTTPSConnectionPool(host='jsonplaceholder.typicode.com', port=443): Max retries exceeded with url: /posts/1 (Caused by ResponseError('too many 500 error responses'))
+2025-08-10 19:42:59 | ERROR | utils.core.api.assertions:assert_json_path:94 | 返回结果应为数组
+2025-08-10 19:42:59 | ERROR | utils.core.base.test_base:execute_test_case:151 | 测试用例执行失败: 获取文章列表, 错误: 返回结果应为数组
+2025-08-10 19:44:04 | ERROR | utils.core.api.assertions:assert_status_code:35 | 创建成功状态码应为201
+2025-08-10 19:44:04 | ERROR | utils.core.base.test_base:execute_test_case:151 | 测试用例执行失败: 创建新文章, 错误: 创建成功状态码应为201
+2025-08-10 19:44:44 | ERROR | utils.core.api.client:_execute_with_retry:229 | 请求失败，已重试3次: HTTPSConnectionPool(host='jsonplaceholder.typicode.com', port=443): Max retries exceeded with url: /posts/1 (Caused by ResponseError('too many 500 error responses'))
+2025-08-10 19:44:44 | ERROR | utils.core.base.test_base:execute_test_case:151 | 测试用例执行失败: 更新文章信息, 错误: HTTPSConnectionPool(host='jsonplaceholder.typicode.com', port=443): Max retries exceeded with url: /posts/1 (Caused by ResponseError('too many 500 error responses'))
+2025-08-10 19:44:46 | ERROR | utils.core.api.assertions:assert_json_path:94 | 返回结果应为数组
+2025-08-10 19:44:46 | ERROR | utils.core.base.test_base:execute_test_case:151 | 测试用例执行失败: 获取文章列表, 错误: 返回结果应为数组
+2025-08-10 19:49:39 | ERROR | utils.core.api.assertions:assert_status_code:35 | 创建成功状态码应为201
+2025-08-10 19:49:39 | ERROR | utils.core.base.test_base:execute_test_case:151 | 测试用例执行失败: 创建新文章, 错误: 创建成功状态码应为201
+2025-08-10 19:50:19 | ERROR | utils.core.api.client:_execute_with_retry:229 | 请求失败，已重试3次: HTTPSConnectionPool(host='jsonplaceholder.typicode.com', port=443): Max retries exceeded with url: /posts/1 (Caused by ResponseError('too many 500 error responses'))
+2025-08-10 19:50:19 | ERROR | utils.core.base.test_base:execute_test_case:151 | 测试用例执行失败: 更新文章信息, 错误: HTTPSConnectionPool(host='jsonplaceholder.typicode.com', port=443): Max retries exceeded with url: /posts/1 (Caused by ResponseError('too many 500 error responses'))
+2025-08-10 19:50:20 | ERROR | utils.core.api.assertions:assert_json_path:94 | 返回结果应为数组
+2025-08-10 19:50:20 | ERROR | utils.core.base.test_base:execute_test_case:151 | 测试用例执行失败: 获取文章列表, 错误: 返回结果应为数组
+2025-08-10 19:50:34 | ERROR | utils.core.api.assertions:assert_status_code:35 | 创建成功状态码应为201
+2025-08-10 19:50:34 | ERROR | utils.core.base.test_base:execute_test_case:151 | 测试用例执行失败: 创建新文章, 错误: 创建成功状态码应为201
+2025-08-10 19:51:16 | ERROR | utils.core.api.client:_execute_with_retry:229 | 请求失败，已重试3次: HTTPSConnectionPool(host='jsonplaceholder.typicode.com', port=443): Max retries exceeded with url: /posts/1 (Caused by ResponseError('too many 500 error responses'))
+2025-08-10 19:51:16 | ERROR | utils.core.base.test_base:execute_test_case:151 | 测试用例执行失败: 更新文章信息, 错误: HTTPSConnectionPool(host='jsonplaceholder.typicode.com', port=443): Max retries exceeded with url: /posts/1 (Caused by ResponseError('too many 500 error responses'))
+2025-08-10 19:51:18 | ERROR | utils.core.api.assertions:assert_json_path:94 | 返回结果应为数组
+2025-08-10 19:51:18 | ERROR | utils.core.base.test_base:execute_test_case:151 | 测试用例执行失败: 获取文章列表, 错误: 返回结果应为数组
+2025-08-10 19:58:22 | ERROR | utils.core.concurrent.test_executor:execute_test_case:200 | [线程17972] ❌ 异常: 获取用户信息 - No module named 'utils.core.api.api_client'
+2025-08-10 19:58:22 | ERROR | utils.core.concurrent.test_executor:execute_test_case:200 | [线程6444] ❌ 异常: 创建新文章 - No module named 'utils.core.api.api_client'
+2025-08-10 19:58:22 | ERROR | utils.core.concurrent.test_executor:execute_test_case:200 | [线程17972] ❌ 异常: 更新文章信息 - No module named 'utils.core.api.api_client'
+2025-08-10 19:58:22 | ERROR | utils.core.concurrent.test_executor:execute_test_case:200 | [线程6444] ❌ 异常: 删除文章 - No module named 'utils.core.api.api_client'
+2025-08-10 19:58:22 | ERROR | utils.core.concurrent.test_executor:execute_test_case:200 | [线程17972] ❌ 异常: 获取不存在的用户 - No module named 'utils.core.api.api_client'
+2025-08-10 19:58:22 | ERROR | utils.core.concurrent.test_executor:execute_test_case:200 | [线程6444] ❌ 异常: 获取文章列表 - No module named 'utils.core.api.api_client'
+2025-08-10 19:58:22 | ERROR | utils.core.concurrent.test_executor:execute_test_case:200 | [线程17972] ❌ 异常: API响应时间测试 - No module named 'utils.core.api.api_client'
+2025-08-10 19:58:22 | ERROR | utils.core.concurrent.test_executor:execute_test_case:200 | [线程6444] ❌ 异常: 获取用户2信息 - No module named 'utils.core.api.api_client'
+2025-08-10 19:58:22 | ERROR | utils.core.concurrent.test_executor:execute_test_case:200 | [线程17972] ❌ 异常: 获取用户3信息 - No module named 'utils.core.api.api_client'
+2025-08-10 19:58:22 | ERROR | utils.core.concurrent.test_executor:execute_test_case:200 | [线程6444] ❌ 异常: 获取文章1 - No module named 'utils.core.api.api_client'
+2025-08-10 19:58:22 | ERROR | utils.core.concurrent.test_executor:execute_test_case:200 | [线程17972] ❌ 异常: 获取评论 - No module named 'utils.core.api.api_client'
+2025-08-10 19:58:22 | ERROR | utils.core.concurrent.test_executor:execute_test_case:200 | [线程6444] ❌ 异常: 获取相册 - No module named 'utils.core.api.api_client'
+2025-08-10 19:58:22 | ERROR | utils.core.concurrent.test_executor:execute_test_case:200 | [线程17972] ❌ 异常: 获取照片 - No module named 'utils.core.api.api_client'
+2025-08-10 19:58:22 | ERROR | utils.core.concurrent.test_executor:execute_test_case:200 | [线程6444] ❌ 异常: 获取待办事项 - No module named 'utils.core.api.api_client'
+2025-08-10 19:58:22 | ERROR | utils.core.concurrent.test_executor:execute_test_case:200 | [线程17972] ❌ 异常: 获取用户4信息 - No module named 'utils.core.api.api_client'
+2025-08-10 19:58:48 | ERROR | utils.core.concurrent.test_executor:execute_test_case:200 | [线程3544] ❌ 异常: 获取用户信息 - cannot import name 'AssertionEngine' from 'utils.core.api.assertions' (E:\code_project\cc_p\auto_case\utils\core\api\assertions.py)
+2025-08-10 19:58:48 | ERROR | utils.core.concurrent.test_executor:execute_test_case:200 | [线程16148] ❌ 异常: 创建新文章 - cannot import name 'AssertionEngine' from 'utils.core.api.assertions' (E:\code_project\cc_p\auto_case\utils\core\api\assertions.py)
+2025-08-10 19:58:48 | ERROR | utils.core.concurrent.test_executor:execute_test_case:200 | [线程3544] ❌ 异常: 更新文章信息 - cannot import name 'AssertionEngine' from 'utils.core.api.assertions' (E:\code_project\cc_p\auto_case\utils\core\api\assertions.py)
+2025-08-10 19:58:48 | ERROR | utils.core.concurrent.test_executor:execute_test_case:200 | [线程16148] ❌ 异常: 删除文章 - cannot import name 'AssertionEngine' from 'utils.core.api.assertions' (E:\code_project\cc_p\auto_case\utils\core\api\assertions.py)
+2025-08-10 19:58:48 | ERROR | utils.core.concurrent.test_executor:execute_test_case:200 | [线程3544] ❌ 异常: 获取不存在的用户 - cannot import name 'AssertionEngine' from 'utils.core.api.assertions' (E:\code_project\cc_p\auto_case\utils\core\api\assertions.py)
+2025-08-10 19:58:48 | ERROR | utils.core.concurrent.test_executor:execute_test_case:200 | [线程16148] ❌ 异常: 获取文章列表 - cannot import name 'AssertionEngine' from 'utils.core.api.assertions' (E:\code_project\cc_p\auto_case\utils\core\api\assertions.py)
+2025-08-10 19:58:48 | ERROR | utils.core.concurrent.test_executor:execute_test_case:200 | [线程3544] ❌ 异常: API响应时间测试 - cannot import name 'AssertionEngine' from 'utils.core.api.assertions' (E:\code_project\cc_p\auto_case\utils\core\api\assertions.py)
+2025-08-10 19:58:48 | ERROR | utils.core.concurrent.test_executor:execute_test_case:200 | [线程16148] ❌ 异常: 获取用户2信息 - cannot import name 'AssertionEngine' from 'utils.core.api.assertions' (E:\code_project\cc_p\auto_case\utils\core\api\assertions.py)
+2025-08-10 19:58:48 | ERROR | utils.core.concurrent.test_executor:execute_test_case:200 | [线程3544] ❌ 异常: 获取用户3信息 - cannot import name 'AssertionEngine' from 'utils.core.api.assertions' (E:\code_project\cc_p\auto_case\utils\core\api\assertions.py)
+2025-08-10 19:58:48 | ERROR | utils.core.concurrent.test_executor:execute_test_case:200 | [线程16148] ❌ 异常: 获取文章1 - cannot import name 'AssertionEngine' from 'utils.core.api.assertions' (E:\code_project\cc_p\auto_case\utils\core\api\assertions.py)
+2025-08-10 19:58:48 | ERROR | utils.core.concurrent.test_executor:execute_test_case:200 | [线程3544] ❌ 异常: 获取评论 - cannot import name 'AssertionEngine' from 'utils.core.api.assertions' (E:\code_project\cc_p\auto_case\utils\core\api\assertions.py)
+2025-08-10 19:58:48 | ERROR | utils.core.concurrent.test_executor:execute_test_case:200 | [线程16148] ❌ 异常: 获取相册 - cannot import name 'AssertionEngine' from 'utils.core.api.assertions' (E:\code_project\cc_p\auto_case\utils\core\api\assertions.py)
+2025-08-10 19:58:48 | ERROR | utils.core.concurrent.test_executor:execute_test_case:200 | [线程3544] ❌ 异常: 获取照片 - cannot import name 'AssertionEngine' from 'utils.core.api.assertions' (E:\code_project\cc_p\auto_case\utils\core\api\assertions.py)
+2025-08-10 19:58:48 | ERROR | utils.core.concurrent.test_executor:execute_test_case:200 | [线程16148] ❌ 异常: 获取待办事项 - cannot import name 'AssertionEngine' from 'utils.core.api.assertions' (E:\code_project\cc_p\auto_case\utils\core\api\assertions.py)
+2025-08-10 19:58:48 | ERROR | utils.core.concurrent.test_executor:execute_test_case:200 | [线程3544] ❌ 异常: 获取用户4信息 - cannot import name 'AssertionEngine' from 'utils.core.api.assertions' (E:\code_project\cc_p\auto_case\utils\core\api\assertions.py)
+2025-08-10 20:00:09 | ERROR | utils.core.api.assertions:assert_json_path:94 | JSON路径断言失败: $.id 用户ID应为1 1, 实际值: 1
+2025-08-10 20:00:09 | ERROR | utils.core.api.assertions:assert_json_path:94 | JSON路径断言失败: $.name 用户名不应为空 None, 实际值: Leanne Graham
+2025-08-10 20:00:09 | ERROR | utils.core.api.assertions:assert_json_path:94 | JSON路径断言失败: $.email 邮箱应包含@符号 @, 实际值: Sincere@april.biz
+2025-08-10 20:00:10 | ERROR | utils.core.api.assertions:assert_status_code:35 | 创建成功状态码应为201
+2025-08-10 20:00:13 | ERROR | utils.core.api.assertions:assert_json_path:94 | JSON路径断言失败: $ 返回结果应为数组 None, 实际值: [{'userId': 1, 'id': 1, 'title': 'sunt aut facere repellat provident occaecati excepturi optio reprehenderit', 'body': 'quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto'}, {'userId': 1, 'id': 2, 'title': 'qui est esse', 'body': 'est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla'}, {'userId': 1, 'id': 3, 'title': 'ea molestias quasi exercitationem repellat qui ipsa sit aut', 'body': 'et iusto sed quo iure\nvoluptatem occaecati omnis eligendi aut ad\nvoluptatem doloribus vel accusantium quis pariatur\nmolestiae porro eius odio et labore et velit aut'}, {'userId': 1, 'id': 4, 'title': 'eum et est occaecati', 'body': 'ullam et saepe reiciendis voluptatem adipisci\nsit amet autem assumenda provident rerum culpa\nquis hic commodi nesciunt rem tenetur doloremque ipsam iure\nquis sunt voluptatem rerum illo velit'}, {'userId': 1, 'id': 5, 'title': 'nesciunt quas odio', 'body': 'repudiandae veniam quaerat sunt sed\nalias aut fugiat sit autem sed est\nvoluptatem omnis possimus esse voluptatibus quis\nest aut tenetur dolor neque'}]
+2025-08-10 20:00:13 | ERROR | utils.core.api.assertions:assert_json_path:94 | JSON路径断言失败: $[0].userId 第一条记录的userId应为1 1, 实际值: 1
+2025-08-10 20:00:16 | ERROR | utils.core.api.assertions:assert_json_path:94 | JSON路径断言失败: $.id 用户ID应为2 2, 实际值: 2
+2025-08-10 20:00:17 | ERROR | utils.core.api.assertions:assert_json_path:94 | JSON路径断言失败: $.id 用户ID应为3 3, 实际值: 3
+2025-08-10 20:00:17 | ERROR | utils.core.api.assertions:assert_json_path:94 | JSON路径断言失败: $.id 文章ID应为1 1, 实际值: 1
+2025-08-10 20:00:23 | ERROR | utils.core.api.assertions:assert_json_path:94 | JSON路径断言失败: $.id 用户ID应为4 4, 实际值: 4
+2025-08-10 20:00:52 | ERROR | utils.core.api.client:_execute_with_retry:229 | 请求失败，已重试3次: HTTPSConnectionPool(host='jsonplaceholder.typicode.com', port=443): Max retries exceeded with url: /posts/1 (Caused by ResponseError('too many 500 error responses'))
+2025-08-10 20:01:34 | ERROR | utils.core.api.assertions:assert_json_path:94 | JSON路径断言失败: $.id 用户ID应为1 1, 实际值: 1
+2025-08-10 20:01:34 | ERROR | utils.core.api.assertions:assert_json_path:94 | JSON路径断言失败: $.name 用户名不应为空 None, 实际值: Leanne Graham
+2025-08-10 20:01:34 | ERROR | utils.core.api.assertions:assert_json_path:94 | JSON路径断言失败: $.email 邮箱应包含@符号 @, 实际值: Sincere@april.biz
+2025-08-10 20:01:35 | ERROR | utils.core.api.assertions:assert_status_code:35 | 创建成功状态码应为201
+2025-08-10 20:01:37 | ERROR | utils.core.api.assertions:assert_json_path:94 | JSON路径断言失败: $ 返回结果应为数组 None, 实际值: [{'userId': 1, 'id': 1, 'title': 'sunt aut facere repellat provident occaecati excepturi optio reprehenderit', 'body': 'quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto'}, {'userId': 1, 'id': 2, 'title': 'qui est esse', 'body': 'est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla'}, {'userId': 1, 'id': 3, 'title': 'ea molestias quasi exercitationem repellat qui ipsa sit aut', 'body': 'et iusto sed quo iure\nvoluptatem occaecati omnis eligendi aut ad\nvoluptatem doloribus vel accusantium quis pariatur\nmolestiae porro eius odio et labore et velit aut'}, {'userId': 1, 'id': 4, 'title': 'eum et est occaecati', 'body': 'ullam et saepe reiciendis voluptatem adipisci\nsit amet autem assumenda provident rerum culpa\nquis hic commodi nesciunt rem tenetur doloremque ipsam iure\nquis sunt voluptatem rerum illo velit'}, {'userId': 1, 'id': 5, 'title': 'nesciunt quas odio', 'body': 'repudiandae veniam quaerat sunt sed\nalias aut fugiat sit autem sed est\nvoluptatem omnis possimus esse voluptatibus quis\nest aut tenetur dolor neque'}]
+2025-08-10 20:01:37 | ERROR | utils.core.api.assertions:assert_json_path:94 | JSON路径断言失败: $[0].userId 第一条记录的userId应为1 1, 实际值: 1
+2025-08-10 20:01:38 | ERROR | utils.core.api.assertions:assert_json_path:94 | JSON路径断言失败: $.id 用户ID应为2 2, 实际值: 2
+2025-08-10 20:01:39 | ERROR | utils.core.api.assertions:assert_json_path:94 | JSON路径断言失败: $.id 用户ID应为3 3, 实际值: 3
+2025-08-10 20:01:39 | ERROR | utils.core.api.assertions:assert_json_path:94 | JSON路径断言失败: $.id 文章ID应为1 1, 实际值: 1
+2025-08-10 20:01:41 | ERROR | utils.core.api.assertions:assert_json_path:94 | JSON路径断言失败: $.id 用户ID应为4 4, 实际值: 4
+2025-08-10 20:02:18 | ERROR | utils.core.api.client:_execute_with_retry:229 | 请求失败，已重试3次: HTTPSConnectionPool(host='jsonplaceholder.typicode.com', port=443): Max retries exceeded with url: /posts/1 (Caused by ResponseError('too many 500 error responses'))
+2025-08-10 20:07:43 | ERROR | utils.core.api.assertions:assert_json_path:94 | JSON路径断言失败: $.id 用户ID应为1 1, 实际值: 1
+2025-08-10 20:07:43 | ERROR | utils.core.api.assertions:assert_json_path:94 | JSON路径断言失败: $.name 用户名不应为空 None, 实际值: Leanne Graham
+2025-08-10 20:07:43 | ERROR | utils.core.api.assertions:assert_json_path:94 | JSON路径断言失败: $.email 邮箱应包含@符号 @, 实际值: Sincere@april.biz
+2025-08-10 20:07:44 | ERROR | utils.core.api.assertions:assert_status_code:35 | 创建成功状态码应为201
+2025-08-10 20:07:46 | ERROR | utils.core.api.assertions:assert_json_path:94 | JSON路径断言失败: $ 返回结果应为数组 None, 实际值: [{'userId': 1, 'id': 1, 'title': 'sunt aut facere repellat provident occaecati excepturi optio reprehenderit', 'body': 'quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto'}, {'userId': 1, 'id': 2, 'title': 'qui est esse', 'body': 'est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla'}, {'userId': 1, 'id': 3, 'title': 'ea molestias quasi exercitationem repellat qui ipsa sit aut', 'body': 'et iusto sed quo iure\nvoluptatem occaecati omnis eligendi aut ad\nvoluptatem doloribus vel accusantium quis pariatur\nmolestiae porro eius odio et labore et velit aut'}, {'userId': 1, 'id': 4, 'title': 'eum et est occaecati', 'body': 'ullam et saepe reiciendis voluptatem adipisci\nsit amet autem assumenda provident rerum culpa\nquis hic commodi nesciunt rem tenetur doloremque ipsam iure\nquis sunt voluptatem rerum illo velit'}, {'userId': 1, 'id': 5, 'title': 'nesciunt quas odio', 'body': 'repudiandae veniam quaerat sunt sed\nalias aut fugiat sit autem sed est\nvoluptatem omnis possimus esse voluptatibus quis\nest aut tenetur dolor neque'}]
+2025-08-10 20:07:47 | ERROR | utils.core.api.assertions:assert_json_path:94 | JSON路径断言失败: $[0].userId 第一条记录的userId应为1 1, 实际值: 1
+2025-08-10 20:07:48 | ERROR | utils.core.api.assertions:assert_json_path:94 | JSON路径断言失败: $.id 用户ID应为2 2, 实际值: 2
+2025-08-10 20:07:49 | ERROR | utils.core.api.assertions:assert_json_path:94 | JSON路径断言失败: $.id 用户ID应为3 3, 实际值: 3
+2025-08-10 20:07:50 | ERROR | utils.core.api.assertions:assert_json_path:94 | JSON路径断言失败: $.id 文章ID应为1 1, 实际值: 1
+2025-08-10 20:07:55 | ERROR | utils.core.api.assertions:assert_json_path:94 | JSON路径断言失败: $.id 用户ID应为4 4, 实际值: 4
+2025-08-10 20:08:24 | ERROR | utils.core.api.client:_execute_with_retry:229 | 请求失败，已重试3次: HTTPSConnectionPool(host='jsonplaceholder.typicode.com', port=443): Max retries exceeded with url: /posts/1 (Caused by ResponseError('too many 500 error responses'))
+2025-08-10 20:08:24 | ERROR | __main__:main:252 | ❌ 测试执行失败
+2025-08-10 20:09:43 | ERROR | utils.core.api.assertions:assert_json_path:94 | JSON路径断言失败: $.id 用户ID应为1 1, 实际值: 1
+2025-08-10 20:09:43 | ERROR | utils.core.api.assertions:assert_json_path:94 | JSON路径断言失败: $.name 用户名不应为空 None, 实际值: Leanne Graham
+2025-08-10 20:09:43 | ERROR | utils.core.api.assertions:assert_json_path:94 | JSON路径断言失败: $.email 邮箱应包含@符号 @, 实际值: Sincere@april.biz
+2025-08-10 20:09:43 | ERROR | utils.core.api.assertions:assert_status_code:35 | 创建成功状态码应为201
+2025-08-10 20:09:45 | ERROR | utils.core.api.assertions:assert_json_path:94 | JSON路径断言失败: $ 返回结果应为数组 None, 实际值: [{'userId': 1, 'id': 1, 'title': 'sunt aut facere repellat provident occaecati excepturi optio reprehenderit', 'body': 'quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto'}, {'userId': 1, 'id': 2, 'title': 'qui est esse', 'body': 'est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla'}, {'userId': 1, 'id': 3, 'title': 'ea molestias quasi exercitationem repellat qui ipsa sit aut', 'body': 'et iusto sed quo iure\nvoluptatem occaecati omnis eligendi aut ad\nvoluptatem doloribus vel accusantium quis pariatur\nmolestiae porro eius odio et labore et velit aut'}, {'userId': 1, 'id': 4, 'title': 'eum et est occaecati', 'body': 'ullam et saepe reiciendis voluptatem adipisci\nsit amet autem assumenda provident rerum culpa\nquis hic commodi nesciunt rem tenetur doloremque ipsam iure\nquis sunt voluptatem rerum illo velit'}, {'userId': 1, 'id': 5, 'title': 'nesciunt quas odio', 'body': 'repudiandae veniam quaerat sunt sed\nalias aut fugiat sit autem sed est\nvoluptatem omnis possimus esse voluptatibus quis\nest aut tenetur dolor neque'}]
+2025-08-10 20:09:45 | ERROR | utils.core.api.assertions:assert_json_path:94 | JSON路径断言失败: $[0].userId 第一条记录的userId应为1 1, 实际值: 1
+2025-08-10 20:09:46 | ERROR | utils.core.api.assertions:assert_json_path:94 | JSON路径断言失败: $.id 用户ID应为2 2, 实际值: 2
+2025-08-10 20:09:46 | ERROR | utils.core.api.assertions:assert_json_path:94 | JSON路径断言失败: $.id 用户ID应为3 3, 实际值: 3
+2025-08-10 20:09:47 | ERROR | utils.core.api.assertions:assert_json_path:94 | JSON路径断言失败: $.id 文章ID应为1 1, 实际值: 1
+2025-08-10 20:09:49 | ERROR | utils.core.api.assertions:assert_json_path:94 | JSON路径断言失败: $.id 用户ID应为4 4, 实际值: 4
+2025-08-10 20:10:24 | ERROR | utils.core.api.client:_execute_with_retry:229 | 请求失败，已重试3次: HTTPSConnectionPool(host='jsonplaceholder.typicode.com', port=443): Max retries exceeded with url: /posts/1 (Caused by ResponseError('too many 500 error responses'))
+2025-08-10 20:10:24 | ERROR | utils.core.concurrent.api_executor:execute_api_case:208 | [API线程12700] ❌ 异常: 更新文章信息 - HTTPSConnectionPool(host='jsonplaceholder.typicode.com', port=443): Max retries exceeded with url: /posts/1 (Caused by ResponseError('too many 500 error responses'))
+2025-08-10 20:33:03 | ERROR | utils.core.api.assertions:assert_json_path:94 | JSON路径断言失败: $.id 用户ID应为1 1, 实际值: 1
+2025-08-10 20:33:03 | ERROR | utils.core.api.assertions:assert_json_path:94 | JSON路径断言失败: $.name 用户名不应为空 None, 实际值: Leanne Graham
+2025-08-10 20:33:03 | ERROR | utils.core.api.assertions:assert_json_path:94 | JSON路径断言失败: $.email 邮箱应包含@符号 @, 实际值: Sincere@april.biz
+2025-08-10 20:33:03 | ERROR | utils.core.api.assertions:assert_status_code:35 | 创建成功状态码应为201
+2025-08-10 20:33:07 | ERROR | utils.core.api.assertions:assert_json_path:94 | JSON路径断言失败: $ 返回结果应为数组 None, 实际值: [{'userId': 1, 'id': 1, 'title': 'sunt aut facere repellat provident occaecati excepturi optio reprehenderit', 'body': 'quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto'}, {'userId': 1, 'id': 2, 'title': 'qui est esse', 'body': 'est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla'}, {'userId': 1, 'id': 3, 'title': 'ea molestias quasi exercitationem repellat qui ipsa sit aut', 'body': 'et iusto sed quo iure\nvoluptatem occaecati omnis eligendi aut ad\nvoluptatem doloribus vel accusantium quis pariatur\nmolestiae porro eius odio et labore et velit aut'}, {'userId': 1, 'id': 4, 'title': 'eum et est occaecati', 'body': 'ullam et saepe reiciendis voluptatem adipisci\nsit amet autem assumenda provident rerum culpa\nquis hic commodi nesciunt rem tenetur doloremque ipsam iure\nquis sunt voluptatem rerum illo velit'}, {'userId': 1, 'id': 5, 'title': 'nesciunt quas odio', 'body': 'repudiandae veniam quaerat sunt sed\nalias aut fugiat sit autem sed est\nvoluptatem omnis possimus esse voluptatibus quis\nest aut tenetur dolor neque'}]
+2025-08-10 20:33:07 | ERROR | utils.core.api.assertions:assert_json_path:94 | JSON路径断言失败: $[0].userId 第一条记录的userId应为1 1, 实际值: 1
+2025-08-10 20:33:09 | ERROR | utils.core.api.assertions:assert_json_path:94 | JSON路径断言失败: $.id 用户ID应为2 2, 实际值: 2
+2025-08-10 20:33:10 | ERROR | utils.core.api.assertions:assert_json_path:94 | JSON路径断言失败: $.id 用户ID应为3 3, 实际值: 3
+2025-08-10 20:33:11 | ERROR | utils.core.api.assertions:assert_json_path:94 | JSON路径断言失败: $.id 文章ID应为1 1, 实际值: 1
+2025-08-10 20:33:16 | ERROR | utils.core.api.assertions:assert_json_path:94 | JSON路径断言失败: $.id 用户ID应为4 4, 实际值: 4
+2025-08-10 20:33:44 | ERROR | utils.core.api.client:_execute_with_retry:229 | 请求失败，已重试3次: HTTPSConnectionPool(host='jsonplaceholder.typicode.com', port=443): Max retries exceeded with url: /posts/1 (Caused by ResponseError('too many 500 error responses'))
+2025-08-10 20:33:44 | ERROR | __main__:main:252 | ❌ 测试执行失败
