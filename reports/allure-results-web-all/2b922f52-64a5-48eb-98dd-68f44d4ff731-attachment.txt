@@ -1,0 +1,6 @@
+2025-08-10 19:39:21 | INFO | test_case.conftest:pytest_runtest_setup:128 | 开始执行测试: test_login_page_data_driven
+2025-08-10 19:39:21 | WARNING | utils.config.parser:load_env_config:52 | 环境配置文件不存在: E:\code_project\cc_p\auto_case\config\env_config.yaml
+2025-08-10 19:39:21 | INFO | utils.core.auth.login_manager:ensure_on_target_page:372 | 当前不在目标页面(https://httpbin.org/)，尝试导航
+2025-08-10 19:39:21 | WARNING | utils.core.auth.login_manager:_default_navigate:326 | 未配置目标页面URL
+2025-08-10 19:39:21 | INFO | test_case.conftest:pytest_runtest_teardown:133 | 测试执行完成: test_login_page_data_driven
+2025-08-10 19:39:21 | WARNING | test_case.web.conftest:browser_manager:132 | 关闭浏览器异常: 'BrowserManager' object has no attribute 'close'

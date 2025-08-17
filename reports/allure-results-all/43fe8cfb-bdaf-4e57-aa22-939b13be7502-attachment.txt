@@ -1,0 +1,7 @@
+2025-08-10 19:28:50 | INFO | test_case.conftest:pytest_runtest_setup:128 | 开始执行测试: test_login_api_data_driven
+2025-08-10 19:28:50 | INFO | test_case.conftest:pytest_runtest_teardown:133 | 测试执行完成: test_login_api_data_driven
+2025-08-10 19:28:50 | INFO | utils.core.api.client:logout:420 | 未配置登出接口，跳过登出请求
+2025-08-10 19:28:50 | INFO | utils.core.api.client:clear_token:456 | token已清除
+2025-08-10 19:28:50 | INFO | utils.core.api.client:logout:427 | 登出操作完成
+2025-08-10 19:28:50 | INFO | utils.core.api.client:close:464 | API客户端会话已关闭
+2025-08-10 19:28:50 | INFO | test_case.api.conftest:api_client:96 | API客户端清理完成

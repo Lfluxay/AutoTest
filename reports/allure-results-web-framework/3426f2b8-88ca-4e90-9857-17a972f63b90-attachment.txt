@@ -1,0 +1,214 @@
+2025-08-10 19:36:31 | INFO | test_case.conftest:pytest_runtest_setup:128 | 开始执行测试: test_web_page_cases
+2025-08-10 19:36:31 | INFO | utils.io.file_helper:clean_directory:641 | 清理目录成功: screenshots\web
+2025-08-10 19:36:31 | INFO | test_case.web.conftest:_ensure_web_directories:69 | 已清空Web测试截图目录: screenshots/web
+2025-08-10 19:36:31 | WARNING | utils.config.parser:load_env_config:52 | 环境配置文件不存在: E:\code_project\cc_p\auto_case\config\env_config.yaml
+2025-08-10 19:36:31 | INFO | utils.core.web.browser:__init__:46 | 浏览器管理器初始化: chromium, headless=False
+2025-08-10 19:36:31 | INFO | utils.core.web.browser:start_browser:102 | 浏览器启动成功: chromium
+2025-08-10 19:36:31 | WARNING | utils.config.parser:load_env_config:52 | 环境配置文件不存在: E:\code_project\cc_p\auto_case\config\env_config.yaml
+2025-08-10 19:37:01 | ERROR | utils.core.auth.login_manager:_default_login:286 | Web默认登录异常: Timeout 30000ms exceeded.
+2025-08-10 19:37:01 | WARNING | test_case.web.conftest:browser_manager:120 | Web全局登录失败
+2025-08-10 19:37:01 | WARNING | utils.config.parser:load_env_config:52 | 环境配置文件不存在: E:\code_project\cc_p\auto_case\config\env_config.yaml
+2025-08-10 19:37:01 | INFO | utils.core.auth.login_manager:ensure_on_target_page:372 | 当前不在目标页面(about:blank)，尝试导航
+2025-08-10 19:37:01 | WARNING | utils.core.auth.login_manager:_default_navigate:326 | 未配置目标页面URL
+2025-08-10 19:37:01 | WARNING | utils.config.parser:load_env_config:52 | 环境配置文件不存在: E:\code_project\cc_p\auto_case\config\env_config.yaml
+2025-08-10 19:37:01 | INFO | utils.core.base.test_base:setup_method:26 | 开始执行测试: test_web_page_cases
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_test:32 | ================================================================================
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_test:33 | 🚀 开始执行测试: test_web_page_cases
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_test:36 | ================================================================================
+2025-08-10 19:37:01 | INFO | test_case.web.test_web_driver:setup_test:16 | Web测试环境准备完成
+2025-08-10 19:37:01 | INFO | test_case.web.test_web_driver:test_web_page_cases:84 | 执行Web测试文件: E:\code_project\cc_p\auto_case\data\web\web_test_cases.yaml
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_test:32 | ================================================================================
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_test:33 | 🚀 开始执行测试: 页面导航测试
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_test:35 | 📝 测试描述: 测试页面基本导航功能
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_test:36 | ================================================================================
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_step:53 | 📋 步骤 1: 测试用例初始化
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_step:55 |    📄 描述: 准备测试环境和数据
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:log_action:89 |    ⚡ 加载测试用例配置: {
+  "case_name": "页面导航测试",
+  "test_type": "unknown",
+  "priority": "normal"
+}
+2025-08-10 19:37:01 | INFO | utils.core.base.test_base:execute_test_case:116 | 执行测试用例: 页面导航测试
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_step:209 |    ✅ 步骤完成: PASSED (耗时: 0.000s)
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_step:53 | 📋 步骤 2: 执行测试逻辑
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_step:55 |    📄 描述: 执行主要测试步骤
+2025-08-10 19:37:01 | INFO | utils.logging.logger:log_step:153 |    步骤: 执行Web步骤序列 2个步骤
+2025-08-10 19:37:01 | INFO | utils.core.web.keywords:execute_steps:513 | 执行步骤1: navigate
+2025-08-10 19:37:01 | ERROR | utils.core.web.keywords:execute_steps:517 | 步骤1执行失败: navigate, 错误: No module named 'core'
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_step:209 |    ✅ 步骤完成: PASSED (耗时: 0.004s)
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_step:53 | 📋 步骤 3: 测试结果验证
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_step:55 |    📄 描述: 验证测试执行结果
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:log_assertion:173 |    ❌ 断言: 测试状态检查
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:log_assertion:174 |    📋 期望值: PASS
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:log_assertion:175 |    📊 实际值: FAIL
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:log_assertion:176 |    🎯 结果: 失败
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:log_assertion:179 |    💬 说明: 测试用例 页面导航测试 执行结果
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_step:209 |    ✅ 步骤完成: PASSED (耗时: 0.000s)
+2025-08-10 19:37:01 | ERROR | utils.core.base.test_base:execute_test_case:151 | 测试用例执行失败: 页面导航测试, 错误: No module named 'core'
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_test:221 | ================================================================================
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_test:224 | ❌ 测试完成: 页面导航测试
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_test:225 | ⏱️ 总耗时: 0.004s
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_test:226 | 📊 总步骤数: 3
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_test:232 | ✅ 通过步骤: 3
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_test:233 | ❌ 失败步骤: 0
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_test:236 | 📋 测试总结:
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_test:238 |    测试结果: FAIL
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_test:238 |    错误信息: No module named 'core'
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_test:240 | ================================================================================
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_test:32 | ================================================================================
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_test:33 | 🚀 开始执行测试: 表单填写测试
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_test:35 | 📝 测试描述: 测试表单输入和提交功能
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_test:36 | ================================================================================
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_step:53 | 📋 步骤 1: 测试用例初始化
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_step:55 |    📄 描述: 准备测试环境和数据
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:log_action:89 |    ⚡ 加载测试用例配置: {
+  "case_name": "表单填写测试",
+  "test_type": "unknown",
+  "priority": "normal"
+}
+2025-08-10 19:37:01 | INFO | utils.core.base.test_base:execute_test_case:116 | 执行测试用例: 表单填写测试
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_step:209 |    ✅ 步骤完成: PASSED (耗时: 0.002s)
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_step:53 | 📋 步骤 2: 执行测试逻辑
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_step:55 |    📄 描述: 执行主要测试步骤
+2025-08-10 19:37:01 | INFO | utils.logging.logger:log_step:153 |    步骤: 执行Web步骤序列 10个步骤
+2025-08-10 19:37:01 | INFO | utils.core.web.keywords:execute_steps:513 | 执行步骤1: navigate
+2025-08-10 19:37:01 | ERROR | utils.core.web.keywords:execute_steps:517 | 步骤1执行失败: navigate, 错误: No module named 'core'
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_step:209 |    ✅ 步骤完成: PASSED (耗时: 0.000s)
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_step:53 | 📋 步骤 3: 测试结果验证
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_step:55 |    📄 描述: 验证测试执行结果
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:log_assertion:173 |    ❌ 断言: 测试状态检查
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:log_assertion:174 |    📋 期望值: PASS
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:log_assertion:175 |    📊 实际值: FAIL
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:log_assertion:176 |    🎯 结果: 失败
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:log_assertion:179 |    💬 说明: 测试用例 表单填写测试 执行结果
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_step:209 |    ✅ 步骤完成: PASSED (耗时: 0.000s)
+2025-08-10 19:37:01 | ERROR | utils.core.base.test_base:execute_test_case:151 | 测试用例执行失败: 表单填写测试, 错误: No module named 'core'
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_test:221 | ================================================================================
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_test:224 | ❌ 测试完成: 表单填写测试
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_test:225 | ⏱️ 总耗时: 0.002s
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_test:226 | 📊 总步骤数: 3
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_test:232 | ✅ 通过步骤: 3
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_test:233 | ❌ 失败步骤: 0
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_test:236 | 📋 测试总结:
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_test:238 |    测试结果: FAIL
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_test:238 |    错误信息: No module named 'core'
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_test:240 | ================================================================================
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_test:32 | ================================================================================
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_test:33 | 🚀 开始执行测试: 元素等待测试
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_test:35 | 📝 测试描述: 测试各种元素等待策略
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_test:36 | ================================================================================
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_step:53 | 📋 步骤 1: 测试用例初始化
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_step:55 |    📄 描述: 准备测试环境和数据
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:log_action:89 |    ⚡ 加载测试用例配置: {
+  "case_name": "元素等待测试",
+  "test_type": "unknown",
+  "priority": "normal"
+}
+2025-08-10 19:37:01 | INFO | utils.core.base.test_base:execute_test_case:116 | 执行测试用例: 元素等待测试
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_step:209 |    ✅ 步骤完成: PASSED (耗时: 0.000s)
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_step:53 | 📋 步骤 2: 执行测试逻辑
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_step:55 |    📄 描述: 执行主要测试步骤
+2025-08-10 19:37:01 | INFO | utils.logging.logger:log_step:153 |    步骤: 执行Web步骤序列 2个步骤
+2025-08-10 19:37:01 | INFO | utils.core.web.keywords:execute_steps:513 | 执行步骤1: navigate
+2025-08-10 19:37:01 | ERROR | utils.core.web.keywords:execute_steps:517 | 步骤1执行失败: navigate, 错误: No module named 'core'
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_step:209 |    ✅ 步骤完成: PASSED (耗时: 0.000s)
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_step:53 | 📋 步骤 3: 测试结果验证
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_step:55 |    📄 描述: 验证测试执行结果
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:log_assertion:173 |    ❌ 断言: 测试状态检查
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:log_assertion:174 |    📋 期望值: PASS
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:log_assertion:175 |    📊 实际值: FAIL
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:log_assertion:176 |    🎯 结果: 失败
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:log_assertion:179 |    💬 说明: 测试用例 元素等待测试 执行结果
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_step:209 |    ✅ 步骤完成: PASSED (耗时: 0.005s)
+2025-08-10 19:37:01 | ERROR | utils.core.base.test_base:execute_test_case:151 | 测试用例执行失败: 元素等待测试, 错误: No module named 'core'
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_test:221 | ================================================================================
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_test:224 | ❌ 测试完成: 元素等待测试
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_test:225 | ⏱️ 总耗时: 0.005s
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_test:226 | 📊 总步骤数: 3
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_test:232 | ✅ 通过步骤: 3
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_test:233 | ❌ 失败步骤: 0
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_test:236 | 📋 测试总结:
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_test:238 |    测试结果: FAIL
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_test:238 |    错误信息: No module named 'core'
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_test:240 | ================================================================================
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_test:32 | ================================================================================
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_test:33 | 🚀 开始执行测试: 多元素操作测试
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_test:35 | 📝 测试描述: 测试对多个元素的批量操作
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_test:36 | ================================================================================
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_step:53 | 📋 步骤 1: 测试用例初始化
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_step:55 |    📄 描述: 准备测试环境和数据
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:log_action:89 |    ⚡ 加载测试用例配置: {
+  "case_name": "多元素操作测试",
+  "test_type": "unknown",
+  "priority": "normal"
+}
+2025-08-10 19:37:01 | INFO | utils.core.base.test_base:execute_test_case:116 | 执行测试用例: 多元素操作测试
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_step:209 |    ✅ 步骤完成: PASSED (耗时: 0.000s)
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_step:53 | 📋 步骤 2: 执行测试逻辑
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_step:55 |    📄 描述: 执行主要测试步骤
+2025-08-10 19:37:01 | INFO | utils.logging.logger:log_step:153 |    步骤: 执行Web步骤序列 4个步骤
+2025-08-10 19:37:01 | INFO | utils.core.web.keywords:execute_steps:513 | 执行步骤1: navigate
+2025-08-10 19:37:01 | ERROR | utils.core.web.keywords:execute_steps:517 | 步骤1执行失败: navigate, 错误: No module named 'core'
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_step:209 |    ✅ 步骤完成: PASSED (耗时: 0.000s)
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_step:53 | 📋 步骤 3: 测试结果验证
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_step:55 |    📄 描述: 验证测试执行结果
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:log_assertion:173 |    ❌ 断言: 测试状态检查
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:log_assertion:174 |    📋 期望值: PASS
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:log_assertion:175 |    📊 实际值: FAIL
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:log_assertion:176 |    🎯 结果: 失败
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:log_assertion:179 |    💬 说明: 测试用例 多元素操作测试 执行结果
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_step:209 |    ✅ 步骤完成: PASSED (耗时: 0.000s)
+2025-08-10 19:37:01 | ERROR | utils.core.base.test_base:execute_test_case:151 | 测试用例执行失败: 多元素操作测试, 错误: No module named 'core'
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_test:221 | ================================================================================
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_test:224 | ❌ 测试完成: 多元素操作测试
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_test:225 | ⏱️ 总耗时: 0.000s
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_test:226 | 📊 总步骤数: 3
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_test:232 | ✅ 通过步骤: 3
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_test:233 | ❌ 失败步骤: 0
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_test:236 | 📋 测试总结:
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_test:238 |    测试结果: FAIL
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_test:238 |    错误信息: No module named 'core'
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_test:240 | ================================================================================
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_test:32 | ================================================================================
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_test:33 | 🚀 开始执行测试: 页面交互测试
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_test:35 | 📝 测试描述: 测试页面的各种交互操作
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_test:36 | ================================================================================
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_step:53 | 📋 步骤 1: 测试用例初始化
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_step:55 |    📄 描述: 准备测试环境和数据
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:log_action:89 |    ⚡ 加载测试用例配置: {
+  "case_name": "页面交互测试",
+  "test_type": "unknown",
+  "priority": "normal"
+}
+2025-08-10 19:37:01 | INFO | utils.core.base.test_base:execute_test_case:116 | 执行测试用例: 页面交互测试
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_step:209 |    ✅ 步骤完成: PASSED (耗时: 0.000s)
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_step:53 | 📋 步骤 2: 执行测试逻辑
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_step:55 |    📄 描述: 执行主要测试步骤
+2025-08-10 19:37:01 | INFO | utils.logging.logger:log_step:153 |    步骤: 执行Web步骤序列 4个步骤
+2025-08-10 19:37:01 | INFO | utils.core.web.keywords:execute_steps:513 | 执行步骤1: navigate
+2025-08-10 19:37:01 | ERROR | utils.core.web.keywords:execute_steps:517 | 步骤1执行失败: navigate, 错误: No module named 'core'
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_step:209 |    ✅ 步骤完成: PASSED (耗时: 0.002s)
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_step:53 | 📋 步骤 3: 测试结果验证
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:start_step:55 |    📄 描述: 验证测试执行结果
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:log_assertion:173 |    ❌ 断言: 测试状态检查
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:log_assertion:174 |    📋 期望值: PASS
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:log_assertion:175 |    📊 实际值: FAIL
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:log_assertion:176 |    🎯 结果: 失败
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:log_assertion:179 |    💬 说明: 测试用例 页面交互测试 执行结果
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_step:209 |    ✅ 步骤完成: PASSED (耗时: 0.000s)
+2025-08-10 19:37:01 | ERROR | utils.core.base.test_base:execute_test_case:151 | 测试用例执行失败: 页面交互测试, 错误: No module named 'core'
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_test:221 | ================================================================================
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_test:224 | ❌ 测试完成: 页面交互测试
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_test:225 | ⏱️ 总耗时: 0.007s
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_test:226 | 📊 总步骤数: 3
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_test:232 | ✅ 通过步骤: 3
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_test:233 | ❌ 失败步骤: 0
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_test:236 | 📋 测试总结:
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_test:238 |    测试结果: FAIL
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_test:238 |    错误信息: No module named 'core'
+2025-08-10 19:37:01 | INFO | utils.logging.test_step_logger:end_test:240 | ================================================================================
+2025-08-10 19:37:01 | INFO | utils.core.base.test_base:teardown_method:37 | 测试执行完成: test_web_page_cases
+2025-08-10 19:37:01 | INFO | utils.logging.logger:end_test:187 | 测试执行完成
+2025-08-10 19:37:01 | INFO | test_case.web.test_web_driver:teardown_test:19 | Web测试环境清理完成
+2025-08-10 19:37:01 | INFO | test_case.conftest:pytest_runtest_teardown:133 | 测试执行完成: test_web_page_cases
+2025-08-10 19:37:01 | WARNING | test_case.web.conftest:browser_manager:132 | 关闭浏览器异常: 'BrowserManager' object has no attribute 'close'

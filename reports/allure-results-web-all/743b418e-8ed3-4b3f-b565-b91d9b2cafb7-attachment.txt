@@ -1,0 +1,2 @@
+2025-08-10 19:39:18 | INFO | test_case.conftest:pytest_runtest_setup:128 | 开始执行测试: test_screenshot_functionality
+2025-08-10 19:39:19 | INFO | test_case.conftest:pytest_runtest_teardown:133 | 测试执行完成: test_screenshot_functionality
