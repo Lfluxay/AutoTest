@@ -1,0 +1,22 @@
+test_cases:
+- assertions:
+  - expected: 200
+    type: status_code
+  case_name: 测试用例1
+  request:
+    method: GET
+    params:
+      key: value1
+    url: https://httpbin.org/get
+- assertions:
+  - expected: 200
+    type: status_code
+  case_name: 测试用例2
+  request:
+    method: GET
+    params:
+      key: value2
+    url: https://httpbin.org/get
+test_info:
+  description: 演示数据驱动测试
+  title: 示例测试
