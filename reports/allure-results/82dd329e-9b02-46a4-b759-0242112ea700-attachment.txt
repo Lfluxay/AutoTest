@@ -1,0 +1,2 @@
+2025-08-10 19:22:54 | INFO | test_case.conftest:pytest_runtest_setup:128 | 开始执行测试: test_get_users_parametrized[1-Leanne Graham]
+2025-08-10 19:22:55 | INFO | test_case.conftest:pytest_runtest_teardown:133 | 测试执行完成: test_get_users_parametrized[1-Leanne Graham]

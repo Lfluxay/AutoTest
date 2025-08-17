@@ -1,0 +1,10 @@
+2025-08-10 19:35:07 | INFO | test_case.conftest:pytest_runtest_setup:128 | 开始执行测试: test_page_navigation
+2025-08-10 19:35:07 | INFO | utils.io.file_helper:clean_directory:641 | 清理目录成功: screenshots\web
+2025-08-10 19:35:07 | INFO | test_case.web.conftest:_ensure_web_directories:69 | 已清空Web测试截图目录: screenshots/web
+2025-08-10 19:35:07 | WARNING | utils.config.parser:load_env_config:52 | 环境配置文件不存在: E:\code_project\cc_p\auto_case\config\env_config.yaml
+2025-08-10 19:35:07 | INFO | utils.core.web.browser:__init__:46 | 浏览器管理器初始化: chromium, headless=False
+2025-08-10 19:35:08 | INFO | utils.core.web.browser:start_browser:102 | 浏览器启动成功: chromium
+2025-08-10 19:35:08 | WARNING | utils.config.parser:load_env_config:52 | 环境配置文件不存在: E:\code_project\cc_p\auto_case\config\env_config.yaml
+2025-08-10 19:35:38 | ERROR | utils.core.auth.login_manager:_default_login:286 | Web默认登录异常: Timeout 30000ms exceeded.
+2025-08-10 19:35:38 | WARNING | test_case.web.conftest:browser_manager:120 | Web全局登录失败
+2025-08-10 19:35:39 | INFO | test_case.conftest:pytest_runtest_teardown:133 | 测试执行完成: test_page_navigation
