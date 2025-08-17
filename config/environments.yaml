@@ -1,0 +1,117 @@
+# ============================================================================
+# 环境配置文件
+# ============================================================================
+# 说明：
+# 1. 此文件只包含环境特定的配置差异
+# 2. 采用深度合并方式覆盖主配置文件
+# 3. 支持环境：dev / test / staging / prod
+# ============================================================================
+
+# ============================================================================
+# 开发环境配置
+# ============================================================================
+dev:
+  # API环境配置
+  api:
+    base_url: "https://dev-api.example.com"
+    defaults:
+      timeout: 60 # 开发环境较慢
+      verify_ssl: false # 开发环境可能用自签名证书
+    auth:
+      login:
+        data:
+          username: "dev_admin"
+          password: "dev123456"
+
+  # Web环境配置
+  web:
+    browser:
+      headless: false # 开发环境显示浏览器便于调试
+    auth:
+      login:
+        url: "https://dev.example.com/login"
+        data:
+          username: "dev_admin"
+          password: "dev123456"
+        home_url: "https://dev.example.com/dashboard"
+
+  # 数据库环境配置
+  database:
+    enabled: true
+    host: "dev-mysql.example.com"
+    port: 3306
+    database: "dev_test_db"
+    username: "dev_user"
+    password: "dev_password"
+
+  # 通知配置
+  notification:
+    enabled: false # 开发环境通常不发通知
+
+# ============================================================================
+# 测试环境配置
+# ============================================================================
+test:
+  # API环境配置
+  api:
+    base_url: "https://test-api.example.com"
+    auth:
+      login:
+        data:
+          username: "test_admin"
+          password: "test123456"
+
+  # Web环境配置
+  web:
+    browser:
+      headless: true # 测试环境无头模式
+    auth:
+      login:
+        url: "https://test.example.com/login"
+        data:
+          username: "test_admin"
+          password: "test123456"
+        home_url: "https://test.example.com/dashboard"
+
+  # 数据库环境配置
+  database:
+    enabled: true
+    host: "test-mysql.example.com"
+    port: 3306
+    database: "test_db"
+    username: "test_user"
+    password: "test_password"
+
+# ============================================================================
+# 生产环境配置
+# ============================================================================
+prod:
+  # API环境配置
+  api:
+    base_url: "https://api.example.com"
+    defaults:
+      retry_times: 1 # 生产环境减少重试
+    auth:
+      login:
+        data:
+          username: "prod_admin"
+          password: "prod123456"
+
+  # Web环境配置
+  web:
+    browser:
+      headless: true # 生产环境必须无头
+    on_failure:
+      screenshot: false # 生产环境不截图
+      video: false
+    auth:
+      login:
+        url: "https://example.com/login"
+        data:
+          username: "prod_admin"
+          password: "prod123456"
+        home_url: "https://example.com/dashboard"
+
+  # 数据库环境配置
+  database:
+    enabled: false # 生产环境通常不直接操作数据库

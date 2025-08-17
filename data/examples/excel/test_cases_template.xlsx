@@ -1,0 +1,28 @@
+# 这是一个Excel模板文件的说明
+# 实际的Excel文件需要使用Excel软件创建
+# 以下是Excel文件的结构说明：
+
+# Sheet1: login_module (登录模块测试)
+# 列结构：
+# case_name | type | template | method | url | username | password | expected_status | expected_code | tags | enabled
+
+# 示例数据：
+# 管理员登录 | template | api.auth.login#standard_login | | | admin | 123456 | 200 | 0 | smoke,positive | Y
+# 用户登录 | template | api.auth.login#standard_login | | | user001 | user123 | 200 | 0 | positive | Y
+# 密码错误 | template | api.auth.login#standard_login | | | admin | wrong | 400 | 1002 | negative | Y
+# 自定义接口 | custom | | GET | /api/health | | | 200 | | health | Y
+
+# Sheet2: user_module (用户管理模块测试)
+# 列结构：
+# case_name | type | method | url | headers | data | assertions | extract | tags | enabled
+
+# 示例数据：
+# 获取用户列表 | custom | GET | /api/users | {"Authorization": "Bearer ${token}"} | | [{"type":"status_code","expected":"200"}] | [{"name":"user_count","type":"json_path","path":"$.total"}] | positive | Y
+# 创建用户 | custom | POST | /api/users | {"Authorization": "Bearer ${token}", "Content-Type": "application/json"} | {"username": "newuser", "email": "new@example.com"} | [{"type":"status_code","expected":"201"}] | [{"name":"new_user_id","type":"json_path","path":"$.id"}] | positive | Y
+
+# 使用说明：
+# 1. 创建Excel文件，按照上述结构设置列
+# 2. 填入测试数据
+# 3. 使用命令执行：python main.py --excel test_cases.xlsx
+# 4. 支持模块过滤：python main.py --excel test_cases.xlsx --modules login_module
+# 5. 支持标签过滤：python main.py --excel test_cases.xlsx --tags smoke

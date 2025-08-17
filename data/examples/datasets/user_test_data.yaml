@@ -1,0 +1,207 @@
+# 用户测试数据集
+
+# 正向测试数据
+positive_users:
+  - name: "管理员用户"
+    username: "admin"
+    password: "123456"
+    email: "admin@example.com"
+    role: "admin"
+    expected_status: 200
+    expected_code: 0
+    expected_message: "操作成功"
+    
+  - name: "普通用户"
+    username: "user001"
+    password: "user123"
+    email: "user001@example.com"
+    role: "user"
+    expected_status: 200
+    expected_code: 0
+    expected_message: "操作成功"
+    
+  - name: "VIP用户"
+    username: "vip_user"
+    password: "vip123"
+    email: "vip@example.com"
+    role: "vip"
+    expected_status: 200
+    expected_code: 0
+    expected_message: "操作成功"
+
+# 负向测试数据
+negative_users:
+  - name: "密码错误"
+    username: "admin"
+    password: "wrong_password"
+    email: "admin@example.com"
+    role: "admin"
+    expected_status: 400
+    expected_code: 1002
+    expected_message: "密码错误"
+    
+  - name: "用户名不存在"
+    username: "nonexistent"
+    password: "123456"
+    email: "none@example.com"
+    role: "user"
+    expected_status: 400
+    expected_code: 1001
+    expected_message: "用户名不存在"
+    
+  - name: "账户被锁定"
+    username: "locked_user"
+    password: "123456"
+    email: "locked@example.com"
+    role: "user"
+    expected_status: 400
+    expected_code: 1005
+    expected_message: "账户已被锁定"
+    
+  - name: "密码为空"
+    username: "admin"
+    password: ""
+    email: "admin@example.com"
+    role: "admin"
+    expected_status: 400
+    expected_code: 1003
+    expected_message: "密码不能为空"
+    
+  - name: "用户名为空"
+    username: ""
+    password: "123456"
+    email: ""
+    role: "user"
+    expected_status: 400
+    expected_code: 1004
+    expected_message: "用户名不能为空"
+
+# 边界测试数据
+boundary_users:
+  - name: "最短用户名"
+    username: "a"
+    password: "123456"
+    email: "a@example.com"
+    role: "user"
+    expected_status: 200
+    expected_code: 0
+    expected_message: "操作成功"
+    
+  - name: "最长用户名"
+    username: "verylongusernamethatisexactlythirtytwocharacters"
+    password: "123456"
+    email: "long@example.com"
+    role: "user"
+    expected_status: 200
+    expected_code: 0
+    expected_message: "操作成功"
+    
+  - name: "最短密码"
+    username: "testuser"
+    password: "123"
+    email: "test@example.com"
+    role: "user"
+    expected_status: 400
+    expected_code: 1006
+    expected_message: "密码长度不能少于6位"
+    
+  - name: "特殊字符用户名"
+    username: "test@user"
+    password: "123456"
+    email: "special@example.com"
+    role: "user"
+    expected_status: 400
+    expected_code: 1007
+    expected_message: "用户名包含非法字符"
+
+# 性能测试数据
+performance_users:
+  - name: "性能测试用户1"
+    username: "perf_user_001"
+    password: "perf123"
+    email: "perf001@example.com"
+    role: "user"
+    expected_status: 200
+    expected_code: 0
+    expected_message: "操作成功"
+    max_response_time: 1000
+    
+  - name: "性能测试用户2"
+    username: "perf_user_002"
+    password: "perf123"
+    email: "perf002@example.com"
+    role: "user"
+    expected_status: 200
+    expected_code: 0
+    expected_message: "操作成功"
+    max_response_time: 1000
+
+# 批量测试数据
+batch_users:
+  - name: "批量用户1"
+    username: "batch_001"
+    password: "batch123"
+    email: "batch001@example.com"
+    role: "user"
+    expected_status: 200
+    expected_code: 0
+    
+  - name: "批量用户2"
+    username: "batch_002"
+    password: "batch123"
+    email: "batch002@example.com"
+    role: "user"
+    expected_status: 200
+    expected_code: 0
+    
+  - name: "批量用户3"
+    username: "batch_003"
+    password: "batch123"
+    email: "batch003@example.com"
+    role: "user"
+    expected_status: 200
+    expected_code: 0
+    
+  - name: "批量用户4"
+    username: "batch_004"
+    password: "batch123"
+    email: "batch004@example.com"
+    role: "user"
+    expected_status: 200
+    expected_code: 0
+    
+  - name: "批量用户5"
+    username: "batch_005"
+    password: "batch123"
+    email: "batch005@example.com"
+    role: "user"
+    expected_status: 200
+    expected_code: 0
+
+# 多环境测试数据
+dev_users:
+  - name: "开发环境用户"
+    username: "dev_admin"
+    password: "dev123"
+    email: "dev@example.com"
+    role: "admin"
+    expected_status: 200
+    expected_code: 0
+    
+test_users:
+  - name: "测试环境用户"
+    username: "test_admin"
+    password: "test123"
+    email: "test@example.com"
+    role: "admin"
+    expected_status: 200
+    expected_code: 0
+    
+staging_users:
+  - name: "预发布环境用户"
+    username: "staging_admin"
+    password: "staging123"
+    email: "staging@example.com"
+    role: "admin"
+    expected_status: 200
+    expected_code: 0

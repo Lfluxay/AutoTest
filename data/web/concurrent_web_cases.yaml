@@ -1,0 +1,83 @@
+test_info:
+  title: "并发Web测试用例"
+  description: "用于并发执行的Web页面测试用例"
+  tags: ["web", "concurrent", "automation"]
+  author: "测试团队"
+  version: "1.0"
+
+test_cases:
+  # 基础页面导航测试
+  - case_name: "页面导航测试"
+    description: "测试页面导航功能"
+    tags: ["navigation", "basic"]
+    priority: 1
+    steps:
+      - action: "navigate"
+        url: "https://example.com"
+      - action: "wait"
+        timeout: 2000
+    assertions:
+      - type: "page_title"
+        expected: "Example Domain"
+      - type: "element_visible"
+        selector: "h1"
+
+  # HTTP测试页面
+  - case_name: "HTTP测试页面"
+    description: "测试HTTP测试工具页面"
+    tags: ["http", "tools"]
+    priority: 2
+    steps:
+      - action: "navigate"
+        url: "https://httpbin.org"
+      - action: "wait"
+        timeout: 2000
+    assertions:
+      - type: "page_title"
+        expected: "httpbin"
+      - type: "element_visible"
+        selector: "body"
+
+  # JSON API页面
+  - case_name: "JSON API页面"
+    description: "测试JSON API页面"
+    tags: ["json", "api"]
+    priority: 2
+    steps:
+      - action: "navigate"
+        url: "https://jsonplaceholder.typicode.com"
+      - action: "wait"
+        timeout: 2000
+    assertions:
+      - type: "element_visible"
+        selector: "body"
+      - type: "page_title"
+        expected: "JSONPlaceholder"
+
+  # 表单页面测试
+  - case_name: "表单页面测试"
+    description: "测试表单页面加载"
+    tags: ["form", "loading"]
+    priority: 3
+    steps:
+      - action: "navigate"
+        url: "https://httpbin.org/forms/post"
+      - action: "wait"
+        timeout: 3000
+    assertions:
+      - type: "element_visible"
+        selector: "form"
+
+  # 状态码测试页面
+  - case_name: "状态码测试页面"
+    description: "测试HTTP状态码页面"
+    tags: ["status", "http"]
+    priority: 3
+    steps:
+      - action: "navigate"
+        url: "https://httpbin.org/status/200"
+      - action: "wait"
+        timeout: 2000
+    assertions:
+      - type: "element_visible"
+        selector: "body"

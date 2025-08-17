@@ -1,0 +1,318 @@
+2025-08-09 01:26:00 | ERROR | __main__:run_tests:177 | 测试错误:
+D:\python\lib\site-packages\_pytest\config\__init__.py:331: PluggyTeardownRaisedWarning: A plugin raised an exception during an old-style hookwrapper teardown.
+Plugin: helpconfig, Hook: pytest_cmdline_parse
+PluginValidationError: Plugin 'E:\\code_project\\cc_p\\auto_case\\tests\\conftest.py' for hook 'pytest_runtest_call'
+hookimpl definition: pytest_runtest_call(pyfuncitem)
+Argument(s) {'pyfuncitem'} are declared in the hookimpl but can not be found in the hookspec
+For more information see https://pluggy.readthedocs.io/en/stable/api_reference.html#pluggy.PluggyTeardownRaisedWarning
+  config = pluginmanager.hook.pytest_cmdline_parse(
+Traceback (most recent call last):
+  File "D:\python\lib\runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "D:\python\lib\runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "D:\python\lib\site-packages\pytest\__main__.py", line 5, in <module>
+    raise SystemExit(pytest.console_main())
+  File "D:\python\lib\site-packages\_pytest\config\__init__.py", line 192, in console_main
+    code = main()
+  File "D:\python\lib\site-packages\_pytest\config\__init__.py", line 150, in main
+    config = _prepareconfig(args, plugins)
+  File "D:\python\lib\site-packages\_pytest\config\__init__.py", line 331, in _prepareconfig
+    config = pluginmanager.hook.pytest_cmdline_parse(
+  File "D:\python\lib\site-packages\pluggy\_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "D:\python\lib\site-packages\pluggy\_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "D:\python\lib\site-packages\pluggy\_callers.py", line 167, in _multicall
+    raise exception
+  File "D:\python\lib\site-packages\pluggy\_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "D:\python\lib\site-packages\pluggy\_callers.py", line 43, in run_old_style_hookwrapper
+    teardown.send(result)
+  File "D:\python\lib\site-packages\_pytest\helpconfig.py", line 104, in pytest_cmdline_parse
+    config: Config = outcome.get_result()
+  File "D:\python\lib\site-packages\pluggy\_result.py", line 103, in get_result
+    raise exc.with_traceback(tb)
+  File "D:\python\lib\site-packages\pluggy\_callers.py", line 38, in run_old_style_hookwrapper
+    res = yield
+  File "D:\python\lib\site-packages\pluggy\_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+  File "D:\python\lib\site-packages\_pytest\config\__init__.py", line 1075, in pytest_cmdline_parse
+    self.parse(args)
+  File "D:\python\lib\site-packages\_pytest\config\__init__.py", line 1425, in parse
+    self._preparse(args, addopts=addopts)
+  File "D:\python\lib\site-packages\_pytest\config\__init__.py", line 1327, in _preparse
+    self.hook.pytest_load_initial_conftests(
+  File "D:\python\lib\site-packages\pluggy\_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "D:\python\lib\site-packages\pluggy\_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "D:\python\lib\site-packages\pluggy\_callers.py", line 167, in _multicall
+    raise exception
+  File "D:\python\lib\site-packages\pluggy\_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "D:\python\lib\site-packages\pluggy\_callers.py", line 53, in run_old_style_hookwrapper
+    return result.get_result()
+  File "D:\python\lib\site-packages\pluggy\_result.py", line 103, in get_result
+    raise exc.with_traceback(tb)
+  File "D:\python\lib\site-packages\pluggy\_callers.py", line 38, in run_old_style_hookwrapper
+    res = yield
+  File "D:\python\lib\site-packages\pluggy\_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "D:\python\lib\site-packages\pluggy\_callers.py", line 53, in run_old_style_hookwrapper
+    return result.get_result()
+  File "D:\python\lib\site-packages\pluggy\_result.py", line 103, in get_result
+    raise exc.with_traceback(tb)
+  File "D:\python\lib\site-packages\pluggy\_callers.py", line 38, in run_old_style_hookwrapper
+    res = yield
+  File "D:\python\lib\site-packages\pluggy\_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+  File "D:\python\lib\site-packages\_pytest\config\__init__.py", line 1153, in pytest_load_initial_conftests
+    self.pluginmanager._set_initial_conftests(
+  File "D:\python\lib\site-packages\_pytest\config\__init__.py", line 563, in _set_initial_conftests
+    self._try_load_conftest(anchor, importmode, rootpath)
+  File "D:\python\lib\site-packages\_pytest\config\__init__.py", line 580, in _try_load_conftest
+    self._getconftestmodules(anchor, importmode, rootpath)
+  File "D:\python\lib\site-packages\_pytest\config\__init__.py", line 609, in _getconftestmodules
+    mod = self._importconftest(conftestpath, importmode, rootpath)
+  File "D:\python\lib\site-packages\_pytest\config\__init__.py", line 657, in _importconftest
+    self.consider_conftest(mod)
+  File "D:\python\lib\site-packages\_pytest\config\__init__.py", line 739, in consider_conftest
+    self.register(conftestmodule, name=conftestmodule.__file__)
+  File "D:\python\lib\site-packages\_pytest\config\__init__.py", line 491, in register
+    ret: Optional[str] = super().register(plugin, name)
+  File "D:\python\lib\site-packages\pluggy\_manager.py", line 168, in register
+    self._verify_hook(hook, hookimpl)
+  File "D:\python\lib\site-packages\pluggy\_manager.py", line 343, in _verify_hook
+    raise PluginValidationError(
+pluggy._manager.PluginValidationError: Plugin 'E:\\code_project\\cc_p\\auto_case\\tests\\conftest.py' for hook 'pytest_runtest_call'
+hookimpl definition: pytest_runtest_call(pyfuncitem)
+Argument(s) {'pyfuncitem'} are declared in the hookimpl but can not be found in the hookspec
+
+2025-08-09 01:26:00 | ERROR | __main__:main:273 | ============================================================
+2025-08-09 01:26:00 | ERROR | __main__:main:274 | 测试执行完成 - 失败
+2025-08-09 01:26:00 | ERROR | __main__:main:275 | ============================================================
+2025-08-09 01:29:43 | ERROR | __main__:run_tests:177 | 测试错误:
+D:\python\lib\site-packages\_pytest\config\__init__.py:331: PluggyTeardownRaisedWarning: A plugin raised an exception during an old-style hookwrapper teardown.
+Plugin: helpconfig, Hook: pytest_cmdline_parse
+ValueError: option names {'--base-url'} already added
+For more information see https://pluggy.readthedocs.io/en/stable/api_reference.html#pluggy.PluggyTeardownRaisedWarning
+  config = pluginmanager.hook.pytest_cmdline_parse(
+Traceback (most recent call last):
+  File "D:\python\lib\runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "D:\python\lib\runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "D:\python\lib\site-packages\pytest\__main__.py", line 5, in <module>
+    raise SystemExit(pytest.console_main())
+  File "D:\python\lib\site-packages\_pytest\config\__init__.py", line 192, in console_main
+    code = main()
+  File "D:\python\lib\site-packages\_pytest\config\__init__.py", line 150, in main
+    config = _prepareconfig(args, plugins)
+  File "D:\python\lib\site-packages\_pytest\config\__init__.py", line 331, in _prepareconfig
+    config = pluginmanager.hook.pytest_cmdline_parse(
+  File "D:\python\lib\site-packages\pluggy\_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "D:\python\lib\site-packages\pluggy\_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "D:\python\lib\site-packages\pluggy\_callers.py", line 167, in _multicall
+    raise exception
+  File "D:\python\lib\site-packages\pluggy\_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "D:\python\lib\site-packages\pluggy\_callers.py", line 43, in run_old_style_hookwrapper
+    teardown.send(result)
+  File "D:\python\lib\site-packages\_pytest\helpconfig.py", line 104, in pytest_cmdline_parse
+    config: Config = outcome.get_result()
+  File "D:\python\lib\site-packages\pluggy\_result.py", line 103, in get_result
+    raise exc.with_traceback(tb)
+  File "D:\python\lib\site-packages\pluggy\_callers.py", line 38, in run_old_style_hookwrapper
+    res = yield
+  File "D:\python\lib\site-packages\pluggy\_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+  File "D:\python\lib\site-packages\_pytest\config\__init__.py", line 1075, in pytest_cmdline_parse
+    self.parse(args)
+  File "D:\python\lib\site-packages\_pytest\config\__init__.py", line 1425, in parse
+    self._preparse(args, addopts=addopts)
+  File "D:\python\lib\site-packages\_pytest\config\__init__.py", line 1327, in _preparse
+    self.hook.pytest_load_initial_conftests(
+  File "D:\python\lib\site-packages\pluggy\_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "D:\python\lib\site-packages\pluggy\_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "D:\python\lib\site-packages\pluggy\_callers.py", line 167, in _multicall
+    raise exception
+  File "D:\python\lib\site-packages\pluggy\_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "D:\python\lib\site-packages\pluggy\_callers.py", line 53, in run_old_style_hookwrapper
+    return result.get_result()
+  File "D:\python\lib\site-packages\pluggy\_result.py", line 103, in get_result
+    raise exc.with_traceback(tb)
+  File "D:\python\lib\site-packages\pluggy\_callers.py", line 38, in run_old_style_hookwrapper
+    res = yield
+  File "D:\python\lib\site-packages\pluggy\_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "D:\python\lib\site-packages\pluggy\_callers.py", line 53, in run_old_style_hookwrapper
+    return result.get_result()
+  File "D:\python\lib\site-packages\pluggy\_result.py", line 103, in get_result
+    raise exc.with_traceback(tb)
+  File "D:\python\lib\site-packages\pluggy\_callers.py", line 38, in run_old_style_hookwrapper
+    res = yield
+  File "D:\python\lib\site-packages\pluggy\_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+  File "D:\python\lib\site-packages\_pytest\config\__init__.py", line 1153, in pytest_load_initial_conftests
+    self.pluginmanager._set_initial_conftests(
+  File "D:\python\lib\site-packages\_pytest\config\__init__.py", line 563, in _set_initial_conftests
+    self._try_load_conftest(anchor, importmode, rootpath)
+  File "D:\python\lib\site-packages\_pytest\config\__init__.py", line 580, in _try_load_conftest
+    self._getconftestmodules(anchor, importmode, rootpath)
+  File "D:\python\lib\site-packages\_pytest\config\__init__.py", line 609, in _getconftestmodules
+    mod = self._importconftest(conftestpath, importmode, rootpath)
+  File "D:\python\lib\site-packages\_pytest\config\__init__.py", line 657, in _importconftest
+    self.consider_conftest(mod)
+  File "D:\python\lib\site-packages\_pytest\config\__init__.py", line 739, in consider_conftest
+    self.register(conftestmodule, name=conftestmodule.__file__)
+  File "D:\python\lib\site-packages\_pytest\config\__init__.py", line 491, in register
+    ret: Optional[str] = super().register(plugin, name)
+  File "D:\python\lib\site-packages\pluggy\_manager.py", line 169, in register
+    hook._maybe_apply_history(hookimpl)
+  File "D:\python\lib\site-packages\pluggy\_hooks.py", line 580, in _maybe_apply_history
+    res = self._hookexec(self.name, [method], kwargs, False)
+  File "D:\python\lib\site-packages\pluggy\_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "D:\python\lib\site-packages\pluggy\_callers.py", line 167, in _multicall
+    raise exception
+  File "D:\python\lib\site-packages\pluggy\_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+  File "E:\code_project\cc_p\auto_case\tests\conftest.py", line 53, in pytest_addoption
+    parser.addoption(
+  File "D:\python\lib\site-packages\_pytest\config\argparsing.py", line 104, in addoption
+    self._anonymous.addoption(*opts, **attrs)
+  File "D:\python\lib\site-packages\_pytest\config\argparsing.py", line 385, in addoption
+    raise ValueError("option names %s already added" % conflict)
+ValueError: option names {'--base-url'} already added
+
+2025-08-09 01:29:43 | ERROR | __main__:main:273 | ============================================================
+2025-08-09 01:29:43 | ERROR | __main__:main:274 | 测试执行完成 - 失败
+2025-08-09 01:29:43 | ERROR | __main__:main:275 | ============================================================
+2025-08-09 01:30:01 | ERROR | __main__:run_tests:177 | 测试错误:
+D:\python\lib\site-packages\_pytest\config\__init__.py:331: PluggyTeardownRaisedWarning: A plugin raised an exception during an old-style hookwrapper teardown.
+Plugin: helpconfig, Hook: pytest_cmdline_parse
+ArgumentError: argument --browser: conflicting option string: --browser
+For more information see https://pluggy.readthedocs.io/en/stable/api_reference.html#pluggy.PluggyTeardownRaisedWarning
+  config = pluginmanager.hook.pytest_cmdline_parse(
+Traceback (most recent call last):
+  File "D:\python\lib\runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "D:\python\lib\runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "D:\python\lib\site-packages\pytest\__main__.py", line 5, in <module>
+    raise SystemExit(pytest.console_main())
+  File "D:\python\lib\site-packages\_pytest\config\__init__.py", line 192, in console_main
+    code = main()
+  File "D:\python\lib\site-packages\_pytest\config\__init__.py", line 150, in main
+    config = _prepareconfig(args, plugins)
+  File "D:\python\lib\site-packages\_pytest\config\__init__.py", line 331, in _prepareconfig
+    config = pluginmanager.hook.pytest_cmdline_parse(
+  File "D:\python\lib\site-packages\pluggy\_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "D:\python\lib\site-packages\pluggy\_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "D:\python\lib\site-packages\pluggy\_callers.py", line 167, in _multicall
+    raise exception
+  File "D:\python\lib\site-packages\pluggy\_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "D:\python\lib\site-packages\pluggy\_callers.py", line 43, in run_old_style_hookwrapper
+    teardown.send(result)
+  File "D:\python\lib\site-packages\_pytest\helpconfig.py", line 104, in pytest_cmdline_parse
+    config: Config = outcome.get_result()
+  File "D:\python\lib\site-packages\pluggy\_result.py", line 103, in get_result
+    raise exc.with_traceback(tb)
+  File "D:\python\lib\site-packages\pluggy\_callers.py", line 38, in run_old_style_hookwrapper
+    res = yield
+  File "D:\python\lib\site-packages\pluggy\_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+  File "D:\python\lib\site-packages\_pytest\config\__init__.py", line 1075, in pytest_cmdline_parse
+    self.parse(args)
+  File "D:\python\lib\site-packages\_pytest\config\__init__.py", line 1430, in parse
+    args = self._parser.parse_setoption(
+  File "D:\python\lib\site-packages\_pytest\config\argparsing.py", line 143, in parse_setoption
+    parsedoption = self.parse(args, namespace=namespace)
+  File "D:\python\lib\site-packages\_pytest\config\argparsing.py", line 113, in parse
+    self.optparser = self._getparser()
+  File "D:\python\lib\site-packages\_pytest\config\argparsing.py", line 130, in _getparser
+    arggroup.add_argument(*n, **a)
+  File "D:\python\lib\argparse.py", line 1441, in add_argument
+    return self._add_action(action)
+  File "D:\python\lib\argparse.py", line 1643, in _add_action
+    action = super(_ArgumentGroup, self)._add_action(action)
+  File "D:\python\lib\argparse.py", line 1455, in _add_action
+    self._check_conflict(action)
+  File "D:\python\lib\argparse.py", line 1592, in _check_conflict
+    conflict_handler(action, confl_optionals)
+  File "D:\python\lib\argparse.py", line 1601, in _handle_conflict_error
+    raise ArgumentError(action, message % conflict_string)
+argparse.ArgumentError: argument --browser: conflicting option string: --browser
+
+2025-08-09 01:30:01 | ERROR | __main__:main:273 | ============================================================
+2025-08-09 01:30:01 | ERROR | __main__:main:274 | 测试执行完成 - 失败
+2025-08-09 01:30:01 | ERROR | __main__:main:275 | ============================================================
+2025-08-09 01:42:43 | ERROR | tests.conftest:api_client:128 | API全局登录异常: APIClient.login() got an unexpected keyword argument 'username'
+2025-08-09 01:42:43 | ERROR | tests.conftest:pytest_runtest_makereport:85 | 测试失败: test_single_api_cases, 错误: 'LoggerManager' object has no attribute 'start_test'
+2025-08-09 01:42:43 | ERROR | tests.conftest:pytest_runtest_makereport:85 | 测试失败: test_login_api_data_driven, 错误: Can't instantiate abstract class DataDrivenTestBase with abstract methods _execute_case_logic, setup_test, teardown_test
+2025-08-09 02:00:05 | ERROR | utils.exceptions:wrapper:151 | 执行 failing_function 时发生异常: 测试异常
+2025-08-09 02:00:05 | ERROR | tests.conftest:pytest_runtest_makereport:85 | 测试失败: test_handle_exceptions_catch_and_reraise, 错误: 测试异常
+2025-08-09 02:00:05 | ERROR | utils.exceptions:wrapper:151 | 执行 failing_function 时发生异常: 测试异常
+2025-08-09 02:00:05 | ERROR | utils.exceptions:wrapper:151 | 执行 api_function 时发生异常: [APIException]: API错误
+2025-08-09 02:00:06 | ERROR | utils.exceptions:wrapper:215 | 执行 always_fail_function 失败，已重试2次: 失败第2次
+2025-08-09 02:00:06 | ERROR | utils.exceptions:wrapper:215 | 执行 backoff_function 失败，已重试3次: 持续失败
+2025-08-09 02:00:06 | ERROR | utils.exceptions:wrapper:215 | 执行 combined_function 失败，已重试2次: 组合测试
+2025-08-09 02:00:06 | ERROR | utils.exceptions:wrapper:151 | 执行 combined_function 时发生异常: 组合测试
+2025-08-09 02:01:22 | ERROR | core.api.client:_execute_with_retry:175 | 请求失败，已重试3次: HTTPSConnectionPool(host='dev-api.example.com', port=443): Max retries exceeded with url: /api/login (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x0000021499829330>: Failed to resolve 'dev-api.example.com' ([Errno 11001] getaddrinfo failed)"))
+2025-08-09 02:01:22 | ERROR | core.api.client:login:308 | 全局登录异常: HTTPSConnectionPool(host='dev-api.example.com', port=443): Max retries exceeded with url: /api/login (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x0000021499829330>: Failed to resolve 'dev-api.example.com' ([Errno 11001] getaddrinfo failed)"))
+2025-08-09 02:01:22 | ERROR | tests.conftest:pytest_runtest_makereport:85 | 测试失败: test_single_api_cases, 错误: 'DataParser' object has no attribute 'get_test_cases'
+2025-08-09 02:01:22 | ERROR | core.base.test_base:get_test_cases:84 | 获取测试用例失败: 'DataParser' object has no attribute 'get_test_cases'
+2025-08-09 02:01:22 | ERROR | tests.conftest:pytest_runtest_makereport:85 | 测试失败: test_login_api_data_driven, 错误: 'DataParser' object has no attribute 'get_test_cases'
+2025-08-09 02:01:22 | ERROR | utils.report_helper:generate_allure_report:56 | Allure命令未找到，请确保已安装Allure
+2025-08-09 02:01:22 | ERROR | __main__:main:289 | ============================================================
+2025-08-09 02:01:22 | ERROR | __main__:main:290 | 测试执行完成 - 失败
+2025-08-09 02:01:22 | ERROR | __main__:main:291 | ============================================================
+2025-08-09 15:10:08 | ERROR | core.base.test_base:get_test_cases:84 | 获取测试用例失败: 'DataParser' object has no attribute 'get_test_cases'
+2025-08-09 15:10:17 | ERROR | core.api.client:_execute_with_retry:175 | 请求失败，已重试3次: HTTPSConnectionPool(host='dev-api.example.com', port=443): Max retries exceeded with url: /api/login (Caused by SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:997)')))
+2025-08-09 15:10:17 | ERROR | core.api.client:login:308 | 全局登录异常: HTTPSConnectionPool(host='dev-api.example.com', port=443): Max retries exceeded with url: /api/login (Caused by SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:997)')))
+2025-08-09 15:10:17 | ERROR | test_case.conftest:pytest_runtest_makereport:138 | 测试错误: test_single_api_cases, 错误: 'function' object has no attribute 'get_test_cases'
+2025-08-09 15:10:17 | ERROR | core.base.test_base:get_test_cases:84 | 获取测试用例失败: 'DataParser' object has no attribute 'get_test_cases'
+2025-08-09 15:10:17 | ERROR | test_case.conftest:pytest_runtest_makereport:138 | 测试错误: test_login_api_data_driven, 错误: 'DataParser' object has no attribute 'get_test_cases'
+2025-08-10 12:39:40 | ERROR | __main__:main:321 | ============================================================
+2025-08-10 12:39:40 | ERROR | __main__:main:322 | 测试执行完成 - 失败
+2025-08-10 12:39:40 | ERROR | __main__:main:323 | ============================================================
+2025-08-10 12:40:06 | ERROR | __main__:main:321 | ============================================================
+2025-08-10 12:40:06 | ERROR | __main__:main:322 | 测试执行完成 - 失败
+2025-08-10 12:40:06 | ERROR | __main__:main:323 | ============================================================
+2025-08-10 12:41:23 | ERROR | core.api.client:_execute_with_retry:205 | 请求失败，已重试3次: HTTPSConnectionPool(host='dev-api.example.com', port=443): Max retries exceeded with url: /api/login (Caused by SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:997)')))
+2025-08-10 12:41:23 | ERROR | core.api.client:login:362 | 全局登录异常: HTTPSConnectionPool(host='dev-api.example.com', port=443): Max retries exceeded with url: /api/login (Caused by SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:997)')))
+2025-08-10 12:41:24 | ERROR | __main__:main:321 | ============================================================
+2025-08-10 12:41:24 | ERROR | __main__:main:322 | 测试执行完成 - 失败
+2025-08-10 12:41:24 | ERROR | __main__:main:323 | ============================================================
+2025-08-10 13:04:33 | ERROR | utils.data_parser:_process_template_cases:413 | 模板用例生成失败: API登录测试, 错误: [AutoTestException](TEMPLATE_FILE_NOT_FOUND): 模板文件不存在: E:\code_project\cc_p\auto_case\templates\api_templates.yaml
+2025-08-10 13:04:55 | ERROR | utils.data_parser:_process_template_cases:413 | 模板用例生成失败: API登录测试, 错误: [AutoTestException](TEMPLATE_FILE_NOT_FOUND): 模板文件不存在: E:\code_project\cc_p\auto_case\templates\api_templates.yaml
+2025-08-10 13:06:18 | ERROR | __main__:run_tests:233 | 测试执行异常: 'gbk' codec can't decode byte 0x80 in position 231: illegal multibyte sequence
+2025-08-10 13:06:18 | ERROR | __main__:main:321 | ============================================================
+2025-08-10 13:06:18 | ERROR | __main__:main:322 | 测试执行完成 - 失败
+2025-08-10 13:06:18 | ERROR | __main__:main:323 | ============================================================
+2025-08-10 13:07:01 | ERROR | utils.data_parser:_process_template_cases:413 | 模板用例生成失败: Excel转换-templates/api_templates.yaml#login_template, 错误: [AutoTestException](TEMPLATE_FILE_NOT_FOUND): 模板文件不存在: E:\code_project\cc_p\auto_case\templates\api_templates.yaml
+2025-08-10 13:07:01 | ERROR | utils.data_parser:_process_template_cases:413 | 模板用例生成失败: 单接口登录测试, 错误: [AutoTestException](TEMPLATE_FILE_NOT_FOUND): 模板文件不存在: E:\code_project\cc_p\auto_case\templates\api_templates.yaml
+2025-08-10 13:07:01 | ERROR | utils.data_parser:_process_template_cases:413 | 模板用例生成失败: 批量登录测试, 错误: [AutoTestException](TEMPLATE_FILE_NOT_FOUND): 模板文件不存在: E:\code_project\cc_p\auto_case\templates\api_templates.yaml
+2025-08-10 13:07:01 | ERROR | utils.data_parser:_process_template_cases:413 | 模板用例生成失败: 用户完整业务流程, 错误: [AutoTestException](TEMPLATE_FILE_NOT_FOUND): 模板文件不存在: E:\code_project\cc_p\auto_case\templates\api_templates.yaml
+2025-08-10 13:07:01 | ERROR | utils.data_parser:_process_template_cases:413 | 模板用例生成失败: 特殊场景登录测试, 错误: [AutoTestException](TEMPLATE_FILE_NOT_FOUND): 模板文件不存在: E:\code_project\cc_p\auto_case\templates\api_templates.yaml
+2025-08-10 13:07:01 | ERROR | utils.data_parser:_process_template_cases:413 | 模板用例生成失败: 登录性能测试, 错误: [AutoTestException](TEMPLATE_FILE_NOT_FOUND): 模板文件不存在: E:\code_project\cc_p\auto_case\templates\api_templates.yaml
+2025-08-10 13:07:01 | ERROR | utils.data_parser:_process_template_cases:413 | 模板用例生成失败: 条件执行测试, 错误: [AutoTestException](TEMPLATE_FILE_NOT_FOUND): 模板文件不存在: E:\code_project\cc_p\auto_case\templates\api_templates.yaml
+2025-08-10 13:52:38 | ERROR | __main__:run_from_test_suite:351 | ❌ 用例执行失败: 访问示例页面
+2025-08-10 13:52:38 | ERROR | __main__:run_from_test_suite:351 | ❌ 用例执行失败: 页面标题检查
+2025-08-10 13:52:38 | ERROR | __main__:run_from_test_suite:351 | ❌ 用例执行失败: 表单测试页面
+2025-08-10 13:52:38 | ERROR | __main__:run_from_test_suite:351 | ❌ 用例执行失败: 填写用户名
+2025-08-10 13:52:38 | ERROR | __main__:run_excel_tests:56 | ❌ Excel测试执行失败: 3/7
+2025-08-10 13:53:08 | ERROR | __main__:run_from_test_suite:351 | ❌ 用例执行失败: 访问示例页面
+2025-08-10 13:53:08 | ERROR | __main__:run_from_test_suite:351 | ❌ 用例执行失败: 页面标题检查
+2025-08-10 13:53:08 | ERROR | __main__:run_from_test_suite:351 | ❌ 用例执行失败: 表单测试页面
+2025-08-10 13:53:08 | ERROR | __main__:run_from_test_suite:351 | ❌ 用例执行失败: 填写用户名
+2025-08-10 13:53:08 | ERROR | __main__:run_excel_tests:56 | ❌ Excel测试执行失败: 0/4

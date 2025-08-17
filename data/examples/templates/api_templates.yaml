@@ -1,0 +1,305 @@
+# API测试模板集合
+
+# 用户认证相关模板
+auth:
+  # 标准登录模板
+  standard_login:
+    description: "标准用户登录接口模板"
+    request:
+      method: "POST"
+      url: "${BASE_URL}/api/auth/login"
+      headers:
+        Content-Type: "application/json"
+        Accept: "application/json"
+      data:
+        username: "${username}"
+        password: "${password}"
+    assertions:
+      - type: "status_code"
+        expected: "${expected_status}"
+        message: "状态码应为${expected_status}"
+      - type: "json_path"
+        path: "$.code"
+        expected: "${expected_code}"
+        message: "响应码应为${expected_code}"
+      - type: "json_path"
+        path: "$.message"
+        expected: "${expected_message}"
+        condition: "${expected_message} != ''"
+        message: "响应消息应为${expected_message}"
+      - type: "json_path"
+        path: "$.data.token"
+        operator: "not_empty"
+        condition: "${expected_code} == 0"
+        message: "登录成功时应返回token"
+    extract:
+      - name: "auth_token"
+        type: "json_path"
+        path: "$.data.token"
+        condition: "${expected_code} == 0"
+      - name: "user_id"
+        type: "json_path"
+        path: "$.data.user.id"
+        condition: "${expected_code} == 0"
+      - name: "user_role"
+        type: "json_path"
+        path: "$.data.user.role"
+        condition: "${expected_code} == 0"
+
+  # 登出模板
+  logout:
+    description: "用户登出接口模板"
+    request:
+      method: "POST"
+      url: "${BASE_URL}/api/auth/logout"
+      headers:
+        Authorization: "Bearer ${auth_token}"
+        Content-Type: "application/json"
+    assertions:
+      - type: "status_code"
+        expected: 200
+        message: "状态码应为200"
+      - type: "json_path"
+        path: "$.code"
+        expected: 0
+        message: "登出应成功"
+
+  # 刷新token模板
+  refresh_token:
+    description: "刷新访问令牌模板"
+    request:
+      method: "POST"
+      url: "${BASE_URL}/api/auth/refresh"
+      headers:
+        Authorization: "Bearer ${refresh_token}"
+        Content-Type: "application/json"
+    assertions:
+      - type: "status_code"
+        expected: 200
+        message: "状态码应为200"
+      - type: "json_path"
+        path: "$.code"
+        expected: 0
+        message: "刷新token应成功"
+      - type: "json_path"
+        path: "$.data.access_token"
+        operator: "not_empty"
+        message: "应返回新的访问令牌"
+    extract:
+      - name: "new_access_token"
+        type: "json_path"
+        path: "$.data.access_token"
+
+# 用户管理相关模板
+user:
+  # 获取用户信息模板
+  get_user:
+    description: "获取用户信息模板"
+    request:
+      method: "GET"
+      url: "${BASE_URL}/api/users/${user_id}"
+      headers:
+        Authorization: "Bearer ${auth_token}"
+        Accept: "application/json"
+    assertions:
+      - type: "status_code"
+        expected: "${expected_status}"
+        message: "状态码应为${expected_status}"
+      - type: "json_path"
+        path: "$.code"
+        expected: "${expected_code}"
+        message: "响应码应为${expected_code}"
+      - type: "json_path"
+        path: "$.data.id"
+        expected: "${user_id}"
+        condition: "${expected_code} == 0"
+        message: "用户ID应匹配"
+    extract:
+      - name: "user_info"
+        type: "json_path"
+        path: "$.data"
+        condition: "${expected_code} == 0"
+
+  # 创建用户模板
+  create_user:
+    description: "创建用户模板"
+    request:
+      method: "POST"
+      url: "${BASE_URL}/api/users"
+      headers:
+        Authorization: "Bearer ${auth_token}"
+        Content-Type: "application/json"
+      data:
+        username: "${username}"
+        email: "${email}"
+        password: "${password}"
+        role: "${role}"
+    assertions:
+      - type: "status_code"
+        expected: "${expected_status}"
+        message: "状态码应为${expected_status}"
+      - type: "json_path"
+        path: "$.code"
+        expected: "${expected_code}"
+        message: "响应码应为${expected_code}"
+      - type: "json_path"
+        path: "$.data.username"
+        expected: "${username}"
+        condition: "${expected_code} == 0"
+        message: "用户名应匹配"
+    extract:
+      - name: "new_user_id"
+        type: "json_path"
+        path: "$.data.id"
+        condition: "${expected_code} == 0"
+
+  # 更新用户模板
+  update_user:
+    description: "更新用户信息模板"
+    request:
+      method: "PUT"
+      url: "${BASE_URL}/api/users/${user_id}"
+      headers:
+        Authorization: "Bearer ${auth_token}"
+        Content-Type: "application/json"
+      data:
+        username: "${username}"
+        email: "${email}"
+        role: "${role}"
+    assertions:
+      - type: "status_code"
+        expected: "${expected_status}"
+        message: "状态码应为${expected_status}"
+      - type: "json_path"
+        path: "$.code"
+        expected: "${expected_code}"
+        message: "响应码应为${expected_code}"
+
+  # 删除用户模板
+  delete_user:
+    description: "删除用户模板"
+    request:
+      method: "DELETE"
+      url: "${BASE_URL}/api/users/${user_id}"
+      headers:
+        Authorization: "Bearer ${auth_token}"
+    assertions:
+      - type: "status_code"
+        expected: "${expected_status}"
+        message: "状态码应为${expected_status}"
+      - type: "json_path"
+        path: "$.code"
+        expected: "${expected_code}"
+        message: "响应码应为${expected_code}"
+
+  # 获取用户列表模板
+  list_users:
+    description: "获取用户列表模板"
+    request:
+      method: "GET"
+      url: "${BASE_URL}/api/users"
+      headers:
+        Authorization: "Bearer ${auth_token}"
+        Accept: "application/json"
+      params:
+        page: "${page}"
+        size: "${size}"
+        role: "${role_filter}"
+    assertions:
+      - type: "status_code"
+        expected: 200
+        message: "状态码应为200"
+      - type: "json_path"
+        path: "$.code"
+        expected: 0
+        message: "响应码应为0"
+      - type: "json_path"
+        path: "$.data.list"
+        operator: "is_list"
+        message: "用户列表应为数组"
+    extract:
+      - name: "user_list"
+        type: "json_path"
+        path: "$.data.list"
+      - name: "total_count"
+        type: "json_path"
+        path: "$.data.total"
+
+# 通用CRUD模板
+crud:
+  # 通用GET模板
+  get_resource:
+    description: "通用资源获取模板"
+    request:
+      method: "GET"
+      url: "${BASE_URL}${resource_path}"
+      headers:
+        Authorization: "Bearer ${auth_token}"
+        Accept: "application/json"
+    assertions:
+      - type: "status_code"
+        expected: "${expected_status}"
+        message: "状态码应为${expected_status}"
+      - type: "json_path"
+        path: "$.code"
+        expected: "${expected_code}"
+        condition: "${expected_code} != ''"
+        message: "响应码应为${expected_code}"
+
+  # 通用POST模板
+  create_resource:
+    description: "通用资源创建模板"
+    request:
+      method: "POST"
+      url: "${BASE_URL}${resource_path}"
+      headers:
+        Authorization: "Bearer ${auth_token}"
+        Content-Type: "application/json"
+      data: "${request_data}"
+    assertions:
+      - type: "status_code"
+        expected: "${expected_status}"
+        message: "状态码应为${expected_status}"
+      - type: "json_path"
+        path: "$.code"
+        expected: "${expected_code}"
+        condition: "${expected_code} != ''"
+        message: "响应码应为${expected_code}"
+
+  # 通用PUT模板
+  update_resource:
+    description: "通用资源更新模板"
+    request:
+      method: "PUT"
+      url: "${BASE_URL}${resource_path}"
+      headers:
+        Authorization: "Bearer ${auth_token}"
+        Content-Type: "application/json"
+      data: "${request_data}"
+    assertions:
+      - type: "status_code"
+        expected: "${expected_status}"
+        message: "状态码应为${expected_status}"
+      - type: "json_path"
+        path: "$.code"
+        expected: "${expected_code}"
+        condition: "${expected_code} != ''"
+        message: "响应码应为${expected_code}"
+
+  # 通用DELETE模板
+  delete_resource:
+    description: "通用资源删除模板"
+    request:
+      method: "DELETE"
+      url: "${BASE_URL}${resource_path}"
+      headers:
+        Authorization: "Bearer ${auth_token}"
+    assertions:
+      - type: "status_code"
+        expected: "${expected_status}"
+        message: "状态码应为${expected_status}"
+      - type: "json_path"
+        path: "$.code"
+        expected: "${expected_code}"
+        condition: "${expected_code} != ''"
+        message: "响应码应为${expected_code}"

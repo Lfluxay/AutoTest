@@ -1,0 +1,300 @@
+2025-08-09 01:37:36 | INFO | tests.conftest:pytest_sessionstart:57 | ============================================================
+2025-08-09 01:37:36 | INFO | tests.conftest:pytest_sessionstart:58 | 测试会话开始
+2025-08-09 01:37:36 | INFO | tests.conftest:pytest_sessionstart:59 | ============================================================
+2025-08-09 01:39:59 | INFO | tests.conftest:pytest_sessionstart:57 | ============================================================
+2025-08-09 01:39:59 | INFO | tests.conftest:pytest_sessionstart:58 | 测试会话开始
+2025-08-09 01:39:59 | INFO | tests.conftest:pytest_sessionstart:59 | ============================================================
+2025-08-09 01:40:00 | INFO | tests.conftest:pytest_sessionfinish:64 | ============================================================
+2025-08-09 01:40:00 | INFO | tests.conftest:pytest_sessionfinish:65 | 测试会话结束，退出状态: 2
+2025-08-09 01:40:00 | INFO | tests.conftest:pytest_sessionfinish:66 | ============================================================
+2025-08-09 01:42:26 | INFO | tests.conftest:pytest_sessionstart:57 | ============================================================
+2025-08-09 01:42:26 | INFO | tests.conftest:pytest_sessionstart:58 | 测试会话开始
+2025-08-09 01:42:26 | INFO | tests.conftest:pytest_sessionstart:59 | ============================================================
+2025-08-09 01:42:26 | INFO | tests.conftest:pytest_sessionfinish:64 | ============================================================
+2025-08-09 01:42:26 | INFO | tests.conftest:pytest_sessionfinish:65 | 测试会话结束，退出状态: 0
+2025-08-09 01:42:26 | INFO | tests.conftest:pytest_sessionfinish:66 | ============================================================
+2025-08-09 01:42:42 | INFO | tests.conftest:pytest_sessionstart:57 | ============================================================
+2025-08-09 01:42:42 | INFO | tests.conftest:pytest_sessionstart:58 | 测试会话开始
+2025-08-09 01:42:42 | INFO | tests.conftest:pytest_sessionstart:59 | ============================================================
+2025-08-09 01:42:43 | INFO | tests.conftest:pytest_runtest_setup:71 | 开始执行测试: test_single_api_cases
+2025-08-09 01:42:43 | INFO | tests.conftest:test_config:92 | 加载测试配置完成
+2025-08-09 01:42:43 | ERROR | tests.conftest:api_client:128 | API全局登录异常: APIClient.login() got an unexpected keyword argument 'username'
+2025-08-09 01:42:43 | INFO | core.base.test_base:setup_method:22 | 开始执行测试: test_single_api_cases
+2025-08-09 01:42:43 | ERROR | tests.conftest:pytest_runtest_makereport:85 | 测试失败: test_single_api_cases, 错误: 'LoggerManager' object has no attribute 'start_test'
+2025-08-09 01:42:43 | INFO | tests.conftest:pytest_runtest_teardown:76 | 测试执行完成: test_single_api_cases
+2025-08-09 01:42:43 | INFO | tests.conftest:pytest_runtest_setup:71 | 开始执行测试: test_login_api_data_driven
+2025-08-09 01:42:43 | ERROR | tests.conftest:pytest_runtest_makereport:85 | 测试失败: test_login_api_data_driven, 错误: Can't instantiate abstract class DataDrivenTestBase with abstract methods _execute_case_logic, setup_test, teardown_test
+2025-08-09 01:42:43 | INFO | tests.conftest:pytest_runtest_teardown:76 | 测试执行完成: test_login_api_data_driven
+2025-08-09 01:42:43 | WARNING | tests.conftest:api_client:137 | 关闭API客户端异常: 'APIClient' object has no attribute 'logout'
+2025-08-09 01:42:43 | INFO | tests.conftest:pytest_sessionfinish:64 | ============================================================
+2025-08-09 01:42:43 | INFO | tests.conftest:pytest_sessionfinish:65 | 测试会话结束，退出状态: 1
+2025-08-09 01:42:43 | INFO | tests.conftest:pytest_sessionfinish:66 | ============================================================
+2025-08-09 02:00:05 | INFO | tests.conftest:pytest_sessionstart:57 | ============================================================
+2025-08-09 02:00:05 | INFO | tests.conftest:pytest_sessionstart:58 | 测试会话开始
+2025-08-09 02:00:05 | INFO | tests.conftest:pytest_sessionstart:59 | ============================================================
+2025-08-09 02:00:05 | INFO | tests.conftest:pytest_runtest_setup:71 | 开始执行测试: test_auto_test_exception_basic
+2025-08-09 02:00:05 | INFO | tests.conftest:pytest_runtest_makereport:83 | 测试通过: test_auto_test_exception_basic
+2025-08-09 02:00:05 | INFO | tests.conftest:pytest_runtest_teardown:76 | 测试执行完成: test_auto_test_exception_basic
+2025-08-09 02:00:05 | INFO | tests.conftest:pytest_runtest_setup:71 | 开始执行测试: test_auto_test_exception_with_details
+2025-08-09 02:00:05 | INFO | tests.conftest:pytest_runtest_makereport:83 | 测试通过: test_auto_test_exception_with_details
+2025-08-09 02:00:05 | INFO | tests.conftest:pytest_runtest_teardown:76 | 测试执行完成: test_auto_test_exception_with_details
+2025-08-09 02:00:05 | INFO | tests.conftest:pytest_runtest_setup:71 | 开始执行测试: test_config_exception
+2025-08-09 02:00:05 | INFO | tests.conftest:pytest_runtest_makereport:83 | 测试通过: test_config_exception
+2025-08-09 02:00:05 | INFO | tests.conftest:pytest_runtest_teardown:76 | 测试执行完成: test_config_exception
+2025-08-09 02:00:05 | INFO | tests.conftest:pytest_runtest_setup:71 | 开始执行测试: test_api_request_error
+2025-08-09 02:00:05 | INFO | tests.conftest:pytest_runtest_makereport:83 | 测试通过: test_api_request_error
+2025-08-09 02:00:05 | INFO | tests.conftest:pytest_runtest_teardown:76 | 测试执行完成: test_api_request_error
+2025-08-09 02:00:05 | INFO | tests.conftest:pytest_runtest_setup:71 | 开始执行测试: test_assertion_exception
+2025-08-09 02:00:05 | INFO | tests.conftest:pytest_runtest_makereport:83 | 测试通过: test_assertion_exception
+2025-08-09 02:00:05 | INFO | tests.conftest:pytest_runtest_teardown:76 | 测试执行完成: test_assertion_exception
+2025-08-09 02:00:05 | INFO | tests.conftest:pytest_runtest_setup:71 | 开始执行测试: test_handle_exceptions_success
+2025-08-09 02:00:05 | INFO | tests.conftest:pytest_runtest_makereport:83 | 测试通过: test_handle_exceptions_success
+2025-08-09 02:00:05 | INFO | tests.conftest:pytest_runtest_teardown:76 | 测试执行完成: test_handle_exceptions_success
+2025-08-09 02:00:05 | INFO | tests.conftest:pytest_runtest_setup:71 | 开始执行测试: test_handle_exceptions_catch_and_reraise
+2025-08-09 02:00:05 | ERROR | tests.conftest:pytest_runtest_makereport:85 | 测试失败: test_handle_exceptions_catch_and_reraise, 错误: 测试异常
+2025-08-09 02:00:05 | INFO | tests.conftest:pytest_runtest_teardown:76 | 测试执行完成: test_handle_exceptions_catch_and_reraise
+2025-08-09 02:00:05 | INFO | tests.conftest:pytest_runtest_setup:71 | 开始执行测试: test_handle_exceptions_catch_and_return_default
+2025-08-09 02:00:05 | INFO | tests.conftest:pytest_runtest_makereport:83 | 测试通过: test_handle_exceptions_catch_and_return_default
+2025-08-09 02:00:05 | INFO | tests.conftest:pytest_runtest_teardown:76 | 测试执行完成: test_handle_exceptions_catch_and_return_default
+2025-08-09 02:00:05 | INFO | tests.conftest:pytest_runtest_setup:71 | 开始执行测试: test_handle_exceptions_custom_exception_type
+2025-08-09 02:00:05 | INFO | tests.conftest:pytest_runtest_makereport:83 | 测试通过: test_handle_exceptions_custom_exception_type
+2025-08-09 02:00:05 | INFO | tests.conftest:pytest_runtest_teardown:76 | 测试执行完成: test_handle_exceptions_custom_exception_type
+2025-08-09 02:00:05 | INFO | tests.conftest:pytest_runtest_setup:71 | 开始执行测试: test_retry_on_exception_success_first_try
+2025-08-09 02:00:05 | INFO | tests.conftest:pytest_runtest_makereport:83 | 测试通过: test_retry_on_exception_success_first_try
+2025-08-09 02:00:05 | INFO | tests.conftest:pytest_runtest_teardown:76 | 测试执行完成: test_retry_on_exception_success_first_try
+2025-08-09 02:00:05 | INFO | tests.conftest:pytest_runtest_setup:71 | 开始执行测试: test_retry_on_exception_success_after_retry
+2025-08-09 02:00:06 | INFO | tests.conftest:pytest_runtest_makereport:83 | 测试通过: test_retry_on_exception_success_after_retry
+2025-08-09 02:00:06 | INFO | tests.conftest:pytest_runtest_teardown:76 | 测试执行完成: test_retry_on_exception_success_after_retry
+2025-08-09 02:00:06 | INFO | tests.conftest:pytest_runtest_setup:71 | 开始执行测试: test_retry_on_exception_final_failure
+2025-08-09 02:00:06 | INFO | tests.conftest:pytest_runtest_makereport:83 | 测试通过: test_retry_on_exception_final_failure
+2025-08-09 02:00:06 | INFO | tests.conftest:pytest_runtest_teardown:76 | 测试执行完成: test_retry_on_exception_final_failure
+2025-08-09 02:00:06 | INFO | tests.conftest:pytest_runtest_setup:71 | 开始执行测试: test_retry_with_backoff
+2025-08-09 02:00:06 | INFO | tests.conftest:pytest_runtest_makereport:83 | 测试通过: test_retry_with_backoff
+2025-08-09 02:00:06 | INFO | tests.conftest:pytest_runtest_teardown:76 | 测试执行完成: test_retry_with_backoff
+2025-08-09 02:00:06 | INFO | tests.conftest:pytest_runtest_setup:71 | 开始执行测试: test_combined_decorators
+2025-08-09 02:00:06 | INFO | tests.conftest:pytest_runtest_makereport:83 | 测试通过: test_combined_decorators
+2025-08-09 02:00:06 | INFO | tests.conftest:pytest_runtest_teardown:76 | 测试执行完成: test_combined_decorators
+2025-08-09 02:00:06 | INFO | tests.conftest:pytest_runtest_setup:71 | 开始执行测试: test_exception_inheritance
+2025-08-09 02:00:06 | INFO | tests.conftest:pytest_runtest_makereport:83 | 测试通过: test_exception_inheritance
+2025-08-09 02:00:06 | INFO | tests.conftest:pytest_runtest_teardown:76 | 测试执行完成: test_exception_inheritance
+2025-08-09 02:00:06 | INFO | tests.conftest:pytest_sessionfinish:64 | ============================================================
+2025-08-09 02:00:06 | INFO | tests.conftest:pytest_sessionfinish:65 | 测试会话结束，退出状态: 1
+2025-08-09 02:00:06 | INFO | tests.conftest:pytest_sessionfinish:66 | ============================================================
+2025-08-09 02:01:14 | INFO | tests.conftest:pytest_sessionstart:57 | ============================================================
+2025-08-09 02:01:14 | INFO | tests.conftest:pytest_sessionstart:58 | 测试会话开始
+2025-08-09 02:01:14 | INFO | tests.conftest:pytest_sessionstart:59 | ============================================================
+2025-08-09 02:01:14 | INFO | tests.conftest:pytest_runtest_setup:71 | 开始执行测试: test_single_api_cases
+2025-08-09 02:01:14 | INFO | tests.conftest:test_config:92 | 加载测试配置完成
+2025-08-09 02:01:22 | WARNING | tests.conftest:api_client:125 | API全局登录失败
+2025-08-09 02:01:22 | INFO | core.base.test_base:setup_method:22 | 开始执行测试: test_single_api_cases
+2025-08-09 02:01:22 | INFO | tests.test_api:setup_test:19 | API测试环境准备完成
+2025-08-09 02:01:22 | INFO | tests.test_api:test_single_api_cases:150 | 执行测试文件: E:\code_project\cc_p\auto_case\data\api\data_driven\search_parameters_cases.yaml
+2025-08-09 02:01:22 | INFO | core.base.test_base:teardown_method:33 | 测试执行完成: test_single_api_cases
+2025-08-09 02:01:22 | INFO | tests.test_api:teardown_test:23 | API测试环境清理完成
+2025-08-09 02:01:22 | ERROR | tests.conftest:pytest_runtest_makereport:85 | 测试失败: test_single_api_cases, 错误: 'DataParser' object has no attribute 'get_test_cases'
+2025-08-09 02:01:22 | INFO | tests.conftest:pytest_runtest_teardown:76 | 测试执行完成: test_single_api_cases
+2025-08-09 02:01:22 | INFO | tests.conftest:pytest_runtest_setup:71 | 开始执行测试: test_login_api_data_driven
+2025-08-09 02:01:22 | INFO | core.base.test_base:setup_method:22 | 开始执行测试: test_login_api_data_driven
+2025-08-09 02:01:22 | ERROR | core.base.test_base:get_test_cases:84 | 获取测试用例失败: 'DataParser' object has no attribute 'get_test_cases'
+2025-08-09 02:01:22 | INFO | core.base.test_base:teardown_method:33 | 测试执行完成: test_login_api_data_driven
+2025-08-09 02:01:22 | ERROR | tests.conftest:pytest_runtest_makereport:85 | 测试失败: test_login_api_data_driven, 错误: 'DataParser' object has no attribute 'get_test_cases'
+2025-08-09 02:01:22 | INFO | tests.conftest:pytest_runtest_teardown:76 | 测试执行完成: test_login_api_data_driven
+2025-08-09 02:01:22 | INFO | tests.conftest:pytest_sessionfinish:64 | ============================================================
+2025-08-09 02:01:22 | INFO | tests.conftest:pytest_sessionfinish:65 | 测试会话结束，退出状态: 1
+2025-08-09 02:01:22 | INFO | tests.conftest:pytest_sessionfinish:66 | ============================================================
+2025-08-09 15:10:00 | INFO | test_case.conftest:pytest_sessionstart:66 | ============================================================
+2025-08-09 15:10:00 | INFO | test_case.conftest:pytest_sessionstart:67 | 测试会话开始
+2025-08-09 15:10:00 | INFO | test_case.conftest:pytest_sessionstart:68 | ============================================================
+2025-08-09 15:10:08 | ERROR | core.base.test_base:get_test_cases:84 | 获取测试用例失败: 'DataParser' object has no attribute 'get_test_cases'
+2025-08-09 15:10:08 | INFO | test_case.conftest:pytest_runtest_setup:116 | 开始执行测试: test_single_api_cases
+2025-08-09 15:10:08 | INFO | test_case.conftest:test_config:151 | 加载测试配置完成
+2025-08-09 15:10:17 | WARNING | test_case.conftest:api_client:184 | API全局登录失败
+2025-08-09 15:10:17 | INFO | core.base.test_base:setup_method:22 | 开始执行测试: test_single_api_cases
+2025-08-09 15:10:17 | INFO | test_case.test_api:setup_test:16 | API测试环境准备完成
+2025-08-09 15:10:17 | INFO | test_case.test_api:test_single_api_cases:78 | 执行测试文件: E:\code_project\cc_p\auto_case\data\api\data_driven\search_parameters_cases.yaml
+2025-08-09 15:10:17 | INFO | core.base.test_base:teardown_method:33 | 测试执行完成: test_single_api_cases
+2025-08-09 15:10:17 | INFO | test_case.test_api:teardown_test:19 | API测试环境清理完成
+2025-08-09 15:10:17 | ERROR | test_case.conftest:pytest_runtest_makereport:138 | 测试错误: test_single_api_cases, 错误: 'function' object has no attribute 'get_test_cases'
+2025-08-09 15:10:17 | INFO | test_case.conftest:pytest_runtest_teardown:121 | 测试执行完成: test_single_api_cases
+2025-08-09 15:10:17 | INFO | test_case.conftest:pytest_runtest_setup:116 | 开始执行测试: test_login_api_data_driven
+2025-08-09 15:10:17 | INFO | core.base.test_base:setup_method:22 | 开始执行测试: test_login_api_data_driven
+2025-08-09 15:10:17 | ERROR | core.base.test_base:get_test_cases:84 | 获取测试用例失败: 'DataParser' object has no attribute 'get_test_cases'
+2025-08-09 15:10:17 | INFO | core.base.test_base:teardown_method:33 | 测试执行完成: test_login_api_data_driven
+2025-08-09 15:10:17 | ERROR | test_case.conftest:pytest_runtest_makereport:138 | 测试错误: test_login_api_data_driven, 错误: 'DataParser' object has no attribute 'get_test_cases'
+2025-08-09 15:10:17 | INFO | test_case.conftest:pytest_runtest_teardown:121 | 测试执行完成: test_login_api_data_driven
+2025-08-09 15:10:17 | INFO | test_case.conftest:pytest_runtest_setup:116 | 开始执行测试: test_web_page_cases[chromium]
+2025-08-09 15:10:17 | INFO | test_case.conftest:pytest_runtest_teardown:121 | 测试执行完成: test_web_page_cases[chromium]
+2025-08-09 15:10:17 | INFO | test_case.conftest:pytest_runtest_setup:116 | 开始执行测试: test_login_page_data_driven[chromium]
+2025-08-09 15:10:17 | INFO | test_case.conftest:pytest_runtest_teardown:121 | 测试执行完成: test_login_page_data_driven[chromium]
+2025-08-09 15:10:17 | INFO | test_case.conftest:pytest_sessionfinish:73 | ============================================================
+2025-08-09 15:10:17 | INFO | test_case.conftest:pytest_sessionfinish:74 | 测试会话结束，退出状态: 1
+2025-08-09 15:10:17 | INFO | test_case.conftest:pytest_sessionfinish:75 | ============================================================
+2025-08-09 15:10:17 | INFO | test_case.conftest:pytest_sessionfinish:103 | 测试结果统计: 总计=2, 通过=0, 失败=0, 错误=2, 跳过=0, 通过率=0.0%
+2025-08-10 12:40:46 | INFO | test_case.conftest:pytest_configure:29 | 已清空截图目录: screenshots
+2025-08-10 12:40:46 | INFO | test_case.conftest:pytest_sessionstart:73 | ============================================================
+2025-08-10 12:40:46 | INFO | test_case.conftest:pytest_sessionstart:74 | 测试会话开始
+2025-08-10 12:40:46 | INFO | test_case.conftest:pytest_sessionstart:75 | ============================================================
+2025-08-10 12:40:47 | INFO | test_case.conftest:pytest_runtest_setup:151 | 开始执行测试: test_single_api_cases
+2025-08-10 12:40:47 | INFO | test_case.conftest:test_config:221 | 加载测试配置完成
+2025-08-10 12:41:23 | WARNING | test_case.conftest:api_client:254 | API全局登录失败
+2025-08-10 12:41:23 | INFO | test_case.conftest:pytest_sessionfinish:80 | ============================================================
+2025-08-10 12:41:23 | INFO | test_case.conftest:pytest_sessionfinish:81 | 测试会话结束，退出状态: 3
+2025-08-10 12:41:23 | INFO | test_case.conftest:pytest_sessionfinish:82 | ============================================================
+2025-08-10 12:41:23 | INFO | test_case.conftest:pytest_sessionfinish:138 | 测试结果统计: 总计=0, 通过=0, 失败=0, 错误=0, 跳过=0, 通过率=0%
+2025-08-10 13:06:17 | INFO | test_case.conftest:pytest_configure:29 | 已清空截图目录: screenshots
+2025-08-10 13:06:17 | INFO | test_case.conftest:pytest_sessionstart:73 | ============================================================
+2025-08-10 13:06:17 | INFO | test_case.conftest:pytest_sessionstart:74 | 测试会话开始
+2025-08-10 13:06:17 | INFO | test_case.conftest:pytest_sessionstart:75 | ============================================================
+2025-08-10 13:06:18 | INFO | test_case.conftest:pytest_sessionfinish:80 | ============================================================
+2025-08-10 13:06:18 | INFO | test_case.conftest:pytest_sessionfinish:81 | 测试会话结束，退出状态: 5
+2025-08-10 13:06:18 | INFO | test_case.conftest:pytest_sessionfinish:82 | ============================================================
+2025-08-10 13:06:18 | INFO | test_case.conftest:pytest_sessionfinish:138 | 测试结果统计: 总计=0, 通过=0, 失败=0, 错误=0, 跳过=0, 通过率=0%
+2025-08-10 13:13:09 | INFO | utils.excel_test_runner:parse_excel_file:44 | 解析Excel模块: login_module
+2025-08-10 13:13:09 | INFO | utils.excel_test_runner:parse_excel_file:55 | 模块 login_module 解析完成: 5 个用例
+2025-08-10 13:13:09 | INFO | utils.excel_test_runner:parse_excel_file:44 | 解析Excel模块: user_module
+2025-08-10 13:13:09 | INFO | utils.excel_test_runner:parse_excel_file:55 | 模块 user_module 解析完成: 4 个用例
+2025-08-10 13:13:09 | INFO | utils.excel_test_runner:parse_excel_file:44 | 解析Excel模块: mixed_module
+2025-08-10 13:13:09 | INFO | utils.excel_test_runner:parse_excel_file:55 | 模块 mixed_module 解析完成: 4 个用例
+2025-08-10 13:13:17 | INFO | utils.excel_test_runner:parse_excel_file:44 | 解析Excel模块: login_module
+2025-08-10 13:13:17 | INFO | utils.excel_test_runner:parse_excel_file:55 | 模块 login_module 解析完成: 5 个用例
+2025-08-10 13:13:17 | INFO | utils.excel_test_runner:parse_excel_file:44 | 解析Excel模块: user_module
+2025-08-10 13:13:17 | INFO | utils.excel_test_runner:parse_excel_file:55 | 模块 user_module 解析完成: 4 个用例
+2025-08-10 13:13:17 | INFO | utils.excel_test_runner:parse_excel_file:44 | 解析Excel模块: mixed_module
+2025-08-10 13:13:17 | INFO | utils.excel_test_runner:parse_excel_file:55 | 模块 mixed_module 解析完成: 4 个用例
+2025-08-10 13:30:46 | INFO | utils.excel_test_runner:parse_excel_file:45 | 解析Excel模块: login_module
+2025-08-10 13:30:46 | INFO | utils.excel_test_runner:parse_excel_file:56 | 模块 login_module 解析完成: 5 个用例
+2025-08-10 13:30:46 | INFO | utils.excel_test_runner:parse_excel_file:45 | 解析Excel模块: user_module
+2025-08-10 13:30:46 | INFO | utils.excel_test_runner:parse_excel_file:56 | 模块 user_module 解析完成: 4 个用例
+2025-08-10 13:30:46 | INFO | utils.excel_test_runner:parse_excel_file:45 | 解析Excel模块: mixed_module
+2025-08-10 13:30:46 | INFO | utils.excel_test_runner:parse_excel_file:56 | 模块 mixed_module 解析完成: 4 个用例
+2025-08-10 13:30:46 | INFO | utils.excel_test_runner:parse_to_test_suite:461 | Excel解析完成: 13 个测试用例
+2025-08-10 13:30:46 | INFO | utils.excel_test_runner:parse_excel_file:45 | 解析Excel模块: login_module
+2025-08-10 13:30:46 | INFO | utils.excel_test_runner:parse_excel_file:56 | 模块 login_module 解析完成: 5 个用例
+2025-08-10 13:30:46 | INFO | utils.excel_test_runner:parse_excel_file:45 | 解析Excel模块: user_module
+2025-08-10 13:30:46 | INFO | utils.excel_test_runner:parse_excel_file:56 | 模块 user_module 解析完成: 4 个用例
+2025-08-10 13:30:46 | INFO | utils.excel_test_runner:parse_excel_file:45 | 解析Excel模块: mixed_module
+2025-08-10 13:30:46 | INFO | utils.excel_test_runner:parse_excel_file:56 | 模块 mixed_module 解析完成: 4 个用例
+2025-08-10 13:30:46 | INFO | utils.excel_test_runner:parse_to_test_suite:461 | Excel解析完成: 13 个测试用例
+2025-08-10 13:30:46 | INFO | utils.excel_test_runner:parse_excel_file:45 | 解析Excel模块: login_module
+2025-08-10 13:30:46 | INFO | utils.excel_test_runner:parse_excel_file:56 | 模块 login_module 解析完成: 5 个用例
+2025-08-10 13:30:46 | INFO | utils.excel_test_runner:parse_excel_file:45 | 解析Excel模块: user_module
+2025-08-10 13:30:46 | INFO | utils.excel_test_runner:parse_excel_file:56 | 模块 user_module 解析完成: 4 个用例
+2025-08-10 13:30:46 | INFO | utils.excel_test_runner:parse_excel_file:45 | 解析Excel模块: mixed_module
+2025-08-10 13:30:46 | INFO | utils.excel_test_runner:parse_excel_file:56 | 模块 mixed_module 解析完成: 4 个用例
+2025-08-10 13:30:46 | INFO | utils.excel_test_runner:parse_to_test_suite:461 | Excel解析完成: 5 个测试用例
+2025-08-10 13:30:46 | INFO | utils.excel_test_runner:parse_excel_file:45 | 解析Excel模块: login_module
+2025-08-10 13:30:46 | INFO | utils.excel_test_runner:parse_excel_file:56 | 模块 login_module 解析完成: 5 个用例
+2025-08-10 13:30:46 | INFO | utils.excel_test_runner:parse_excel_file:45 | 解析Excel模块: user_module
+2025-08-10 13:30:46 | INFO | utils.excel_test_runner:parse_excel_file:56 | 模块 user_module 解析完成: 4 个用例
+2025-08-10 13:30:46 | INFO | utils.excel_test_runner:parse_excel_file:45 | 解析Excel模块: mixed_module
+2025-08-10 13:30:46 | INFO | utils.excel_test_runner:parse_excel_file:56 | 模块 mixed_module 解析完成: 4 个用例
+2025-08-10 13:30:46 | INFO | utils.excel_test_runner:parse_to_test_suite:461 | Excel解析完成: 3 个测试用例
+2025-08-10 13:30:46 | INFO | utils.excel_test_runner:parse_excel_file:45 | 解析Excel模块: login_module
+2025-08-10 13:30:46 | INFO | utils.excel_test_runner:parse_excel_file:56 | 模块 login_module 解析完成: 5 个用例
+2025-08-10 13:30:46 | INFO | utils.excel_test_runner:parse_excel_file:45 | 解析Excel模块: user_module
+2025-08-10 13:30:46 | INFO | utils.excel_test_runner:parse_excel_file:56 | 模块 user_module 解析完成: 4 个用例
+2025-08-10 13:30:46 | INFO | utils.excel_test_runner:parse_excel_file:45 | 解析Excel模块: mixed_module
+2025-08-10 13:30:46 | INFO | utils.excel_test_runner:parse_excel_file:56 | 模块 mixed_module 解析完成: 4 个用例
+2025-08-10 13:30:46 | INFO | utils.excel_test_runner:parse_to_test_suite:461 | Excel解析完成: 7 个测试用例
+2025-08-10 13:30:57 | INFO | utils.excel_test_runner:parse_excel_file:45 | 解析Excel模块: login_module
+2025-08-10 13:30:57 | INFO | utils.excel_test_runner:parse_excel_file:56 | 模块 login_module 解析完成: 5 个用例
+2025-08-10 13:30:57 | INFO | utils.excel_test_runner:parse_excel_file:45 | 解析Excel模块: user_module
+2025-08-10 13:30:57 | INFO | utils.excel_test_runner:parse_excel_file:56 | 模块 user_module 解析完成: 4 个用例
+2025-08-10 13:30:57 | INFO | utils.excel_test_runner:parse_excel_file:45 | 解析Excel模块: mixed_module
+2025-08-10 13:30:57 | INFO | utils.excel_test_runner:parse_excel_file:56 | 模块 mixed_module 解析完成: 4 个用例
+2025-08-10 13:30:57 | INFO | utils.excel_test_runner:parse_to_test_suite:461 | Excel解析完成: 1 个测试用例
+2025-08-10 13:50:30 | INFO | utils.excel_test_runner:parse_excel_file:45 | 解析Excel模块: api_tests
+2025-08-10 13:50:30 | INFO | utils.excel_test_runner:parse_excel_file:56 | 模块 api_tests 解析完成: 3 个用例
+2025-08-10 13:50:30 | INFO | utils.excel_test_runner:parse_excel_file:45 | 解析Excel模块: web_tests
+2025-08-10 13:50:30 | WARNING | utils.excel_test_runner:parse_sheet:147 | 无法识别用例类型: 访问示例页面
+2025-08-10 13:50:30 | WARNING | utils.excel_test_runner:parse_sheet:147 | 无法识别用例类型: 页面标题检查
+2025-08-10 13:50:30 | WARNING | utils.excel_test_runner:parse_sheet:147 | 无法识别用例类型: 表单测试页面
+2025-08-10 13:50:30 | WARNING | utils.excel_test_runner:parse_sheet:147 | 无法识别用例类型: 填写用户名
+2025-08-10 13:50:30 | WARNING | utils.excel_test_runner:parse_excel_file:58 | 模块 web_tests 没有有效用例
+2025-08-10 13:50:30 | INFO | utils.excel_test_runner:parse_to_test_suite:461 | Excel解析完成: 3 个测试用例
+2025-08-10 13:51:56 | INFO | utils.excel_test_runner:parse_excel_file:45 | 解析Excel模块: api_tests
+2025-08-10 13:51:56 | INFO | utils.excel_test_runner:parse_excel_file:56 | 模块 api_tests 解析完成: 3 个用例
+2025-08-10 13:51:56 | INFO | utils.excel_test_runner:parse_excel_file:45 | 解析Excel模块: web_tests
+2025-08-10 13:51:56 | INFO | utils.excel_test_runner:parse_excel_file:56 | 模块 web_tests 解析完成: 4 个用例
+2025-08-10 13:51:56 | INFO | utils.excel_test_runner:parse_to_test_suite:463 | Excel解析完成: 7 个测试用例
+2025-08-10 13:52:38 | INFO | utils.excel_test_runner:parse_excel_file:45 | 解析Excel模块: api_tests
+2025-08-10 13:52:38 | INFO | utils.excel_test_runner:parse_excel_file:56 | 模块 api_tests 解析完成: 3 个用例
+2025-08-10 13:52:38 | INFO | utils.excel_test_runner:parse_excel_file:45 | 解析Excel模块: web_tests
+2025-08-10 13:52:38 | INFO | utils.excel_test_runner:parse_excel_file:56 | 模块 web_tests 解析完成: 4 个用例
+2025-08-10 13:52:38 | INFO | utils.excel_test_runner:parse_to_test_suite:463 | Excel解析完成: 7 个测试用例
+2025-08-10 13:53:08 | INFO | utils.excel_test_runner:parse_excel_file:45 | 解析Excel模块: api_tests
+2025-08-10 13:53:08 | INFO | utils.excel_test_runner:parse_excel_file:56 | 模块 api_tests 解析完成: 3 个用例
+2025-08-10 13:53:08 | INFO | utils.excel_test_runner:parse_excel_file:45 | 解析Excel模块: web_tests
+2025-08-10 13:53:08 | INFO | utils.excel_test_runner:parse_excel_file:56 | 模块 web_tests 解析完成: 4 个用例
+2025-08-10 13:53:08 | INFO | utils.excel_test_runner:parse_to_test_suite:463 | Excel解析完成: 4 个测试用例
+2025-08-10 13:53:30 | INFO | utils.excel_test_runner:parse_excel_file:45 | 解析Excel模块: api_tests
+2025-08-10 13:53:30 | INFO | utils.excel_test_runner:parse_excel_file:56 | 模块 api_tests 解析完成: 3 个用例
+2025-08-10 13:53:30 | INFO | utils.excel_test_runner:parse_excel_file:45 | 解析Excel模块: web_tests
+2025-08-10 13:53:30 | INFO | utils.excel_test_runner:parse_excel_file:56 | 模块 web_tests 解析完成: 4 个用例
+2025-08-10 13:53:30 | INFO | utils.excel_test_runner:parse_to_test_suite:463 | Excel解析完成: 4 个测试用例
+2025-08-10 13:53:30 | INFO | utils.excel_test_runner:parse_excel_file:45 | 解析Excel模块: api_tests
+2025-08-10 13:53:30 | INFO | utils.excel_test_runner:parse_excel_file:56 | 模块 api_tests 解析完成: 3 个用例
+2025-08-10 13:53:30 | INFO | utils.excel_test_runner:parse_excel_file:45 | 解析Excel模块: web_tests
+2025-08-10 13:53:30 | INFO | utils.excel_test_runner:parse_excel_file:56 | 模块 web_tests 解析完成: 4 个用例
+2025-08-10 13:53:59 | INFO | utils.excel_test_runner:parse_excel_file:45 | 解析Excel模块: api_tests
+2025-08-10 13:53:59 | INFO | utils.excel_test_runner:parse_excel_file:56 | 模块 api_tests 解析完成: 3 个用例
+2025-08-10 13:53:59 | INFO | utils.excel_test_runner:parse_excel_file:45 | 解析Excel模块: web_tests
+2025-08-10 13:53:59 | INFO | utils.excel_test_runner:parse_excel_file:56 | 模块 web_tests 解析完成: 4 个用例
+2025-08-10 13:53:59 | INFO | utils.excel_test_runner:parse_to_test_suite:463 | Excel解析完成: 4 个测试用例
+2025-08-10 13:53:59 | INFO | utils.excel_test_runner:parse_excel_file:45 | 解析Excel模块: api_tests
+2025-08-10 13:53:59 | INFO | utils.excel_test_runner:parse_excel_file:56 | 模块 api_tests 解析完成: 3 个用例
+2025-08-10 13:53:59 | INFO | utils.excel_test_runner:parse_excel_file:45 | 解析Excel模块: web_tests
+2025-08-10 13:53:59 | INFO | utils.excel_test_runner:parse_excel_file:56 | 模块 web_tests 解析完成: 4 个用例
+2025-08-10 13:54:22 | INFO | utils.excel_test_runner:parse_excel_file:45 | 解析Excel模块: api_tests
+2025-08-10 13:54:22 | INFO | utils.excel_test_runner:parse_excel_file:56 | 模块 api_tests 解析完成: 3 个用例
+2025-08-10 13:54:22 | INFO | utils.excel_test_runner:parse_excel_file:45 | 解析Excel模块: web_tests
+2025-08-10 13:54:22 | INFO | utils.excel_test_runner:parse_excel_file:56 | 模块 web_tests 解析完成: 4 个用例
+2025-08-10 13:54:22 | INFO | utils.excel_test_runner:parse_to_test_suite:463 | Excel解析完成: 7 个测试用例
+2025-08-10 13:54:28 | INFO | utils.excel_test_runner:parse_excel_file:45 | 解析Excel模块: api_tests
+2025-08-10 13:54:28 | INFO | utils.excel_test_runner:parse_excel_file:56 | 模块 api_tests 解析完成: 3 个用例
+2025-08-10 13:54:28 | INFO | utils.excel_test_runner:parse_excel_file:45 | 解析Excel模块: web_tests
+2025-08-10 13:54:28 | INFO | utils.excel_test_runner:parse_excel_file:56 | 模块 web_tests 解析完成: 4 个用例
+2025-08-10 13:54:28 | INFO | utils.excel_test_runner:parse_to_test_suite:463 | Excel解析完成: 7 个测试用例
+2025-08-10 14:15:14 | INFO | test_case.conftest:pytest_configure:27 | 已清空截图目录: screenshots
+2025-08-10 14:15:14 | INFO | test_case.conftest:pytest_sessionstart:72 | ============================================================
+2025-08-10 14:15:14 | INFO | test_case.conftest:pytest_sessionstart:73 | 测试会话开始
+2025-08-10 14:15:14 | INFO | test_case.conftest:pytest_sessionstart:74 | ============================================================
+2025-08-10 14:15:15 | INFO | test_case.conftest:pytest_sessionfinish:79 | ============================================================
+2025-08-10 14:15:15 | INFO | test_case.conftest:pytest_sessionfinish:80 | 测试会话结束，退出状态: 0
+2025-08-10 14:15:15 | INFO | test_case.conftest:pytest_sessionfinish:81 | ============================================================
+2025-08-10 14:15:15 | INFO | test_case.conftest:pytest_sessionfinish:137 | 测试结果统计: 总计=0, 通过=0, 失败=0, 错误=0, 跳过=0, 通过率=0%
+2025-08-10 14:15:58 | INFO | test_case.web.conftest:pytest_configure:54 | 已清空Web测试截图目录: screenshots/web
+2025-08-10 14:15:58 | INFO | test_case.conftest:pytest_configure:27 | 已清空截图目录: screenshots
+2025-08-10 14:15:58 | INFO | test_case.conftest:pytest_sessionstart:72 | ============================================================
+2025-08-10 14:15:58 | INFO | test_case.conftest:pytest_sessionstart:73 | 测试会话开始
+2025-08-10 14:15:58 | INFO | test_case.conftest:pytest_sessionstart:74 | ============================================================
+2025-08-10 14:15:58 | INFO | test_case.conftest:pytest_sessionfinish:79 | ============================================================
+2025-08-10 14:15:58 | INFO | test_case.conftest:pytest_sessionfinish:80 | 测试会话结束，退出状态: 0
+2025-08-10 14:15:58 | INFO | test_case.conftest:pytest_sessionfinish:81 | ============================================================
+2025-08-10 14:15:58 | INFO | test_case.conftest:pytest_sessionfinish:137 | 测试结果统计: 总计=0, 通过=0, 失败=0, 错误=0, 跳过=0, 通过率=0%
+2025-08-10 14:16:05 | INFO | test_case.conftest:pytest_configure:27 | 已清空截图目录: screenshots
+2025-08-10 14:16:05 | INFO | test_case.conftest:pytest_sessionstart:72 | ============================================================
+2025-08-10 14:16:05 | INFO | test_case.conftest:pytest_sessionstart:73 | 测试会话开始
+2025-08-10 14:16:05 | INFO | test_case.conftest:pytest_sessionstart:74 | ============================================================
+2025-08-10 14:16:05 | INFO | test_case.web.conftest:pytest_configure:54 | 已清空Web测试截图目录: screenshots/web
+2025-08-10 14:16:05 | INFO | test_case.conftest:pytest_sessionfinish:79 | ============================================================
+2025-08-10 14:16:05 | INFO | test_case.conftest:pytest_sessionfinish:80 | 测试会话结束，退出状态: 0
+2025-08-10 14:16:05 | INFO | test_case.conftest:pytest_sessionfinish:81 | ============================================================
+2025-08-10 14:16:05 | INFO | test_case.conftest:pytest_sessionfinish:137 | 测试结果统计: 总计=0, 通过=0, 失败=0, 错误=0, 跳过=0, 通过率=0%
+2025-08-10 14:18:18 | INFO | test_case.conftest:pytest_configure:41 | 已清空截图目录: screenshots
+2025-08-10 14:18:18 | INFO | test_case.conftest:pytest_sessionstart:86 | ============================================================
+2025-08-10 14:18:18 | INFO | test_case.conftest:pytest_sessionstart:87 | 测试会话开始
+2025-08-10 14:18:18 | INFO | test_case.conftest:pytest_sessionstart:88 | ============================================================
+2025-08-10 14:18:18 | INFO | test_case.conftest:pytest_sessionfinish:93 | ============================================================
+2025-08-10 14:18:18 | INFO | test_case.conftest:pytest_sessionfinish:94 | 测试会话结束，退出状态: 0
+2025-08-10 14:18:18 | INFO | test_case.conftest:pytest_sessionfinish:95 | ============================================================
+2025-08-10 14:18:18 | INFO | test_case.conftest:pytest_sessionfinish:151 | 测试结果统计: 总计=0, 通过=0, 失败=0, 错误=0, 跳过=0, 通过率=0%
+2025-08-10 14:18:28 | INFO | test_case.web.conftest:pytest_configure:66 | 已清空Web测试截图目录: screenshots/web
+2025-08-10 14:18:28 | INFO | test_case.conftest:pytest_configure:41 | 已清空截图目录: screenshots
+2025-08-10 14:18:28 | INFO | test_case.conftest:pytest_sessionstart:86 | ============================================================
+2025-08-10 14:18:28 | INFO | test_case.conftest:pytest_sessionstart:87 | 测试会话开始
+2025-08-10 14:18:28 | INFO | test_case.conftest:pytest_sessionstart:88 | ============================================================
+2025-08-10 14:18:28 | INFO | test_case.conftest:pytest_sessionfinish:93 | ============================================================
+2025-08-10 14:18:28 | INFO | test_case.conftest:pytest_sessionfinish:94 | 测试会话结束，退出状态: 0
+2025-08-10 14:18:28 | INFO | test_case.conftest:pytest_sessionfinish:95 | ============================================================
+2025-08-10 14:18:28 | INFO | test_case.conftest:pytest_sessionfinish:151 | 测试结果统计: 总计=0, 通过=0, 失败=0, 错误=0, 跳过=0, 通过率=0%

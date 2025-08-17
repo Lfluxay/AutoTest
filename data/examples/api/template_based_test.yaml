@@ -1,0 +1,179 @@
+test_info:
+  title: "模板化API测试示例"
+  description: "演示如何使用模板和数据集进行数据驱动测试"
+  tags: ["api", "template", "data_driven"]
+  author: "测试团队"
+  version: "1.0"
+
+# 文件内模板定义
+templates:
+  # 用户操作模板
+  user_api_template:
+    description: "用户相关API操作模板"
+    request:
+      method: "${method}"
+      url: "https://jsonplaceholder.typicode.com/users/${user_id}"
+      headers:
+        Accept: "application/json"
+        Content-Type: "application/json"
+      data: "${request_data}"
+    assertions:
+      - type: "status_code"
+        expected: "${expected_status}"
+        message: "状态码应为${expected_status}"
+      - type: "json_path"
+        path: "$.id"
+        expected: "${user_id}"
+        condition: "${expected_status} == 200"
+        message: "用户ID应为${user_id}"
+      - type: "json_path"
+        path: "$.name"
+        operator: "not_empty"
+        condition: "${expected_status} == 200"
+        message: "用户名不应为空"
+    extract:
+      - name: "response_user_id"
+        type: "json_path"
+        path: "$.id"
+        condition: "${expected_status} == 200"
+
+  # 文章操作模板
+  post_api_template:
+    description: "文章相关API操作模板"
+    request:
+      method: "${method}"
+      url: "https://jsonplaceholder.typicode.com/posts${post_path}"
+      headers:
+        Content-Type: "application/json"
+      data: "${post_data}"
+    assertions:
+      - type: "status_code"
+        expected: "${expected_status}"
+        message: "状态码应为${expected_status}"
+      - type: "json_path"
+        path: "$.title"
+        expected: "${expected_title}"
+        condition: "${expected_title} != ''"
+        message: "标题应为${expected_title}"
+      - type: "json_path"
+        path: "$.userId"
+        expected: "${expected_user_id}"
+        condition: "${expected_user_id} != ''"
+        message: "用户ID应为${expected_user_id}"
+    extract:
+      - name: "post_id"
+        type: "json_path"
+        path: "$.id"
+        condition: "${expected_status} == 201"
+
+test_cases:
+  # 使用文件内模板进行用户测试
+  - case_name: "用户API测试"
+    description: "使用模板测试用户相关API"
+    template: "#user_api_template"
+    test_data:
+      - name: "获取用户1"
+        method: "GET"
+        user_id: "1"
+        request_data: ""
+        expected_status: 200
+      - name: "获取用户2"
+        method: "GET"
+        user_id: "2"
+        request_data: ""
+        expected_status: 200
+      - name: "获取不存在用户"
+        method: "GET"
+        user_id: "999"
+        request_data: ""
+        expected_status: 404
+    tags: ["template", "user", "get"]
+
+  # 使用文件内模板进行文章测试
+  - case_name: "文章API测试"
+    description: "使用模板测试文章相关API"
+    template: "#post_api_template"
+    test_data:
+      - name: "创建新文章"
+        method: "POST"
+        post_path: ""
+        post_data:
+          title: "新文章标题"
+          body: "新文章内容"
+          userId: 1
+        expected_status: 201
+        expected_title: "新文章标题"
+        expected_user_id: 1
+      - name: "更新文章"
+        method: "PUT"
+        post_path: "/1"
+        post_data:
+          id: 1
+          title: "更新的标题"
+          body: "更新的内容"
+          userId: 1
+        expected_status: 200
+        expected_title: "更新的标题"
+        expected_user_id: 1
+      - name: "删除文章"
+        method: "DELETE"
+        post_path: "/1"
+        post_data: ""
+        expected_status: 200
+        expected_title: ""
+        expected_user_id: ""
+    tags: ["template", "post", "crud"]
+
+  # 使用覆盖配置的模板测试
+  - case_name: "性能测试"
+    description: "使用模板进行性能测试，添加响应时间断言"
+    template: "#user_api_template"
+    test_data:
+      - name: "用户API性能测试"
+        method: "GET"
+        user_id: "1"
+        request_data: ""
+        expected_status: 200
+    override:
+      assertions:
+        - type: "status_code"
+          expected: 200
+        - type: "response_time"
+          max_time: 1000
+          message: "响应时间应小于1秒"
+        - type: "json_path"
+          path: "$.id"
+          expected: 1
+    tags: ["template", "performance"]
+
+  # 批量数据测试
+  - case_name: "批量用户查询"
+    description: "批量查询多个用户信息"
+    template: "#user_api_template"
+    test_data:
+      - name: "用户1"
+        method: "GET"
+        user_id: "1"
+        request_data: ""
+        expected_status: 200
+      - name: "用户2"
+        method: "GET"
+        user_id: "2"
+        request_data: ""
+        expected_status: 200
+      - name: "用户3"
+        method: "GET"
+        user_id: "3"
+        request_data: ""
+        expected_status: 200
+      - name: "用户4"
+        method: "GET"
+        user_id: "4"
+        request_data: ""
+        expected_status: 200
+      - name: "用户5"
+        method: "GET"
+        user_id: "5"
+        request_data: ""
+        expected_status: 200
+    tags: ["template", "batch", "user"]

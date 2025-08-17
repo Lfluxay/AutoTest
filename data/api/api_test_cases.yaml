@@ -1,0 +1,309 @@
+test_info:
+  title: "基础API测试示例"
+  description: "演示基本的API接口测试用例编写"
+  tags: ["api", "example", "basic"]
+  author: "测试团队"
+  version: "1.0"
+
+test_cases:
+  # 基础GET请求示例
+  - case_name: "获取用户信息"
+    description: "测试获取单个用户信息的API接口"
+    tags: ["get", "user", "positive"]
+    severity: "critical"
+    request:
+      method: "GET"
+      url: "https://jsonplaceholder.typicode.com/users/1"
+      headers:
+        Accept: "application/json"
+    assertions:
+      - type: "status_code"
+        expected: 200
+        message: "状态码应为200"
+      - type: "json_path"
+        path: "$.id"
+        expected: 1
+        message: "用户ID应为1"
+      - type: "json_path"
+        path: "$.name"
+        operator: "not_empty"
+        message: "用户名不应为空"
+      - type: "json_path"
+        path: "$.email"
+        operator: "contains"
+        expected: "@"
+        message: "邮箱应包含@符号"
+    extract:
+      - name: "user_name"
+        type: "json_path"
+        path: "$.name"
+      - name: "user_email"
+        type: "json_path"
+        path: "$.email"
+
+  # 基础POST请求示例
+  - case_name: "创建新文章"
+    description: "测试创建新文章的API接口"
+    tags: ["post", "article", "positive"]
+    severity: "critical"
+    request:
+      method: "POST"
+      url: "https://jsonplaceholder.typicode.com/posts"
+      headers:
+        Content-Type: "application/json"
+      data:
+        title: "测试文章标题"
+        body: "这是一篇测试文章的内容"
+        userId: 1
+    assertions:
+      - type: "status_code"
+        expected: 201
+        message: "创建成功状态码应为201"
+      - type: "json_path"
+        path: "$.title"
+        expected: "测试文章标题"
+        message: "返回的标题应与提交的一致"
+      - type: "json_path"
+        path: "$.id"
+        operator: "not_empty"
+        message: "应返回新创建的文章ID"
+    extract:
+      - name: "new_post_id"
+        type: "json_path"
+        path: "$.id"
+
+  # 基础PUT请求示例
+  - case_name: "更新文章信息"
+    description: "测试更新文章信息的API接口"
+    tags: ["put", "article", "positive"]
+    severity: "normal"
+    request:
+      method: "PUT"
+      url: "https://jsonplaceholder.typicode.com/posts/1"
+      headers:
+        Content-Type: "application/json"
+      data:
+        id: 1
+        title: "更新后的文章标题"
+        body: "更新后的文章内容"
+        userId: 1
+    assertions:
+      - type: "status_code"
+        expected: 200
+        message: "更新成功状态码应为200"
+      - type: "json_path"
+        path: "$.title"
+        expected: "更新后的文章标题"
+        message: "标题应已更新"
+      - type: "json_path"
+        path: "$.id"
+        expected: 1
+        message: "文章ID应保持不变"
+
+  # 基础DELETE请求示例
+  - case_name: "删除文章"
+    description: "测试删除文章的API接口"
+    tags: ["delete", "article", "positive"]
+    severity: "normal"
+    request:
+      method: "DELETE"
+      url: "https://jsonplaceholder.typicode.com/posts/1"
+    assertions:
+      - type: "status_code"
+        expected: 200
+        message: "删除成功状态码应为200"
+
+  # 错误处理示例
+  - case_name: "获取不存在的用户"
+    description: "测试获取不存在用户时的错误处理"
+    tags: ["get", "user", "negative"]
+    severity: "normal"
+    request:
+      method: "GET"
+      url: "https://jsonplaceholder.typicode.com/users/999"
+      headers:
+        Accept: "application/json"
+    assertions:
+      - type: "status_code"
+        expected: 404
+        message: "不存在的资源应返回404"
+
+  # 参数化请求示例
+  - case_name: "获取文章列表"
+    description: "测试带参数的文章列表查询"
+    tags: ["get", "article", "params"]
+    severity: "normal"
+    request:
+      method: "GET"
+      url: "https://jsonplaceholder.typicode.com/posts"
+      params:
+        userId: 1
+        _limit: 5
+    assertions:
+      - type: "status_code"
+        expected: 200
+        message: "查询成功状态码应为200"
+      - type: "json_path"
+        path: "$"
+        operator: "is_list"
+        message: "返回结果应为数组"
+      - type: "json_path"
+        path: "$[0].userId"
+        expected: 1
+        message: "第一条记录的userId应为1"
+    extract:
+      - name: "posts_count"
+        type: "json_path"
+        path: "$.length"
+
+  # 响应时间测试示例
+  - case_name: "API响应时间测试"
+    description: "测试API接口的响应时间性能"
+    tags: ["performance", "response_time"]
+    severity: "low"
+    request:
+      method: "GET"
+      url: "https://jsonplaceholder.typicode.com/posts"
+    assertions:
+      - type: "status_code"
+        expected: 200
+        message: "状态码应为200"
+      - type: "response_time"
+        max_time: 2000
+        message: "响应时间应小于2秒"
+
+  # 并发测试用例1
+  - case_name: "获取用户2信息"
+    description: "测试获取用户2信息的API接口"
+    tags: ["get", "user", "concurrent"]
+    severity: "normal"
+    request:
+      method: "GET"
+      url: "https://jsonplaceholder.typicode.com/users/2"
+      headers:
+        Accept: "application/json"
+    assertions:
+      - type: "status_code"
+        expected: 200
+        message: "状态码应为200"
+      - type: "json_path"
+        path: "$.id"
+        expected: 2
+        message: "用户ID应为2"
+
+  # 并发测试用例2
+  - case_name: "获取用户3信息"
+    description: "测试获取用户3信息的API接口"
+    tags: ["get", "user", "concurrent"]
+    severity: "normal"
+    request:
+      method: "GET"
+      url: "https://jsonplaceholder.typicode.com/users/3"
+      headers:
+        Accept: "application/json"
+    assertions:
+      - type: "status_code"
+        expected: 200
+        message: "状态码应为200"
+      - type: "json_path"
+        path: "$.id"
+        expected: 3
+        message: "用户ID应为3"
+
+  # 并发测试用例3
+  - case_name: "获取文章1"
+    description: "测试获取文章1的API接口"
+    tags: ["get", "post", "concurrent"]
+    severity: "normal"
+    request:
+      method: "GET"
+      url: "https://jsonplaceholder.typicode.com/posts/1"
+      headers:
+        Accept: "application/json"
+    assertions:
+      - type: "status_code"
+        expected: 200
+        message: "状态码应为200"
+      - type: "json_path"
+        path: "$.id"
+        expected: 1
+        message: "文章ID应为1"
+
+  # 并发测试用例4
+  - case_name: "获取评论"
+    description: "测试获取评论的API接口"
+    tags: ["get", "comments", "concurrent"]
+    severity: "normal"
+    request:
+      method: "GET"
+      url: "https://jsonplaceholder.typicode.com/comments?postId=1"
+      headers:
+        Accept: "application/json"
+    assertions:
+      - type: "status_code"
+        expected: 200
+        message: "状态码应为200"
+
+  # 并发测试用例5
+  - case_name: "获取相册"
+    description: "测试获取相册的API接口"
+    tags: ["get", "albums", "concurrent"]
+    severity: "normal"
+    request:
+      method: "GET"
+      url: "https://jsonplaceholder.typicode.com/albums"
+      headers:
+        Accept: "application/json"
+    assertions:
+      - type: "status_code"
+        expected: 200
+        message: "状态码应为200"
+
+  # 并发测试用例6
+  - case_name: "获取照片"
+    description: "测试获取照片的API接口"
+    tags: ["get", "photos", "concurrent"]
+    severity: "normal"
+    request:
+      method: "GET"
+      url: "https://jsonplaceholder.typicode.com/photos?albumId=1"
+      headers:
+        Accept: "application/json"
+    assertions:
+      - type: "status_code"
+        expected: 200
+        message: "状态码应为200"
+
+  # 并发测试用例7
+  - case_name: "获取待办事项"
+    description: "测试获取待办事项的API接口"
+    tags: ["get", "todos", "concurrent"]
+    severity: "normal"
+    request:
+      method: "GET"
+      url: "https://jsonplaceholder.typicode.com/todos?userId=1"
+      headers:
+        Accept: "application/json"
+    assertions:
+      - type: "status_code"
+        expected: 200
+        message: "状态码应为200"
+
+  # 并发测试用例8
+  - case_name: "获取用户4信息"
+    description: "测试获取用户4信息的API接口"
+    tags: ["get", "user", "concurrent"]
+    severity: "normal"
+    request:
+      method: "GET"
+      url: "https://jsonplaceholder.typicode.com/users/4"
+      headers:
+        Accept: "application/json"
+    assertions:
+      - type: "status_code"
+        expected: 200
+        message: "状态码应为200"
+      - type: "json_path"
+        path: "$.id"
+        expected: 4
+        message: "用户ID应为4"

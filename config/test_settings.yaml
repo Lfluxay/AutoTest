@@ -1,0 +1,227 @@
+# ============================================================================
+# 测试设置配置文件
+# ============================================================================
+# 说明：
+# 1. 此文件包含测试执行、数据、工作流等配置
+# 2. 与核心配置和环境配置分离，便于管理
+# 3. 包含API、Web、数据库、工作流的详细配置
+# ============================================================================
+
+# ============================================================================
+# 测试执行配置
+# ============================================================================
+execution:
+  # 执行模式：all(全部) / tags(按标签) / modules(按模块) / files(按文件) / custom(自定义)
+  mode: "tags"
+
+  # 用例选择配置
+  case_tags: ["smoke"]
+  case_modules: []
+  case_files: []
+  custom_expression: ""
+
+  # 执行范围配置
+  test_types: ["api", "web"]
+  severity_levels: ["critical", "high", "medium"]
+  skip_marked: true
+
+  # 重试配置
+  retry_times: 0
+  retry_delay: 1
+  retry_on_failure_only: true
+
+  # 超时配置
+  timeout: 300 # 单个用例超时（秒）
+  session_timeout: 3600 # 会话超时（秒）
+
+  # 性能配置
+  load_balancing: true # 负载均衡，在并发执行时分配任务
+  fail_fast: false # 遇到失败时是否立即停止
+  max_failures: 10 # 最大失败数限制，0表示不限制
+
+# ============================================================================
+# API测试配置
+# ============================================================================
+api:
+  # 基础配置
+  defaults:
+    timeout: 30
+    retry_times: 3
+    verify_ssl: true
+
+  # 请求配置
+  headers:
+    Content-Type: "application/json"
+    User-Agent: "AutoTest/1.0"
+
+  # 认证配置模板
+  auth:
+    login:
+      enabled: true
+      url: "/api/login"
+      method: "POST"
+
+      # 成功判断模板
+      success_flag:
+        type: "json_path"
+        path: "$.code"
+        value: 0
+
+      # Token提取模板
+      token_extract:
+        type: "json_path"
+        path: "$.data.token"
+        name: "token"
+
+      # Token使用模板
+      token_header: "Authorization"
+      token_prefix: "Bearer "
+
+# ============================================================================
+# Web测试配置
+# ============================================================================
+web:
+  # 浏览器配置
+  browser:
+    type: "chromium" # chromium / firefox / webkit
+    headless: false
+    viewport:
+      width: 1920
+      height: 1080
+
+  # 超时配置
+  timeouts:
+    element: 30000 # 元素等待超时（毫秒）
+    page: 60000 # 页面加载超时（毫秒）
+
+  # 失败处理配置
+  on_failure:
+    screenshot: true
+    trace: true
+    video: true
+
+  # 认证配置模板
+  auth:
+    login:
+      enabled: true
+
+      # 页面元素模板
+      locators:
+        username: "#username"
+        password: "#password"
+        login_button: "#login-btn"
+
+      # 成功判断模板
+      success_url_pattern: "*/dashboard"
+
+      # 目标页面模板
+      home_url_pattern: "*/dashboard*"
+
+# ============================================================================
+# 数据库详细配置
+# ============================================================================
+database:
+  # 数据库类型配置
+  mysql:
+    connection:
+      charset: "utf8mb4"
+      autocommit: true
+      use_unicode: true
+    options:
+      sql_mode: "STRICT_TRANS_TABLES,NO_ZERO_DATE,NO_ZERO_IN_DATE,ERROR_FOR_DIVISION_BY_ZERO"
+    pool:
+      min_connections: 2
+      max_connections: 20
+      max_idle_time: 600
+
+  postgresql:
+    connection:
+      sslmode: "prefer"
+      application_name: "automation_test"
+    pool:
+      min_connections: 1
+      max_connections: 15
+
+  sqlite:
+    connection:
+      check_same_thread: false
+      timeout: 20
+
+  # 数据库操作配置
+  operations:
+    transaction:
+      enabled: true
+      auto_commit: true
+      isolation_level: "READ_COMMITTED"
+    query:
+      timeout: 30
+      log_sql: true
+      slow_query_threshold: 1.0
+    retry:
+      enabled: true
+      max_attempts: 3
+      delay: 1
+
+  # 数据清理配置
+  cleanup:
+    before_test: true
+    after_test: true
+    test_prefix: "test_"
+  backup:
+    enabled: false
+    directory: "backup/database"
+    keep_days: 7
+
+# ============================================================================
+# 工作流配置
+# ============================================================================
+workflows:
+  # 工作流策略
+  strategy: "config_driven" # config_driven, template_based, plugin_based
+  strategy_priority:
+    - "config_driven"
+    - "template_based"
+    - "plugin_based"
+
+  # 缓存配置
+  cache:
+    enabled: true
+    timeout: 3600
+    cleanup_interval: 7200
+    max_cache_size: 1000
+
+  # 性能配置
+  performance:
+    parallel_execution: false
+    max_concurrent_workflows: 5
+    step_timeout: 30000
+    workflow_timeout: 300000
+
+  # 错误处理配置
+  error_handling:
+    max_retry_attempts: 3
+    retry_delay: 1000
+    fail_fast: false
+    error_recovery_enabled: true
+
+# ============================================================================
+# 通知配置模板
+# ============================================================================
+notification:
+  templates:
+    feishu:
+      webhook: ""
+      secret: ""
+    email:
+      smtp_server: "smtp.qq.com"
+      smtp_port: 587
+      use_tls: true
+      sender: ""
+      password: ""
+      receivers: []
+    wechat:
+      webhook: ""
+    dingtalk:
+      webhook: ""
+      secret: ""
+      at_all: false

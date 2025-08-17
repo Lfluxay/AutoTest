@@ -1,0 +1,186 @@
+test_info:
+  title: "基础Web测试示例"
+  description: "演示基本的Web页面自动化测试用例编写"
+  tags: ["web", "example", "basic"]
+  author: "测试团队"
+  version: "1.0"
+
+test_cases:
+  # 基础页面导航测试
+  - case_name: "页面导航测试"
+    description: "测试页面基本导航功能"
+    tags: ["navigation", "basic"]
+    severity: "critical"
+    steps:
+      - action: "navigate"
+        params:
+          url: "https://example.com"
+      - action: "wait_for_element"
+        params:
+          locator: "h1"
+          state: "visible"
+          timeout: 10000
+    assertions:
+      - type: "url_contains"
+        expected: "example.com"
+        message: "应成功导航到目标页面"
+      - type: "element_visible"
+        locator: "h1"
+        message: "页面标题应可见"
+      - type: "page_title"
+        expected: "Example Domain"
+        message: "页面标题应正确"
+    extract:
+      - name: "current_url"
+        type: "url"
+      - name: "page_title"
+        type: "title"
+
+  # 表单填写测试
+  - case_name: "表单填写测试"
+    description: "测试表单输入和提交功能"
+    tags: ["form", "input"]
+    severity: "critical"
+    steps:
+      - action: "navigate"
+        params:
+          url: "https://httpbin.org/forms/post"
+      - action: "wait_for_element"
+        params:
+          locator: "form"
+          state: "visible"
+      - action: "input"
+        params:
+          locator: "input[name='custname']"
+          value: "测试用户"
+      - action: "input"
+        params:
+          locator: "input[name='custtel']"
+          value: "13800138000"
+      - action: "input"
+        params:
+          locator: "input[name='custemail']"
+          value: "test@example.com"
+      - action: "select"
+        params:
+          locator: "select[name='size']"
+          value: "medium"
+      - action: "check"
+        params:
+          locator: "input[name='topping'][value='bacon']"
+      - action: "input"
+        params:
+          locator: "textarea[name='comments']"
+          value: "这是测试评论"
+      - action: "click"
+        params:
+          locator: "input[type='submit']"
+      - action: "wait_for_element"
+        params:
+          locator: ".data"
+          state: "visible"
+          timeout: 10000
+    assertions:
+      - type: "element_visible"
+        locator: ".data"
+        message: "应显示提交结果"
+      - type: "element_text_contains"
+        locator: ".data"
+        expected: "测试用户"
+        message: "结果应包含提交的用户名"
+      - type: "element_text_contains"
+        locator: ".data"
+        expected: "test@example.com"
+        message: "结果应包含提交的邮箱"
+
+  # 元素等待测试
+  - case_name: "元素等待测试"
+    description: "测试各种元素等待策略"
+    tags: ["wait", "element"]
+    severity: "normal"
+    steps:
+      - action: "navigate"
+        params:
+          url: "https://httpbin.org/delay/2"
+      - action: "wait_for_element"
+        params:
+          locator: "body"
+          state: "visible"
+          timeout: 5000
+    assertions:
+      - type: "element_visible"
+        locator: "body"
+        message: "页面内容应在延迟后加载"
+      - type: "response_time"
+        min_time: 2000
+        max_time: 5000
+        message: "页面加载时间应在2-5秒之间"
+
+  # 多元素操作测试
+  - case_name: "多元素操作测试"
+    description: "测试对多个元素的批量操作"
+    tags: ["multiple_elements", "batch"]
+    severity: "normal"
+    steps:
+      - action: "navigate"
+        params:
+          url: "https://httpbin.org/forms/post"
+      - action: "wait_for_element"
+        params:
+          locator: "form"
+          state: "visible"
+      - action: "input_multiple"
+        params:
+          inputs:
+            - locator: "input[name='custname']"
+              value: "用户1"
+            - locator: "input[name='custtel']"
+              value: "13800138001"
+            - locator: "input[name='custemail']"
+              value: "user1@example.com"
+      - action: "check_multiple"
+        params:
+          checkboxes:
+            - "input[name='topping'][value='bacon']"
+            - "input[name='topping'][value='cheese']"
+    assertions:
+      - type: "element_value"
+        locator: "input[name='custname']"
+        expected: "用户1"
+        message: "用户名输入框值应正确"
+      - type: "element_checked"
+        locator: "input[name='topping'][value='bacon']"
+        expected: true
+        message: "bacon选项应被选中"
+      - type: "element_checked"
+        locator: "input[name='topping'][value='cheese']"
+        expected: true
+        message: "cheese选项应被选中"
+
+  # 页面交互测试
+  - case_name: "页面交互测试"
+    description: "测试页面的各种交互操作"
+    tags: ["interaction", "click"]
+    severity: "normal"
+    steps:
+      - action: "navigate"
+        params:
+          url: "https://httpbin.org"
+      - action: "wait_for_element"
+        params:
+          locator: "a[href='/get']"
+          state: "visible"
+      - action: "click"
+        params:
+          locator: "a[href='/get']"
+      - action: "wait_for_url"
+        params:
+          url: "*/get"
+          timeout: 5000
+    assertions:
+      - type: "url_contains"
+        expected: "/get"
+        message: "应导航到GET页面"
+      - type: "element_visible"
+        locator: "h1"
+        message: "页面标题应可见"
